@@ -1,0 +1,58 @@
+<html>
+	<head>
+		<title>Free Rider Jail</title>
+		<link
+			rel="stylesheet"
+			href="node_modules/dracula-ui/styles/dracula-ui.css"
+		/>
+	</head>
+	<body class="drac-bg-black center">
+		<div
+			class="drac-box drac-card-subtle drac-border-pink drac-bg-pink drac-p-md drac-m-md"
+			variant="subtle"
+		>
+			<h1 class="drac-heading drac-heading-xl drac-text-white">
+				Login to report free rider(s)
+			</h1>
+			<br />
+			<form action="/login" method="post">
+				<div class="form-group">
+					<label for="username" class="drac-text-white drac-heading"
+						>username:
+					</label>
+					<input
+						type="text"
+						class="drac-input drac-input-white drac-text-white"
+						id="username"
+						name="username"
+						placeholder="Enter username"
+					/>
+				</div>
+				<br />
+				<div class="form-group">
+					<label for="password" class="drac-text-white drac-heading"
+						>password:
+					</label>
+					<input
+						type="password"
+						class="drac-input drac-input-white drac-text-white"
+						id="password"
+						name="password"
+						placeholder="Password"
+					/>
+				</div>
+				<br />
+				<button
+					type="submit"
+					value="Login"
+					class="drac-btn drac-bg-animated drac-text-black"
+				>
+					Submit
+				</button>
+			</form>
+		</div>
+		<script>
+			alert("Not Authorized!")
+		</script>
+	</body>
+</html>
