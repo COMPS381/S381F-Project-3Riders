@@ -3,9 +3,11 @@ const session = require("cookie-session");
 const bodyParser = require("body-parser");
 
 const mongoose = require("mongoose");
+/*
 mongoose.connect(
 	"mongodb://mongo:osWLKX0WcgMxoRdO3bjU@containers-us-west-81.railway.app:7018"
 );
+*/
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
 db.on("error", (error) => console.log(error));
