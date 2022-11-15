@@ -1,65 +1,145 @@
 <html>
 	<head>
 		<title>Free Rider Jail</title>
-		<link rel="stylesheet" href="node_modules/dracula-ui/styles/dracula-ui.css" />
-		<link rel="stylesheet" href="node_modules/self-defined/bootstrap.css" />
+		<link
+			rel="stylesheet"
+			href="node_modules/dracula-ui/styles/dracula-ui.css"
+		/>
+		<link
+			rel="stylesheet"
+			href="node_modules/bootstrap/dist/css/bootstrap.min.css"
+		/>
 	</head>
-	<body class="drac-bg-black center">
+	<body class="drac-bg-black center drac-text-white">
 		<div class="container">
 			<div class="row">
-				<h5 class="drac-heading drac-heading-xl drac-text-white" style="font-size: 50px; padding-top: 30px;">Who's the Free Rider?</h5>
+				<h5
+					class="drac-heading drac-heading-xl drac-text-white"
+					style="font-size: 50px; padding-top: 30px"
+				>
+					Who's the Free Rider?
+				</h5>
 			</div>
-			<br>
-			<br>
+			<br />
+			<br />
 			<div class="row">
-				<div class="col-sm-8 drac-box drac-card-subtle drac-border-pink drac-bg-pink">
-					<table class="drac-text-white" style="width: 100%;">
-						<tr">
-							<th style="width: 25%; padding-top: 10px; padding-bottom: 20px;"><b>Name:</b></th>
-							<th style="width: 25%; padding-top: 10px; padding-bottom: 20px;"><b>Sex:</b></th>
-							<th style="width: 50%; padding-top: 10px; padding-bottom: 20px;"><b>Complainment:</b></th>
+				<div
+					class="col-sm-8 drac-box drac-card-subtle drac-border-cyan drac-bg-cyan"
+				>
+					<br />
+					<h6 class="drac-heading drac-heading-xl drac-text-white">
+						Top 5 reported:
+					</h6>
+					<br />
+					<table class="drac-table drac-table-cyan drac-text-white">
+						<tr>
+							<th
+								class="drac-text drac-text-white"
+								style="
+									width: 25%;
+									padding-top: 10px;
+									padding-bottom: 20px;
+								"
+							>
+								<b>Name:</b>
+							</th>
+							<th
+								class="drac-text drac-text-white"
+								style="
+									width: 25%;
+									padding-top: 10px;
+									padding-bottom: 20px;
+								"
+							>
+								<b>Sex:</b>
+							</th>
+							<th
+								class="drac-text drac-text-white"
+								style="
+									width: 50%;
+									padding-top: 10px;
+									padding-bottom: 20px;
+								"
+							>
+								<b>Complainment:</b>
+							</th>
+						</tr>
+						<!-- TODO: placeholder, auto gen from db -->
+						<tr>
+							<td
+								class="drac-text drac-text-white"
+								style="width: 25%; padding-bottom: 10px"
+							>
+								Y*** W*** Kwok
+							</td>
+							<td
+								class="drac-text drac-text-white"
+								style="width: 25%; padding-bottom: 10px"
+							>
+								M
+							</td>
+							<td
+								class="drac-text drac-text-white"
+								style="width: 50%; padding-bottom: 10px"
+							>
+								Do not attend meetings
+							</td>
 						</tr>
 						<tr>
-							<td style="width: 25%; padding-bottom: 10px;">Y*** W*** Kwok</td>
-							<td style="width: 25%; padding-bottom: 10px;">M</td>
-							<td style="width: 50%; padding-bottom: 10px;">Do not attend meetings</td>
+							<td style="width: 25%; padding-bottom: 10px">
+								S*** I*** Wan
+							</td>
+							<td style="width: 25%; padding-bottom: 10px">F</td>
+							<td style="width: 50%; padding-bottom: 10px">
+								Bad Attitude
+							</td>
 						</tr>
 						<tr>
-							<td style="width: 25%; padding-bottom: 10px;">S*** I*** Wan</td>
-							<td style="width: 25%; padding-bottom: 10px;">F</td>
-							<td style="width: 50%; padding-bottom: 10px;">Bad Attitude</td>
+							<td style="width: 25%; padding-bottom: 10px">
+								B*** G*** Chan
+							</td>
+							<td style="width: 25%; padding-bottom: 10px">F</td>
+							<td style="width: 50%; padding-bottom: 10px">
+								GPA = 4 but crazy in the projects, her output is
+								trashy
+							</td>
 						</tr>
 						<tr>
-							<td style="width: 25%; padding-bottom: 10px;">B*** G*** Chan</td>
-							<td style="width: 25%; padding-bottom: 10px;">F</td>
-							<td style="width: 50%; padding-bottom: 10px;">GPA = 4 but crazy in the projects, her output is trashy</td>
+							<td style="width: 25%; padding-bottom: 10px">
+								T*** T*** Wan
+							</td>
+							<td style="width: 25%; padding-bottom: 10px">M</td>
+							<td style="width: 50%; padding-bottom: 10px">
+								Lazy in Writing
+							</td>
 						</tr>
 						<tr>
-							<td style="width: 25%; padding-bottom: 10px;">T*** T*** Wan</td>
-							<td style="width: 25%; padding-bottom: 10px;">M</td>
-							<td style="width: 50%; padding-bottom: 10px;">Lazy in Writing</td>
-						</tr>
-						<tr>
-							<td style="width: 25%; padding-bottom: 10px;">J*** L*** Fan</td>
-							<td style="width: 25%; padding-bottom: 10px;">M</td>
-							<td style="width: 50%; padding-bottom: 10px;">Well-known Trash</td>
+							<td style="width: 25%; padding-bottom: 10px">
+								J*** L*** Fan
+							</td>
+							<td style="width: 25%; padding-bottom: 10px">M</td>
+							<td style="width: 50%; padding-bottom: 10px">
+								Well-known Trash
+							</td>
 						</tr>
 					</table>
 				</div>
 				<div
-					class="col-sm-4 drac-box drac-card-subtle"
+					class="col-sm-4 drac-box drac-card-subtle drac-border-pink drac-bg-pink"
 					variant="subtle"
-					style="padding-left: 50px; padding-right: 50px;"
+					style="padding-left: 50px; padding-right: 50px"
 				>
-					<br>
-					<br>
+					<br />
+					<br />
 					<h1 class="drac-heading drac-heading-xl drac-text-white">
 						Login to report free rider(s)
 					</h1>
-					<br>
+					<br />
 					<form action="/login" method="post">
 						<div class="form-group">
-							<label for="username" class="drac-text-white drac-heading"
+							<label
+								for="username"
+								class="drac-text-white drac-heading"
 								>Username:
 							</label>
 							<input
@@ -70,9 +150,11 @@
 								placeholder="Enter username"
 							/>
 						</div>
-						<br>
+						<br />
 						<div class="form-group">
-							<label for="password" class="drac-text-white drac-heading"
+							<label
+								for="password"
+								class="drac-text-white drac-heading"
 								>Password:
 							</label>
 							<input
@@ -84,23 +166,37 @@
 							/>
 						</div>
 						<br />
-						<button
-							type="submit"
-							value="Login"
-							class="drac-btn drac-bg-animated drac-text-black"
-							style="float: right;"
-						>
-							Login
-						</button>
+						<div style="display: flex; justify-content: flex-end">
+							<button
+								type="submit"
+								value="Login"
+								class="drac-btn drac-bg-animated drac-text-black"
+							>
+								Login
+							</button>
+						</div>
 					</form>
 				</div>
 			</div>
 			<div class="row">
-				<p style="font-size: 18px; text-align: center; font-family: serif; font-style: italic; padding-top: 30px;" class="drac-text-white">"Free Riders aren't terrible. The only sad thing is you don't know them."</p>
+				<p
+					style="
+						font-size: 18px;
+						text-align: center;
+						font-family: serif;
+						font-style: italic;
+						padding-top: 30px;
+					"
+					class="drac-text-white"
+				>
+					"Free Riders aren't terrible. The only sad thing is you
+					don't know them."
+				</p>
 			</div>
 		</div>
 		<script>
-			alert("Not Authorized!")
+			// TODO: a more elegant way to do this
+			alert("Not Authorized!");
 		</script>
 	</body>
 </html>

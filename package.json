@@ -13,6 +13,7 @@
   "license": "The Unlicense",
   "dependencies": {
     "body-parser": "^1.20.1",
+    "bootstrap": "5.2.2",
     "cookie-session": "^2.0.0",
     "dracula-ui": "^1.0.3",
     "ejs": "^3.1.8",
