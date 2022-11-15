@@ -1,21 +1,14 @@
 <html>
 	<head>
 		<title>Free Rider Jail</title>
-		<link
-			rel="stylesheet"
-			href="node_modules/dracula-ui/styles/dracula-ui.css"
-		/>
-		<link
-			rel="stylesheet"
-			href="node_modules/bootstrap/dist/css/bootstrap.min.css"
-		/>
+		<%- include('styles.ejs') %>
 	</head>
-	<body class="drac-bg-black center drac-text-white">
+	<body class="drac-bg-black drac-text-white">
 		<div class="container">
 			<div class="row">
 				<h5
-					class="drac-heading drac-heading-xl drac-text-white"
-					style="font-size: 50px; padding-top: 30px"
+					class="drac-heading drac-heading-2xl drac-text-white"
+					style="padding-top: 30px"
 				>
 					Who's the Free Rider?
 				</h5>
@@ -31,94 +24,56 @@
 						Last 5 reports:
 					</h6>
 					<br />
-					<table class="drac-table drac-table-cyan drac-text-white">
+					<table
+						class="drac-table drac-table-cyan drac-text-white reports"
+					>
 						<tr>
-							<th
-								class="drac-text drac-text-white"
-								style="
-									width: 25%;
-									padding-top: 10px;
-									padding-bottom: 20px;
-								"
-							>
+							<th class="drac-text drac-text-white">
 								<b>Name:</b>
 							</th>
-							<th
-								class="drac-text drac-text-white"
-								style="
-									width: 25%;
-									padding-top: 10px;
-									padding-bottom: 20px;
-								"
-							>
+							<th class="drac-text drac-text-white">
 								<b>Year:</b>
 							</th>
-							<th
-								class="drac-text drac-text-white"
-								style="
-									width: 50%;
-									padding-top: 10px;
-									padding-bottom: 20px;
-								"
-							>
-								<b>Complainment:</b>
+							<th class="drac-text drac-text-white complains">
+								<b>Complains:</b>
 							</th>
 						</tr>
 						<!-- TODO: placeholder, auto gen from db -->
 						<tr>
-							<td
-								class="drac-text drac-text-white"
-								style="width: 25%; padding-bottom: 10px"
-							>
+							<td class="drac-text drac-text-white">
 								Y*** W*** Kwok
 							</td>
-							<td
-								class="drac-text drac-text-white"
-								style="width: 25%; padding-bottom: 10px"
-							>
-								3
-							</td>
-							<td
-								class="drac-text drac-text-white"
-								style="width: 50%; padding-bottom: 10px"
-							>
+							<td class="drac-text drac-text-white">3</td>
+							<td class="drac-text drac-text-white complains">
 								Do not attend meetings
 							</td>
 						</tr>
 						<tr>
-							<td style="width: 25%; padding-bottom: 10px">
-								S*** I*** Wan
-							</td>
-							<td style="width: 25%; padding-bottom: 10px">1</td>
-							<td style="width: 50%; padding-bottom: 10px">
+							<td>S*** I*** Wan</td>
+							<td>1</td>
+							<td class="drac-text drac-text-white complains">
 								Bad Attitude
 							</td>
 						</tr>
 						<tr>
-							<td style="width: 25%; padding-bottom: 10px">
-								B*** G*** Chan
-							</td>
-							<td style="width: 25%; padding-bottom: 10px">4</td>
-							<td style="width: 50%; padding-bottom: 10px">
+							<td>B*** G*** Chan</td>
+							<td>4</td>
+							<td class="drac-text drac-text-white complains">
 								GPA = 4 but crazy in the projects, her output is
 								trashy
 							</td>
 						</tr>
 						<tr>
-							<td style="width: 25%; padding-bottom: 10px">
-								T*** T*** Wan
-							</td>
-							<td style="width: 25%; padding-bottom: 10px">1</td>
-							<td style="width: 50%; padding-bottom: 10px">
+							<td>T*** T*** Wan</td>
+							<td>1</td>
+							<td class="drac-text drac-text-white complains">
 								Lazy in Writing
 							</td>
 						</tr>
 						<tr>
-							<td style="width: 25%; padding-bottom: 10px">
-								J*** L*** Fan
-							</td>
-							<td style="width: 25%; padding-bottom: 10px">3</td>
-							<td style="width: 50%; padding-bottom: 10px">
+							<td>J*** L*** Fan</td>
+							<td>3</td>
+							<td class="drac-text drac-text-white complains">
 								Well-known Trash
 							</td>
 						</tr>
@@ -127,7 +82,7 @@
 				<div
 					class="col-sm-4 drac-box drac-card-subtle drac-border-pink drac-bg-pink"
 					variant="subtle"
-					style="padding-left: 50px; padding-right: 50px"
+					style="padding-left: 45px; padding-right: 45px"
 				>
 					<br />
 					<br />
@@ -179,16 +134,7 @@
 				</div>
 			</div>
 			<div class="row">
-				<p
-					style="
-						font-size: 18px;
-						text-align: center;
-						font-family: serif;
-						font-style: italic;
-						padding-top: 30px;
-					"
-					class="drac-text-white"
-				>
+				<p class="drac-text-white quote">
 					"Free Riders aren't terrible. The only sad thing is you
 					don't know them."
 				</p>

@@ -4,3 +4,21 @@
 	align-items: center;
 	text-align: center;
 }
+
+.quote {
+	font-size: 18px;
+	text-align: center;
+	font-family: serif;
+	font-style: italic;
+	padding-top: 30px;
+}
+
+.reports th {
+	width: 25%;
+	padding-top: 10px;
+	padding-bottom: 20px;
+}
+
+.reports .complains {
+	width: 50% !important;
+}
