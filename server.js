@@ -180,6 +180,39 @@ app.post("/register", (req, res) => {
 	});
 });
 
+app.get("/search", (req, res) => {
+	res.status(200).render("search", {
+		error: "",
+	});
+});
+
+app.post("/search", (req, res) => {
+	console.log(req.body);
+
+	let name = req.body.name;
+	let year = req.body.year;
+	let program = req.body.program
+
+	let FreeRider = mongoose.model("Free Riders", freeRiderSchema);
+	let freeRiders = await Freerider.find({ name: name, year: year, program: program});
+	console.log("Free Riders", freeRiders);
+
+	var tbodyRef = document.getElementById('listTable').getElementsByTagName('tbody')[0];
+	freeRiders.forEach( (element) => {
+		var row = tbodyRef.insertRow();
+		var nameCell = row.insertCell(0);
+		var yearCell = row.insertCell(1);
+		var programCell = row.insertCell(2);
+		var timeCell = row.insertCell(3);
+
+		nameCell.innerHTML = element["name"]
+		yearCell.innerHTML = element["year"]
+		programCell.innerHTML = element["program"]
+		timeCell.innerHTML = element["time"]
+	})
+
+});
+
 process.env.PORT = process.env.PORT || 8099;
 app.listen(app.listen(process.env.PORT));
 console.log(`Server running at http://localhost:${process.env.PORT}/`);

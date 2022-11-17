@@ -27,72 +27,146 @@
 				<div class="col-sm-12">
 					<h1 class="drac-heading drac-heading-xl drac-text-white">
 							What's wrong with this guy?
-						</h1>
+					</h1>
+					<br>
+					<form action="/login" method="post">
+						<div class="form-group">
+							<label for="username" class="drac-text-white drac-heading" style="float: left;"
+								>First Name:
+							</label>
+							<input
+								type="text"
+								class="drac-input drac-input-white drac-text-white"
+								id="firstname"
+								name="firstname"
+								placeholder=""
+							/>
+						</div>
 						<br>
-						<form action="/login" method="post">
-							<div class="form-group">
-								<label for="username" class="drac-text-white drac-heading" style="float: left;"
-									>First Name:
-								</label>
-								<input
-									type="text"
-									class="drac-input drac-input-white drac-text-white"
-									id="firstname"
-									name="firstname"
-									placeholder=""
-								/>
-							</div>
-							<br>
-							<div class="form-group">
-								<label for="lastname" class="drac-text-white drac-heading" style="float: left;"
-									>Last Name:
-								</label>
-								<input
-									type="text"
-									class="drac-input drac-input-white drac-text-white"
-									id="lastname"
-									name="lastname"
-									placeholder=""
-								/>
-							</div>
-							<br>
-							<div class="form-group">
-								<label for="year" class="drac-text-white drac-heading" style="float: left;"
-									>Year:
-								</label>
-  								<select name="cars" id="cars" class="drac-input drac-input-white drac-text-white">
-	    							<option value="1">1</option>
-									<option value="2">2</option>
-									<option value="3">3</option>
-									<option value="4">4</option>
-  								</select>
-							</div>
-							<br>
-							<div class="form-group">
-								<label for="reasons" class="drac-text-white drac-heading" style="float: left;"
-									>Why you think he/she is a free rider:
-								</label>
-								<input
-									type="text"
-									class="drac-input drac-input-white drac-text-white"
-									id="reason"
-									name="reason"
-									placeholder="Some reasons..."
-								/>
-							</div>
-							<br>
-							<br>
-							<button
-								type="submit"
-								value="Login"
-								class="drac-btn drac-text-black"
-								style="float: right; color: green;"
-							>
-								Submit
-							</button>
-						</form>
+						<div class="form-group">
+							<label for="lastname" class="drac-text-white drac-heading" style="float: left;"
+								>Last Name:
+							</label>
+							<input
+								type="text"
+								class="drac-input drac-input-white drac-text-white"
+								id="lastname"
+								name="lastname"
+								placeholder=""
+							/>
+						</div>
+						<br>
+						<div class="form-group">
+							<label for="year" class="drac-text-white drac-heading" style="float: left;"
+								>Year:
+							</label>
+								<select name="cars" id="cars" class="drac-input drac-input-white drac-text-white">
+    							<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								</select>
+						</div>
+						<br>
+						<div class="form-group">
+							<label for="reasons" class="drac-text-white drac-heading" style="float: left;"
+								>Why you think he/she is a free rider:
+							</label>
+							<input
+								type="text"
+								class="drac-input drac-input-white drac-text-white"
+								id="reason"
+								name="reason"
+								placeholder="Some reasons..."
+							/>
+						</div>
+						<br>
+						<br>
+						<button
+							type="submit"
+							value="Login"
+							class="drac-btn drac-text-black"
+							style="float: right; color: green;"
+						>
+							Submit
+						</button>
+					</form>
 				</div>
 			</div>
+			<br>
+			<br>
+			<div class="row">
+				<div class="col-sm-12">
+					<h1 class="drac-heading drac-heading-xl drac-text-white">
+							Tell us the details, we will show you if he/she is on the list.
+					</h1>
+					<br>
+					<form action="/search" method="post">
+						
+						<div class="form-group">
+							<label for="name" class="drac-text-white drac-heading" style="float: left;"
+								>Name:
+							</label>
+							<input 
+								type="text"  
+								class="drac-input drac-input-white drac-text-white"
+								id="search_name"
+								placeholder="His/Her names..."
+							/>
+						</div>
+						<br>
+						<div class="form-group">
+							<label for="year" class="drac-text-white drac-heading" style="float: left;"
+								>Year:
+							</label>
+								<select name="year" id="year" class="drac-input drac-input-white drac-text-white">
+    							<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								</select>
+						</div>
+						<div class="form-group">
+							<label for="program" class="drac-text-white drac-heading" style="float: left;"
+								>Studying Program:
+							</label>
+							<select name="program" id="program" class="drac-input drac-input-white drac-text-white">
+    							<option value="computing">Computing</option>
+								<option value="engineering">Engineering</option>
+								<option value="nurseing">Nursing</option>
+							</select>
+						</div>
+						<br>
+						<br>
+						<button
+							type="submit"
+							value="Search"
+							class="drac-btn drac-text-black"
+							style="float: right; color: green;"
+						>
+							Search
+						</button>
+					</form>
+				</div>
+				<div class="col-sm-12">
+					<!-- div for diplaying filtered result -->
+					<h1 class="drac-heading drac-heading-xl drac-text-white">
+						Free rider list:
+					</h1>
+					<table id="listTable">
+						<thead>
+							<tr>
+								<td>Name</td>
+								<td>Year</td>
+								<td>Studying Program</td>
+								<td>Time being reported</td>
+							</tr>
+						</thead>
+						<tbody>
+							
+						</tbody>
+					</table>
+				</div>
 		</div>
 	</body>
 </html>
