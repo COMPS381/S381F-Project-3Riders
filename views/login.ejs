@@ -140,9 +140,10 @@
 				</p>
 			</div>
 		</div>
+		<% if (error != "") { %>
 		<script>
-			// TODO: a more elegant way to do this
-			// alert("Not Authorized!");
+			alert("<%= error %>");
 		</script>
+		<% } %>
 	</body>
 </html>

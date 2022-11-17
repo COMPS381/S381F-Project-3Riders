@@ -3,28 +3,36 @@ const session = require("cookie-session");
 const bodyParser = require("body-parser");
 
 const mongoose = require("mongoose");
-/*
+
+const riderSchema = require("./models/rider");
+const userSchema = require("./models/users");
+
 mongoose.connect(
 	"mongodb://mongo:osWLKX0WcgMxoRdO3bjU@containers-us-west-81.railway.app:7018"
 );
-*/
+
+var users = undefined;
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
 db.on("error", (error) => console.log(error));
-db.once("open", () => console.log("connection to db established"));
-
-const riderSchema = require("./models/rider");
+db.once("open", async () => {
+	console.log("connection to db established");
+	// get users from mongoose instance
+	let User = mongoose.model("Users", userSchema);
+	users = await User.find({});
+	console.log(users);
+});
 
 const app = express();
 
 const SECRETKEY = "I want to pass COMPS381F" || process.env.SECRETKEY;
 
 // TODO: Replace it with MongoDB documents later
-const users = new Array(
-	{ username: "Eric", password: "123" },
-	{ username: "Stan", password: "123" },
-	{ username: "Kyle", password: "123" }
-);
+
+// 	{ username: "Eric", password: "123" },
+// 	{ username: "Stan", password: "123" },
+// 	{ username: "Kyle", password: "123" }
+// );
 
 app.use(
 	session({
@@ -53,7 +61,9 @@ app.get("/", (req, res) => {
 });
 
 app.get("/login", (req, res) => {
-	res.status(200).render("login", {});
+	res.status(200).render("login", {
+		error: "",
+	});
 });
 
 app.post("/login", (req, res) => {
@@ -70,7 +80,13 @@ app.post("/login", (req, res) => {
 			req.session.username = req.body.username; // 'username': req.body.name
 		}
 	});
-	res.redirect("/");
+	if (req.session.authenticated) {
+		res.redirect("/");
+	} else {
+		res.status(401).render("login", {
+			error: "Invalid username or password",
+		});
+	}
 });
 
 app.get("/logout", (req, res) => {
@@ -132,6 +148,36 @@ app.post("/report", (req, res) => {
 			}
 		}
 	);
+});
+
+app.post("/register", (req, res) => {
+	// register a new user, if duplicate entry, return error msg, else return success msg
+	let NewUser = mongoose.model("User", userSchema);
+	let type = req.body.admin ? "admin" : "user";
+	let newUser = new NewUser({
+		username: req.body.username,
+		password: req.body.password,
+		sid: req.body.sid,
+		type: type,
+	});
+	newUser.save((err, result) => {
+		if (err) {
+			console.log(err);
+			// check if err is duplicate entry
+			if (err.code == 11000) {
+				res.status(500).end(
+					"Error: Duplicate username or sid, if you registered before please login"
+				);
+			} else {
+				res.status(500).end("Error: " + err);
+			}
+		} else {
+			console.log(result.username + " saved to users collection.");
+			res.status(200).json({
+				message: "Registered successfully",
+			});
+		}
+	});
 });
 
 process.env.PORT = process.env.PORT || 8099;
