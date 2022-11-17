@@ -5,6 +5,7 @@ var userSchema = new mongoose.Schema({
 	username: { type: String, unique: true, required: true },
 	password: { type: String, required: true, min: 8 },
 	type: { type: String, default: "user" },
+	avatar: { type: String, default: "" },
 });
 
 module.exports = userSchema;

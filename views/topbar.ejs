@@ -1,0 +1,89 @@
+<table style="position: absolute; top:0; width: 100vw">
+	<tr>
+		<td>
+			<div>
+				<ul class="drac-tabs drac-tabs-cyan">
+					<li class="drac-tab">
+						<a
+							class="drac-heading drac-heading-lg drac-text-purple-cyan drac-tab-link"
+							href="/"
+						>
+							🚓&nbsp;3Riders
+						</a>
+					</li>
+					<!-- <li class="drac-tab">
+						<a
+							class="drac-tab-link drac-text"
+							id="home"
+							href="/"
+							>Home</a
+						>
+					</li> -->
+					<li class="drac-tab">
+						<a
+							class="drac-tab-link drac-text"
+							id="control"
+							href="/list"
+							>List</a
+						>
+					</li>
+					<li class="drac-tab">
+						<a
+							class="drac-tab-link drac-text"
+							id="advance"
+							href="/report"
+							>Report</a
+						>
+					</li>
+				</ul>
+			</div>
+		</td>
+		<td style="float: right; padding: 15px">
+			<span
+				class="drac-avatar drac-bg-cyan-transparent drac-text-cyan"
+				onclick="toggleMenu()"
+			>
+				<span class="drac-avatar-background"></span
+			></span>
+			<br />
+		</td>
+	</tr>
+	<tr>
+		<td></td>
+		<td style="float: right; padding-right: 15px" id="menu" class="d-none">
+			<button
+				id="logout"
+				class="drac-btn drac-bg-red drac-text-white"
+				onclick="location.assign('/logout')"
+			>
+				Logout
+			</button>
+		</td>
+	</tr>
+</table>
+<br />
+
+<script>
+	const tabs = document.querySelectorAll(".drac-tab");
+	function tabSwitch(ele) {
+		tabs.forEach((tab) => {
+			tab.classList.remove("drac-tab-active");
+		});
+		document
+			.getElementById(ele)
+			.parentElement.classList.add("drac-tab-active");
+	}
+	// get avatar base64 from /avatar
+	fetch("/avatar")
+		.then((res) => res.text())
+		.then((data) => {
+			console.log(data);
+			document.querySelector(
+				".drac-avatar-background"
+			).style.backgroundImage = `url(${data})`;
+		});
+	function toggleMenu() {
+		document.getElementById("menu").classList.toggle("d-none");
+	}
+	tabSwitch(location.pathname.split("/")[0]);
+</script>

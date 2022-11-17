@@ -1,1 +1,68 @@
 <!-- TODO: form for registration -->
+<html>
+	<head></head>
+	<body>
+		<h1>Register</h1>
+		<form action="/register" method="post" id="regForm">
+			<!-- image picker to pick avatar -->
+
+			<!-- end of image picker -->
+			<div class="form-group">
+				<label for="sid">Student ID:</label>
+				<input type="text" id="sid" name="sid" />
+			</div>
+			<div class="form-group">
+				<label for="username">Username:</label>
+				<input type="text" id="username" name="username" />
+			</div>
+			<div class="form-group">
+				<label for="password">Password:</label>
+				<input type="password" id="password" name="password" />
+			</div>
+			<!-- <div class="form-group">
+				<label for="password2">Confirm Password:</label>
+				<input type="password" id="password2" name="password2" />
+			</div> -->
+			<div class="form-group">
+				<label for="avatar">Avatar:</label>
+				<input type="text" id="avatar" name="avatar" />
+				<input id="filePicker" type="file" />
+				<img id="img" height="150" />
+			</div>
+			<button type="submit" id="submit">
+				Register
+			</button>
+		</form>
+	</body>
+	<script>
+		var b64;
+
+		function showPassword() {
+			var passWd = document.getElementById("userpassword");
+			if (passWd.type === "password") {
+				passWd.type = "text";
+			} else {
+				passWd.type = "password";
+			}
+		}
+
+		function readFile() {
+			if (!this.files || !this.files[0]) return;
+
+			const FR = new FileReader();
+
+			FR.addEventListener("load", function (evt) {
+				document.getElementById("img").src = evt.target.result;
+				b64 = evt.target.result;
+				console.log(b64);
+				document.getElementById("avatar").value = b64.toString();
+			});
+
+			FR.readAsDataURL(this.files[0]);
+		}
+
+		document
+			.getElementById("filePicker")
+			.addEventListener("change", readFile);
+	</script>
+</html>
