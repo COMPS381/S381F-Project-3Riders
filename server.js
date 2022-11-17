@@ -194,7 +194,7 @@ app.post("/search", (req, res) => {
 	let program = req.body.program
 
 	let FreeRider = mongoose.model("Free Riders", freeRiderSchema);
-	let freeRiders = await Freerider.find({ name: name, year: year, program: program});
+	let freeRiders = Freerider.find({ name: name, year: year, program: program});
 	console.log("Free Riders", freeRiders);
 
 	var tbodyRef = document.getElementById('listTable').getElementsByTagName('tbody')[0];
@@ -208,7 +208,7 @@ app.post("/search", (req, res) => {
 		nameCell.innerHTML = element["name"]
 		yearCell.innerHTML = element["year"]
 		programCell.innerHTML = element["program"]
-		timeCell.innerHTML = element["time"]
+		timeCell.innerHTML = element[""]
 	})
 
 });
