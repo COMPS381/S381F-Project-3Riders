@@ -4,21 +4,13 @@
 		<%- include('styles.ejs') %>
 	</head>
 	<body class="drac-bg-black drac-text-white center">
-		<div class="container">
+		<%- include('topbar.ejs') %>
+		<div class="container" style="padding-top: 100px">
 			<div class="row">
-				<div class="col-sm-10">
+				<div class="col-sm-12">
 					<h1 class="drac-heading drac-heading-xl drac-text-white" style="text-align: left;">
 						We know that feel, <%= username %>.
 					</h1>
-				</div>
-				<div class="col-sm-2">
-					<button
-						class="drac-btn drac-bg-red drac-text-white"
-						style="float: right;"
-						onclick="location.assign('/logout')"
-						>
-						Logout
-					</button>
 				</div>
 			</div>
 			<br>
