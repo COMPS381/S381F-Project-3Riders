@@ -191,10 +191,10 @@ app.post("/search", (req, res) => {
 
 	let name = req.body.name;
 	let year = req.body.year;
-	let program = req.body.program
+	let course = req.body.course;
 
-	let FreeRider = mongoose.model("Free Riders", freeRiderSchema);
-	let freeRiders = Freerider.find({ name: name, year: year, program: program});
+	let Rider = mongoose.model("Rider", riderSchema);
+	let riders = Rider.find({ name: name, reports:{courseCode: course} });
 	console.log("Free Riders", freeRiders);
 
 	var tbodyRef = document.getElementById('listTable').getElementsByTagName('tbody')[0];
