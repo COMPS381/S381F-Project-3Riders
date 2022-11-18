@@ -10,7 +10,8 @@
   },
   "author": "Ng Kwan Yau <s1231163@live.hkmu.edu.hk>",
   "contributors": [
-    "Li Chin Pang Kevin <s1224494@live.hkmu.edu.hk>"
+    "Li Chin Pang Kevin <s1224494@live.hkmu.edu.hk>",
+	"Kwok Ka Yau <s1224563@live.hkmu.edu.hk>"
   ],
   "license": "The Unlicense",
   "dependencies": {
