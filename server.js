@@ -75,9 +75,9 @@ app.post("/login", (req, res) => {
 			console.log("authenticated")
 			req.session.authenticated = true; // 'authenticated': true
 			req.session.username = req.body.username; // 'username': req.body.name
-			// console.log(avatar);
+			req.session.type = user.type;
 			avatarMap.set(req.body.username, user.avatar == "" ? "/default.webp" : user.avatar);
-			console.log(req.session.authenticated);
+			console.log(req.session.type);
 		}
 	});
 	if (req.session.authenticated) {
