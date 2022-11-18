@@ -19,20 +19,21 @@
 							>Home</a
 						>
 					</li> -->
+
 					<li class="drac-tab">
 						<a
 							class="drac-tab-link drac-text"
-							id="control"
-							href="/list"
-							>List</a
+							id="report"
+							href="/report"
+							>Report</a
 						>
 					</li>
 					<li class="drac-tab">
 						<a
 							class="drac-tab-link drac-text"
-							id="advance"
-							href="/report"
-							>Report</a
+							id="list"
+							href="/list"
+							>List</a
 						>
 					</li>
 				</ul>
@@ -66,6 +67,7 @@
 <script>
 	const tabs = document.querySelectorAll(".drac-tab");
 	function tabSwitch(ele) {
+		console.log(ele)
 		tabs.forEach((tab) => {
 			tab.classList.remove("drac-tab-active");
 		});
@@ -77,7 +79,7 @@
 	fetch("/avatar")
 		.then((res) => res.text())
 		.then((data) => {
-			console.log(data);
+			// console.log(data);
 			document.querySelector(
 				".drac-avatar-background"
 			).style.backgroundImage = `url(${data})`;
@@ -85,5 +87,5 @@
 	function toggleMenu() {
 		document.getElementById("menu").classList.toggle("d-none");
 	}
-	tabSwitch(location.pathname.split("/")[0]);
+	tabSwitch(location.pathname.split("/")[1]);
 </script>

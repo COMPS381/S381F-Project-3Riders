@@ -1,0 +1,90 @@
+<html>
+	<head>
+		<title>Who's the Free Rider?</title>
+		<%- include('styles.ejs') %>
+	</head>
+	<body class="drac-bg-black drac-text-white center">
+		<%- include('topbar.ejs') %>
+		<div class="container" style="padding-top: 100px">
+			<div class="row">
+				<div class="col-sm-12">
+					<h1 class="drac-heading drac-heading-xl drac-text-white">
+						Tell us the details, we will show you if he/she is on
+						the list.
+					</h1>
+					<br />
+					<form action="/search" method="post">
+						<div class="form-group">
+							<label
+								for="name"
+								class="drac-text-white drac-heading"
+								style="float: left"
+								>Name:
+							</label>
+							<input
+								type="text"
+								class="drac-input drac-input-white drac-text-white"
+								id="search_name"
+								placeholder="His/Her names..."
+							/>
+						</div>
+						<br />
+						<div class="form-group">
+							<label
+								for="course"
+								class="drac-text-white drac-heading"
+								style="float: left"
+								>Studying course:
+							</label>
+							<select
+								name="course"
+								id="course"
+								class="drac-input drac-input-white drac-text-white"
+							>
+								<option value="381F">S381F</option>
+								<option value="333F">S333F</option>
+								<option value="456F">S456F</option>
+							</select>
+						</div>
+						<br />
+						<br />
+						<button
+							type="submit"
+							value="Search"
+							class="drac-btn drac-text-black"
+							style="float: right; color: green"
+						>
+							Search
+						</button>
+					</form>
+				</div>
+				<br />
+				<br />
+				<div class="col-sm-12">
+					<!-- div for diplaying filtered result -->
+					<h1 class="drac-heading drac-heading-xl drac-text-white">
+						Free rider list:
+					</h1>
+					<table
+						id="listTable"
+						class="drac-table drac-table-cyan drac-text-white reports"
+					>
+						<thead>
+							<tr>
+								<th class="drac-text drac-text-white">Name</th>
+								<th class="drac-text drac-text-white">Year</th>
+								<th class="drac-text drac-text-white">
+									Course Code
+								</th>
+								<th class="drac-text drac-text-white">
+									Time being reported
+								</th>
+							</tr>
+						</thead>
+						<tbody></tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

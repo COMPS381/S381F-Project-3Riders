@@ -1,38 +1,103 @@
 <!-- TODO: form for registration -->
 <html>
-	<head></head>
-	<body>
-		<h1>Register</h1>
-		<form action="/register" method="post" id="regForm">
-			<!-- image picker to pick avatar -->
+	<head>
+		<title>Who's the Free Rider?</title>
+		<%- include('styles.ejs') %>
+		<script src="js/resizeImage.js"></script>
+	</head>
+	<body class="drac-bg-black drac-text-white center">
+		<div
+			variant="subtle"
+			class="drac-box drac-card drac-card-subtle drac-border-pink drac-bg-pink drac-p-md drac-m-md"
+		>
+			<span class="drac-text drac-line-height drac-text-white"
+				><h2 class="drac-heading drac-heading-2xl drac-text-white">
+					Register
+				</h2>
+				<br />
+				<form action="/register" method="post" id="regForm">
+					<!-- image picker to pick avatar -->
 
-			<!-- end of image picker -->
-			<div class="form-group">
-				<label for="sid">Student ID:</label>
-				<input type="text" id="sid" name="sid" />
-			</div>
-			<div class="form-group">
-				<label for="username">Username:</label>
-				<input type="text" id="username" name="username" />
-			</div>
-			<div class="form-group">
-				<label for="password">Password:</label>
-				<input type="password" id="password" name="password" />
-			</div>
-			<!-- <div class="form-group">
-				<label for="password2">Confirm Password:</label>
-				<input type="password" id="password2" name="password2" />
-			</div> -->
-			<div class="form-group">
-				<label for="avatar">Avatar:</label>
-				<input type="text" id="avatar" name="avatar" />
-				<input id="filePicker" type="file" />
-				<img id="img" height="150" />
-			</div>
-			<button type="submit" id="submit">
-				Register
+					<!-- end of image picker -->
+					<div class="form-group">
+						<label class="drac-heading" for="sid"
+							>Student ID:</label
+						>
+						<input
+							class="drac-input drac-input-white drac-text-white"
+							type="text"
+							id="sid"
+							name="sid"
+							placeholder="12345678"
+						/>
+					</div>
+					<br />
+					<div class="form-group">
+						<label class="drac-heading" for="username"
+							>Username:</label
+						>
+						<input
+							class="drac-input drac-input-white drac-text-white"
+							type="text"
+							id="username"
+							name="username"
+						/>
+					</div>
+					<br />
+					<div class="form-group">
+						<label class="drac-heading" for="password"
+							>Password:</label
+						>
+						<input
+							class="drac-input drac-input-white drac-text-white"
+							type="password"
+							id="password"
+							name="password"
+						/>
+					</div>
+					<br />
+					<!-- <div class="form-group">
+						<label class="drac-heading" for="password2">Confirm Password:</label>
+						<input class="drac-input drac-input-white drac-text-white" type="password" id="password2" name="password2" />
+					</div> -->
+					<div class="form-group mb-3 drac-file">
+						<label for="avatar" class="form-label drac-heading"
+							>Avatar:</label
+						>
+						<input
+							class="form-control"
+							type="file"
+							id="filePicker"
+						/>
+						<!-- <label class="drac-heading" for="avatar">Avatar:</label> -->
+						<input
+							type="text"
+							id="avatar"
+							name="avatar"
+							class="d-none"
+						/>
+						<!-- <input class="drac-input drac-input-white drac-text-white" id="filePicker" type="file" /> -->
+						<br />
+						<img id="img" />
+					</div>
+					<button
+						type="submit"
+						id="submit"
+						class="drac-btn drac-bg-animated drac-text-black"
+					>
+						Register
+					</button>
+				</form></span
+			>
+		</div>
+		<span class="topbar">
+			<button
+				class="drac-btn drac-bg-orange drac-text-black menuRight"
+				onclick="window.location.href = '/login'"
+			>
+				back
 			</button>
-		</form>
+		</span>
 	</body>
 	<script>
 		var b64;
@@ -52,10 +117,13 @@
 			const FR = new FileReader();
 
 			FR.addEventListener("load", function (evt) {
+				document.getElementById("submit").disabled = true;
 				document.getElementById("img").src = evt.target.result;
-				b64 = evt.target.result;
-				console.log(b64);
-				document.getElementById("avatar").value = b64.toString();
+				// b64 = evt.target.result;
+				resizeImage(evt.target.result, 150, 150).then((result) => {
+					document.getElementById("avatar").value =  result;
+					document.getElementById("submit").disabled = false;
+				});
 			});
 
 			FR.readAsDataURL(this.files[0]);
@@ -65,4 +133,12 @@
 			.getElementById("filePicker")
 			.addEventListener("change", readFile);
 	</script>
+	<% if (msg != "") { %>
+	<script>
+		alert("<%= msg %>");
+		if ("<%= msg %>" == "Registered successfully") {
+			window.location.href = "/login";
+		}
+	</script>
+	<% } %>
 </html>

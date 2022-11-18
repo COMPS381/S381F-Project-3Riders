@@ -12,13 +12,13 @@ mongoose.connect(
 );
 
 var users = undefined;
+var User = mongoose.model("Users", userSchema);
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
 db.on("error", (error) => console.log(error));
 db.once("open", async () => {
 	console.log("connection to db established");
 	// get users from mongoose instance
-	let User = mongoose.model("Users", userSchema);
 	users = await User.find({});
 	// console.log(users);
 });
@@ -26,13 +26,6 @@ db.once("open", async () => {
 const app = express();
 
 const SECRETKEY = "I want to pass COMPS381F" || process.env.SECRETKEY;
-
-// TODO: Replace it with MongoDB documents later
-
-// 	{ username: "Eric", password: "123" },
-// 	{ username: "Stan", password: "123" },
-// 	{ username: "Kyle", password: "123" }
-// );
 
 app.use(
 	session({
@@ -55,7 +48,7 @@ app.get("/", (req, res) => {
 		// user not logged in!
 		res.redirect("/login");
 	} else {
-		res.status(200).render("index", { username: req.session.username });
+		res.status(200).render("report", { username: req.session.username });
 		// res.status(200).render('secrets',{name:req.session.username});
 	}
 });
@@ -86,7 +79,7 @@ app.post("/login", (req, res) => {
 		}
 	});
 	if (req.session.authenticated) {
-		res.redirect("/");
+		res.redirect("/report");
 	} else {
 		res.status(401).render("login", {
 			error: "Invalid username or password",
@@ -99,14 +92,25 @@ app.get("/logout", (req, res) => {
 	res.redirect("/");
 });
 
-app.get("/leaderboard", (req, res) => {
-	if (!req.session.authenticated) {
+app.get("/avatar", (req, res) => {
+	res.send(avatar);
+});
+
+app.get("/list", (req, res) => {
+	if (req.session.authenticated) {
+		res.status(200).render("list");
+	} else {
 		res.redirect("/login");
 	}
 });
 
-app.get("/avatar", (req, res) => {
-	res.send(avatar);
+app.get("/report", (req, res) => {
+	if (!req.session.authenticated) {
+		// user not logged in!
+		res.redirect("/login");
+	} else {
+		res.status(200).render("report", { username: req.session.username });
+	}
 });
 
 app.post("/report", (req, res) => {
@@ -116,15 +120,17 @@ app.post("/report", (req, res) => {
 	let Rider = mongoose.model("Rider", riderSchema);
 	Rider.findOneAndUpdate(
 		{ sid: req.body.sid },
+		{ name: req.body.name },
 		{
 			$push: {
 				reports: {
 					username: req.session.username,
+					courseCode: req.body.courseCode,
 					remarks: req.body.remarks || "",
 				},
 			},
 		},
-		{},
+		// {},
 		async (error, result) => {
 			if (error) return;
 			// do something with the document
@@ -132,9 +138,11 @@ app.post("/report", (req, res) => {
 				console.log("Entry not found, try to create one");
 				result = new Rider({
 					sid: req.body.sid,
+					name: req.body.name,
 					reports: [
 						{
 							username: req.session.username,
+							courseCode: req.body.courseCode,
 							remarks: req.body.remarks || "",
 						},
 					],
@@ -160,7 +168,7 @@ app.post("/report", (req, res) => {
 });
 
 app.get("/register", (req, res) => {
-	res.status(200).render("register", {});
+	res.status(200).render("register", { msg: "" });
 });
 
 app.post("/register", (req, res) => {
@@ -174,21 +182,22 @@ app.post("/register", (req, res) => {
 		avatar: req.body.avatar,
 		type: type,
 	});
-	newUser.save((err, result) => {
+	newUser.save(async (err, result) => {
 		if (err) {
 			console.log(err);
 			// check if err is duplicate entry
 			if (err.code == 11000) {
-				res.status(500).end(
-					"Error: Duplicate username or sid, if you registered before please login"
-				);
+				res.status(500).render("register", {
+					msg: "Error: Duplicate username or sid, if you registered before please login",
+				});
 			} else {
-				res.status(500).end("Error: " + err);
+				res.status(500).render("register", { msg: "Error: " + err });
 			}
 		} else {
 			console.log(result.username + " saved to users collection.");
-			res.status(200).json({
-				message: "Registered successfully",
+			users = await User.find({}); // update users list
+			res.status(200).render("register", {
+				msg: "Registered successfully",
 			});
 		}
 	});
@@ -208,23 +217,24 @@ app.post("/search", (req, res) => {
 	let course = req.body.course;
 
 	let Rider = mongoose.model("Rider", riderSchema);
-	let riders = Rider.find({ name: name, reports:{courseCode: course} });
+	let riders = Rider.find({ name: name, reports: { courseCode: course } });
 	console.log("Free Riders", freeRiders);
 
-	var tbodyRef = document.getElementById('listTable').getElementsByTagName('tbody')[0];
-	freeRiders.forEach( (element) => {
+	var tbodyRef = document
+		.getElementById("listTable")
+		.getElementsByTagName("tbody")[0];
+	freeRiders.forEach((element) => {
 		var row = tbodyRef.insertRow();
 		var nameCell = row.insertCell(0);
 		var yearCell = row.insertCell(1);
 		var programCell = row.insertCell(2);
 		var timeCell = row.insertCell(3);
 
-		nameCell.innerHTML = element["name"]
-		yearCell.innerHTML = element["year"]
-		programCell.innerHTML = element["program"]
-		timeCell.innerHTML = element[""]
-	})
-
+		nameCell.innerHTML = element["name"];
+		yearCell.innerHTML = element["year"];
+		programCell.innerHTML = element["program"];
+		timeCell.innerHTML = element[""];
+	});
 });
 
 process.env.PORT = process.env.PORT || 8099;

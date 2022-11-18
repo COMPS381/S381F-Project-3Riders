@@ -37,3 +37,18 @@
 	float: right;
 	padding-right: 15px;
 }
+
+.drac-file .form-control{
+	color: var(--white);
+	background-color: var(--blackSecondary) !important;
+	border: 0px;
+}
+
+a.drac-btn:hover {
+	color: var(--white);
+}
+
+.drac-file #img {
+	max-height: 150px;
+	max-width: 150px;
+}
