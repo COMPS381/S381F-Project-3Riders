@@ -36,6 +36,9 @@ npm dev
 npm dropDb
 ```
 
+### drop a rider
+| When dropping a rider, please ensure that the user type is "admin"
+
 ## Extra Documentation
 
 [Dracula UI](https://ui.draculatheme.com/)
