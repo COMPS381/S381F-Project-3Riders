@@ -81,7 +81,7 @@ app.post("/login", (req, res) => {
 		}
 	});
 	if (req.session.authenticated) {
-		res.redirect("/report");
+		res.status(200).render("/report", { username: req.session.username });
 	} else {
 		res.status(401).render("login", {
 			error: "Invalid username or password",
