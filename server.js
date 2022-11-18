@@ -50,7 +50,7 @@ app.get("/", (req, res) => {
 			error: "user not authenticated",
 		});
 	} else {
-		res.status(200).render("report", { username: req.session.username });
+		res.status(200).render("report", { username: req.session.username, msg: ""  });
 		// res.status(200).render('secrets',{name:req.session.username});
 	}
 });
@@ -81,7 +81,7 @@ app.post("/login", (req, res) => {
 		}
 	});
 	if (req.session.authenticated) {
-		res.status(200).render("report", { username: req.session.username });
+		res.status(200).render("report", { username: req.session.username, msg: ""  });
 	} else {
 		res.status(401).render("login", {
 			error: "Invalid username or password",
@@ -122,7 +122,7 @@ app.post("/list", (req, res) => {
 app.get("/report", (req, res) => {
 	console.log(req.session.authenticated)
 	if (req.session.authenticated) {
-		res.status(200).render("report", { username: req.session.username });
+		res.status(200).render("report", { username: req.session.username, msg: ""  });
 	} else {
 		console.log("here")
 		res.status(401).render("login", {
@@ -183,7 +183,7 @@ app.post("/report", (req, res) => {
 			}
 		}
 	);
-	res.status(200).render("report", { username: req.session.username, msg: "Reported successfully" });
+	res.status(200).render("report", { username: req.session.username, msg: "Reported successfully"});
 });
 
 app.get("/register", (req, res) => {
