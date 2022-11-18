@@ -183,7 +183,7 @@ app.post("/report", (req, res) => {
 			}
 		}
 	);
-	res.status(200).render("report", { msg: "Reported successfully" });
+	res.status(200).render("report", { username: req.session.username, msg: "Reported successfully" });
 });
 
 app.get("/register", (req, res) => {
