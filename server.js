@@ -127,6 +127,7 @@ app.get("/report", (req, res) => {
 		});
 	} else {
 		res.status(200).render("report", { username: req.session.username });
+		//res.status(200).render("index", { username: req.session.username });
 	}
 });
 
