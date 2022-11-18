@@ -21,77 +21,95 @@
 			<div class="row">
 				<div class="col-sm-12">
 					<h1 class="drac-heading drac-heading-xl drac-text-white">
-							What's wrong with this guy?
-						</h1>
-						<br>
-						<form action="/report" method="post">
-							<div class="form-group">
-								<label for="sid" class="drac-text-white drac-heading" style="float: left;"
-									>Student ID:
-								</label>
-								<input
-									type="text"
-									class="drac-input drac-input-white drac-text-white"
-									id="sid"
-									name="sid"
-									placeholder=""
-								/>
-							</div>
-							<br>
+						What's wrong with this guy?
+					</h1>
+					<br />
+					<form action="/report" method="post">
+						<div class="form-group">
+							<label
+								for="sid"
+								class="drac-text-white drac-heading"
+								style="float: left"
+								>Student ID:
+							</label>
+							<input
+								type="text"
+								class="drac-input drac-input-white drac-text-white"
+								id="sid"
+								name="sid"
+								placeholder=""
+							/>
+						</div>
+						<br />
 
-							<div class="form-group">
-								<label for="name" class="drac-text-white drac-heading" style="float: left;"
-									>Name:
-								</label>
-								<input
-									type="text"
-									class="drac-input drac-input-white drac-text-white"
-									id="name"
-									name="name"
-									placeholder=""
-								/>
-							</div>
-							<br>
+						<div class="form-group">
+							<label
+								for="name"
+								class="drac-text-white drac-heading"
+								style="float: left"
+								>Name:
+							</label>
+							<input
+								type="text"
+								class="drac-input drac-input-white drac-text-white"
+								id="name"
+								name="name"
+								placeholder=""
+							/>
+						</div>
+						<br />
 
-							<div class="form-group">
-								<label for="coursecode" class="drac-text-white drac-heading" style="float: left;"
-									>Course Code:
-								</label>
-								<input
-									type="text"
-									class="drac-input drac-input-white drac-text-white"
-									id="coursecode"
-									name="coursecode"
-									placeholder=""
-								/>
-							</div>
-							<br>
+						<div class="form-group">
+							<label
+								for="coursecode"
+								class="drac-text-white drac-heading"
+								style="float: left"
+								>Course Code:
+							</label>
+							<input
+								type="text"
+								class="drac-input drac-input-white drac-text-white"
+								id="coursecode"
+								name="coursecode"
+								placeholder=""
+							/>
+						</div>
+						<br />
 
-							<div class="form-group">
-								<label for="remarks" class="drac-text-white drac-heading" style="float: left;"
-									>Why you think he/she is a free rider:
-								</label>
-								<input
-									type="text"
-									class="drac-input drac-input-white drac-text-white"
-									id="remarks"
-									name="remarks"
-									placeholder="Some reasons..."
-								/>
-							</div>
-							<br>
-							<br>
+						<div class="form-group">
+							<label
+								for="remarks"
+								class="drac-text-white drac-heading"
+								style="float: left"
+								>Why you think he/she is a free rider:
+							</label>
+							<input
+								type="text"
+								class="drac-input drac-input-white drac-text-white"
+								id="remarks"
+								name="remarks"
+								placeholder="Some reasons..."
+							/>
+						</div>
+						<br />
+						<br />
 
-							<button
-								type="submit"
-								value="addone"
-								class="drac-btn drac-text-black"
-								style="float: right; color: green;"
-							>
-								Submit
-							</button>
-						</form>
+						<button
+							type="submit"
+							value="addone"
+							class="drac-btn drac-text-black"
+							style="float: right; color: green"
+						>
+							Submit
+						</button>
+					</form>
 				</div>
 			</div>
+		</div>
+		<% if (msg != "") { %>
+		<script>
+			alert("<%= msg %>");
+		</script>
+		<% } %>
 	</body>
 </html>
