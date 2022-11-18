@@ -92,7 +92,7 @@ app.post("/login", (req, res) => {
 
 app.get("/logout", (req, res) => {
 	req.session = null; // clear cookie-session
-	res.redirect("/");
+	res.redirect("/login");
 });
 
 app.get("/avatar", (req, res) => {
