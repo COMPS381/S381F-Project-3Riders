@@ -22,3 +22,18 @@
 .reports .complains {
 	width: 50% !important;
 }
+
+.reports {
+	margin-bottom: 10px;
+}
+
+.topbar {
+	position: absolute;
+	top: 0;
+	width: 100vw;
+}
+
+.menuRight {
+	float: right;
+	padding-right: 15px;
+}
