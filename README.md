@@ -26,6 +26,11 @@ npm install
 npm start
 ```
 
+### auto reload for development
+```sh
+npm dev
+```
+
 ### reset database
 ```sh
 npm resetDb
