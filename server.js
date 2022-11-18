@@ -183,6 +183,7 @@ app.post("/report", (req, res) => {
 			}
 		}
 	);
+	res.status(200).render("report", { msg: "Reported successfully" });
 });
 
 app.get("/register", (req, res) => {
@@ -241,7 +242,7 @@ app.post("/search", (req, res) => {
 	var tbodyRef = document
 		.getElementById("listTable")
 		.getElementsByTagName("tbody")[0];
-	freeRiders.forEach((element) => {
+		freeRiders.forEach((element) => {
 		var row = tbodyRef.insertRow();
 		var nameCell = row.insertCell(0);
 		var yearCell = row.insertCell(1);
