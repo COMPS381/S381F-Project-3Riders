@@ -37,6 +37,9 @@ npm dropDb
 ```
 
 ### drop a rider
+```js
+req.session.type = user.type;
+````
 | When dropping a rider, please ensure that the user type is "admin"
 
 ## Extra Documentation
