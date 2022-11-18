@@ -31,9 +31,9 @@ npm start
 npm dev
 ```
 
-### reset database
+### drop database collections
 ```sh
-npm resetDb
+npm dropDb
 ```
 
 ## Extra Documentation
