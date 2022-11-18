@@ -21,89 +21,77 @@
 			<div class="row">
 				<div class="col-sm-12">
 					<h1 class="drac-heading drac-heading-xl drac-text-white">
-						What's wrong with this guy?
-					</h1>
-					<br />
-					<form action="/login" method="post">
-						<div class="form-group">
-							<label
-								for="username"
-								class="drac-text-white drac-heading"
-								style="float: left"
-								>First Name:
-							</label>
-							<input
-								type="text"
-								class="drac-input drac-input-white drac-text-white"
-								id="firstname"
-								name="firstname"
-								placeholder=""
-							/>
-						</div>
-						<br />
-						<div class="form-group">
-							<label
-								for="lastname"
-								class="drac-text-white drac-heading"
-								style="float: left"
-								>Last Name:
-							</label>
-							<input
-								type="text"
-								class="drac-input drac-input-white drac-text-white"
-								id="lastname"
-								name="lastname"
-								placeholder=""
-							/>
-						</div>
-						<br />
-						<div class="form-group">
-							<label
-								for="year"
-								class="drac-text-white drac-heading"
-								style="float: left"
-								>Year:
-							</label>
-							<select
-								name="cars"
-								id="cars"
-								class="drac-input drac-input-white drac-text-white"
+							What's wrong with this guy?
+						</h1>
+						<br>
+						<form action="/report" method="post">
+							<div class="form-group">
+								<label for="sid" class="drac-text-white drac-heading" style="float: left;"
+									>Student ID:
+								</label>
+								<input
+									type="text"
+									class="drac-input drac-input-white drac-text-white"
+									id="sid"
+									name="sid"
+									placeholder=""
+								/>
+							</div>
+							<br>
+
+							<div class="form-group">
+								<label for="name" class="drac-text-white drac-heading" style="float: left;"
+									>Name:
+								</label>
+								<input
+									type="text"
+									class="drac-input drac-input-white drac-text-white"
+									id="name"
+									name="name"
+									placeholder=""
+								/>
+							</div>
+							<br>
+
+							<div class="form-group">
+								<label for="coursecode" class="drac-text-white drac-heading" style="float: left;"
+									>Course Code:
+								</label>
+								<input
+									type="text"
+									class="drac-input drac-input-white drac-text-white"
+									id="coursecode"
+									name="coursecode"
+									placeholder=""
+								/>
+							</div>
+							<br>
+
+							<div class="form-group">
+								<label for="remarks" class="drac-text-white drac-heading" style="float: left;"
+									>Why you think he/she is a free rider:
+								</label>
+								<input
+									type="text"
+									class="drac-input drac-input-white drac-text-white"
+									id="remarks"
+									name="remarks"
+									placeholder="Some reasons..."
+								/>
+							</div>
+							<br>
+							<br>
+
+							<button
+								type="submit"
+								value="addone"
+								class="drac-btn drac-text-black"
+								style="float: right; color: green;"
 							>
-								<option value="1">1</option>
-								<option value="2">2</option>
-								<option value="3">3</option>
-								<option value="4">4</option>
-							</select>
-						</div>
-						<br />
-						<div class="form-group">
-							<label
-								for="reasons"
-								class="drac-text-white drac-heading"
-								style="float: left"
-								>Why you think he/she is a free rider:
-							</label>
-							<input
-								type="text"
-								class="drac-input drac-input-white drac-text-white"
-								id="reason"
-								name="reason"
-								placeholder="Some reasons..."
-							/>
-						</div>
-						<br />
-						<br />
-						<button
-							type="submit"
-							value="Login"
-							class="drac-btn drac-text-black"
-							style="float: right; color: green"
-						>
-							Submit
-						</button>
-					</form>
+								Submit
+							</button>
+						</form>
 				</div>
 			</div>
-		</div>
 	</body>
 </html>
