@@ -91,7 +91,7 @@ app.post("/login", (req, res) => {
 
 app.get("/logout", (req, res) => {
 	req.session = null; // clear cookie-session
-	avatarMap.delete(req.session.username); // drop avatar
+	try { avatarMap.delete(req.session.username); } catch (e) {}// drop avatar 
 	res.redirect("/login");
 });
 
