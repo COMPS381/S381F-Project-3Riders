@@ -31,7 +31,7 @@ app.use(
 	session({
 		name: "loginSession",
 		keys: [SECRETKEY],
-		data: ""
+		search_data: null,
 	})
 );
 
@@ -123,9 +123,9 @@ app.post("/sandwich", (req, res) => {
 
 app.get("/list", (req, res) => {
 	if (req.session.authenticated) {
-		console.log("Search data********************************************************"+req.session.data)
-		res.status(200).render("list", {riders: req.session.data});
-		req.session.data = null;
+		console.log("Search data********************************************************"+req.session.search_data)
+		res.status(200).render("list", {riders: req.session.search_data});
+		req.session.search_data = null;
 	} else {
 		res.status(401).render("login", {
 			error: "user not authenticated",
@@ -251,8 +251,6 @@ app.get("/search", (req, res) => {
 
 //search for free rider and list out on list.ejs
 app.post("/search", (req, res) => {
-	console.log(req.body);
-
 	let name = req.body.search_name;
 	let course = req.body.search_course;
 	console.log("Finding...Name: "+ name +" Coursecode: "+ course);
@@ -288,7 +286,7 @@ app.post("/search", (req, res) => {
 		display += "</tr>";
 	}	
 
-	req.session.data = display;
+	req.session.search_data = display;
 	res.redirect("list");
 
 	});
