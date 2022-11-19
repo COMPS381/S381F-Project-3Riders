@@ -226,6 +226,7 @@ app.get("/search", (req, res) => {
 	});
 });
 
+//search for free rider and list out on list.ejs
 app.post("/search", (req, res) => {
 	console.log(req.body);
 
@@ -249,25 +250,27 @@ app.post("/search", (req, res) => {
 	var tbodyRef = document
 		.getElementById("listTable")
 		.getElementsByTagName("tbody")[0];
-		riders.forEach((element) => {
-			var name = row.insertCell(0);
-			nameCell.innerHTML = element["name"];
+		
+		res.status(200).render("list", { 
+			riders.forEach((element) => {
+				var name = row.insertCell(0);
+				nameCell.innerHTML = element["name"];
 
-			var reports = element["report"]
-			for (var i = reports.length - 1; i >= 0; i--) {
-				var row = tbodyRef.insertRow();
-				
-				var userName = row.insertCell(1);
-				var courseCode = row.insertCell(2);
-				var reportDate = row.insertCell(3);
-				var remarks = row.insertCell(4);
+				var reports = element["report"]
+				for (var i = reports.length - 1; i >= 0; i--) {
+					var row = tbodyRef.insertRow();
+					
+					var userName = row.insertCell(1);
+					var courseCode = row.insertCell(2);
+					var reportDate = row.insertCell(3);
+					var remarks = row.insertCell(4);
 
-				userName.innerHTML = reports["program"];
-				courseCode.innerHTML = reports["courseCode"];
-				reportDate.innerHTML = reports["reportDate"];
-				remarks.innerHTML = reports["remarks"];
-			}
-			
+					userName.innerHTML = reports["program"];
+					courseCode.innerHTML = reports["courseCode"];
+					reportDate.innerHTML = reports["reportDate"];
+					remarks.innerHTML = reports["remarks"];
+				}	
+			}) 
 		});
 	});
 
