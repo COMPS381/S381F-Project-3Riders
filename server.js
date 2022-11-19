@@ -272,7 +272,7 @@ app.post("/search", (req, res) => {
 					reportDate.innerHTML = reports["reportDate"];
 					remarks.innerHTML = reports["remarks"];
 				}	
-			}) 
+			}); 
 		});
 	});
 
