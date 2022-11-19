@@ -143,7 +143,7 @@ app.post("/report", (req, res) => {
 			$push: {
 				reports: {
 					username: req.session.username,
-					courseCode: req.body.courseCode,
+					courseCode: req.body.coursecode,
 					remarks: req.body.remarks || "",
 				},
 			},
@@ -160,7 +160,7 @@ app.post("/report", (req, res) => {
 					reports: [
 						{
 							username: req.session.username,
-							courseCode: req.body.courseCode,
+							courseCode: req.body.coursecode,
 							remarks: req.body.remarks || "",
 						},
 					],
@@ -272,12 +272,10 @@ app.post("/drop", (req, res) => {
 		let Rider = mongoose.model("Rider", riderSchema);
 		Rider.deleteOne(
 			{ sid: req.body.sid },
-			//{ name: ""},
-			//{ reports: {
-				//username: req.session.username,
-				//courseCode: req.body.courseCode,
-				//remarks: req.body.remarks || "",
-			//}},
+			{ reports: {
+				courseCode: req.body.courseCode,
+				}
+			},
 		).then(console.log("Rider removed"));
 		res.status(200).render("report", {
 			username: req.session.username, msg: "",
