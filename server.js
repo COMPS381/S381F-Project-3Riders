@@ -279,9 +279,9 @@ app.post("/search", (req, res) => {
 		}
 		display += "</tr>";
 	}	
-		res.status(200).render("list", {
-				riders: display,
-			});
+
+	res.status(200).render("list");
+
 	});
 
 // Direct to the drop.ejs by GET
