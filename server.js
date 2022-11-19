@@ -31,7 +31,6 @@ app.use(
 	session({
 		name: "loginSession",
 		keys: [SECRETKEY],
-		search_data: "no",
 	})
 );
 
@@ -80,6 +79,7 @@ app.post("/login", (req, res) => {
 			req.session.type = user.type;
 			avatarMap.set(req.body.username, user.avatar == "" ? "/default.webp" : user.avatar);
 			console.log(req.session.type);
+			req.session.search_data = null;
 			console.log(req.session)
 		}
 	});
