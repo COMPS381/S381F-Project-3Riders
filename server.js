@@ -122,7 +122,7 @@ app.post("/sandwich", (req, res) => {
 
 app.get("/list", (req, res) => {
 	if (req.session.authenticated) {
-		console.log(req.session.valid)
+		console.log("PASSSSSSSSSSSSSSSSSSSSSSSSSSSS"+req.session.valid)
 		res.status(200).render("list", {riders: req.session.valid});
 		req.session.valid = null;
 	} else {
