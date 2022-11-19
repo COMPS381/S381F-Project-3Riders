@@ -250,8 +250,8 @@ app.get("/search", (req, res) => {
 app.post("/search", (req, res) => {
 	console.log(req.body);
 
-	let name = req.body.search_name.value;
-	let course = req.body.search_course.value;
+	let name = req.body.search_name;
+	let course = req.body.search_course;
 	console.log("Finding...Name: "+ name +" Coursecode: "+ course);
 	let Rider = mongoose.model("Rider", riderSchema);
 
