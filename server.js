@@ -242,9 +242,9 @@ app.post("/search", (req, res) => {
 		riders = Rider.find({});
 	}
 	else if (name == "" && course != "NA"){
-		riders = Rider.find( reports: { courseCode: course } );
+		riders = Rider.find( {reports: { courseCode: course } });
 	}else if (name != "" && course == "NA"){
-		riders = Rider.find(name: name);
+		riders = Rider.find({name: name});
 	}
 	console.log("Free Riders", riders);
 
