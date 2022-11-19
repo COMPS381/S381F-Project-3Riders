@@ -31,7 +31,7 @@ app.use(
 	session({
 		name: "loginSession",
 		keys: [SECRETKEY],
-		search_data: null,
+		search_data: "no",
 	})
 );
 
@@ -52,7 +52,7 @@ app.get("/", (req, res) => {
 		});
 	} else {
 		res.status(200).render("report", { username: req.session.username, msg: ""  });
-		
+
 		// res.status(200).render('secrets',{name:req.session.username});
 	}
 });
