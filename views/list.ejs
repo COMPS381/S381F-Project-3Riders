@@ -82,7 +82,10 @@
 								</th>
 							</tr>
 						</thead>
-						<tbody><%= riders %></tbody>
+						<tbody>
+							<% if (riders != "") { %>
+								<%= riders %>
+							<% } %></tbody>
 					</table>
 				</div>
 			</div>
