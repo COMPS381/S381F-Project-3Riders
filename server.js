@@ -248,7 +248,8 @@ app.get("/search", (req, res) => {
 
 //search for free rider and list out on list.ejs
 app.post("/search", (req, res) => {
-	console.log(req.body);
+	async (error, result) => {
+		console.log(req.body);
 
 	let name = req.body.search_name;
 	let course = req.body.search_course;
@@ -279,9 +280,13 @@ app.post("/search", (req, res) => {
 		}
 		display += "</tr>"
 	}	
+
+
 		res.status(200).render("list", {
 				riders: display,
 			});
+	}
+	
 	});
 
 // Direct to the drop.ejs by GET
