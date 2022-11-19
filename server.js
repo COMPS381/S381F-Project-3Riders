@@ -232,7 +232,7 @@ app.post("/search", (req, res) => {
 
 	let name = req.body.search_name;
 	let course = req.body.search_course;
-
+	console.log("Finding...Name: "+ name +" Coursecode: "+ course);
 	let Rider = mongoose.model("Rider", riderSchema);
 
 	let riders = ""
