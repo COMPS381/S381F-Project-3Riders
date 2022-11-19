@@ -250,8 +250,8 @@ app.get("/search", (req, res) => {
 app.post("/search", (req, res) => {
 	console.log(req.body);
 
-	let name = req.body.search_name;
-	let course = req.body.search_course;
+	let name = req.body.search_name.value;
+	let course = req.body.search_course.value;
 	console.log("Finding...Name: "+ name +" Coursecode: "+ course);
 	let Rider = mongoose.model("Rider", riderSchema);
 
@@ -271,11 +271,16 @@ app.post("/search", (req, res) => {
 	display = ""
 	for (var i = riders.length - 1; i >= 0; i--) {
 		display += "<tr><td>"+riders[i].name +"</td>"
+		console.log(riders[i].name)
 		for (var j = riders[i].reports.length - 1; i >= 0; i--) {
 			display += "<td>" + riders[i].reports[j].username + "</td>" +
 			"<td>" + riders[i].reports[j].courseCode + "</td>" +
 			"<td>" + riders[i].reports[j].remarks + "</td>" +
 			"<td>" + riders[i].reports[j].reportDate + "</td>";
+			console.log(riders[i].reports[j].username)
+			console.log(riders[i].reports[j].courseCode)
+			console.log(riders[i].reports[j].remarks)
+			console.log(riders[i].reports[j].reportDate)
 		}
 		display += "</tr>";
 	}	
