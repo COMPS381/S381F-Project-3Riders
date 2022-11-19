@@ -252,28 +252,27 @@ app.post("/search", (req, res) => {
 		.getElementById("listTable")
 		.getElementsByTagName("tbody")[0];
 
+	riders.forEach((element) => {
+			var name = row.insertCell(0);
+			nameCell.innerHTML = element["name"];
+
+			var reports = element["report"]
+			for (var i = reports.length - 1; i >= 0; i--) {
+				var row = tbodyRef.insertRow();
+				
+				var userName = row.insertCell(1);
+				var courseCode = row.insertCell(2);
+				var reportDate = row.insertCell(3);
+				var remarks = row.insertCell(4);
+
+				userName.innerHTML = reports["program"];
+				courseCode.innerHTML = reports["courseCode"];
+				reportDate.innerHTML = reports["reportDate"];
+				remarks.innerHTML = reports["remarks"];
+			}	
+		}); 
 		
-		res.status(200).render("list", { 
-			riders.forEach((element) => {
-				var name = row.insertCell(0);
-				nameCell.innerHTML = element["name"];
-
-				var reports = element["report"]
-				for (var i = reports.length - 1; i >= 0; i--) {
-					var row = tbodyRef.insertRow();
-					
-					var userName = row.insertCell(1);
-					var courseCode = row.insertCell(2);
-					var reportDate = row.insertCell(3);
-					var remarks = row.insertCell(4);
-
-					userName.innerHTML = reports["program"];
-					courseCode.innerHTML = reports["courseCode"];
-					reportDate.innerHTML = reports["reportDate"];
-					remarks.innerHTML = reports["remarks"];
-				}	
-			}); 
-		});
+		//res.status(200).render("list");
 	});
 
 // Direct to the drop.ejs by GET
