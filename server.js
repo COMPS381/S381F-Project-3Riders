@@ -258,7 +258,7 @@ app.post("/search", (req, res) => {
 	console.log("Finding...Name: "+ name +" Coursecode: "+ course);
 	let Rider = mongoose.model("Rider", riderSchema);
 
-	let riders = ""
+	let riders = [];
 	if (name != "" && course != "NA"){
 		riders = Rider.find({ name: name, reports: { courseCode: course } });
 	}else if (name == "" && course == "NA"){
@@ -269,7 +269,7 @@ app.post("/search", (req, res) => {
 	}else if (name != "" && course == "NA"){
 		riders = Rider.find({name: name});
 	}
-	console.log("Free Riders", riders);
+	console.log("Free Riders found: ", riders);
 	
 	let display = ""
 	for (var i = riders.length - 1; i >= 0; i--) {
