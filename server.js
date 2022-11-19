@@ -247,32 +247,19 @@ app.post("/search", (req, res) => {
 		riders = Rider.find({name: name});
 	}
 	console.log("Free Riders", riders);
-
-	var tbodyRef = document
-		.getElementById("listTable")
-		.getElementsByTagName("tbody")[0];
-
-	riders.forEach((element) => {
-			var name = row.insertCell(0);
-			nameCell.innerHTML = element["name"];
-
-			var reports = element["report"]
-			for (var i = reports.length - 1; i >= 0; i--) {
-				var row = tbodyRef.insertRow();
-				
-				var userName = row.insertCell(1);
-				var courseCode = row.insertCell(2);
-				var reportDate = row.insertCell(3);
-				var remarks = row.insertCell(4);
-
-				userName.innerHTML = reports["program"];
-				courseCode.innerHTML = reports["courseCode"];
-				reportDate.innerHTML = reports["reportDate"];
-				remarks.innerHTML = reports["remarks"];
-			}	
-		}); 
-		
-		//res.status(200).render("list");
+	
+	String display = ""
+	for (var i = riders.length - 1; i >= 0; i--) {
+		display += "<tr><td>"+riders[i].name +"</td>"
+		for (var j = riders[i].reports.length - 1; i >= 0; i--) {
+			display += "<td>" + riders[i].reports[j].username + "</td>" +
+			"<td>" + riders[i].reports[j].courseCode + "</td>" +
+			"<td>" + riders[i].reports[j].remarks + "</td>" +
+			"<td>" + riders[i].reports[j].reportDate + "</td>"
+		}
+		display += "</tr>"
+	}	
+		res.status(200).render("list", {riders: display});
 	});
 
 // Direct to the drop.ejs by GET
