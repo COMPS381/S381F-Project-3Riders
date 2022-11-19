@@ -39,8 +39,8 @@ npm dropDb
 ### drop a rider
 ```js
 req.session.type = user.type;
-````
-| When dropping a rider, please ensure that the user type is "admin"
+```
+>When dropping a rider, please ensure that the user type is "admin"
 
 ## Extra Documentation
 
@@ -49,3 +49,7 @@ req.session.type = user.type;
 ## Licence
 
 [UNLICENSE](UNLICENSE)
+
+## Online demo
+
+[demo](https://3riders.up.railway.app/)
