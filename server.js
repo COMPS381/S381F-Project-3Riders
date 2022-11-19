@@ -31,6 +31,7 @@ app.use(
 	session({
 		name: "loginSession",
 		keys: [SECRETKEY],
+		data: ""
 	})
 );
 
@@ -122,9 +123,9 @@ app.post("/sandwich", (req, res) => {
 
 app.get("/list", (req, res) => {
 	if (req.session.authenticated) {
-		console.log("PASSSSSSSSSSSSSSSSSSSSSSSSSSSS"+req.session.valid)
-		res.status(200).render("list", {riders: req.session.valid});
-		req.session.valid = null;
+		console.log("Search data********************************************************"+req.session.data)
+		res.status(200).render("list", {riders: req.session.data});
+		req.session.data = null;
 	} else {
 		res.status(401).render("login", {
 			error: "user not authenticated",
@@ -287,7 +288,7 @@ app.post("/search", (req, res) => {
 		display += "</tr>";
 	}	
 
-	req.session.valid = display;
+	req.session.data = display;
 	res.redirect("list");
 
 	});
