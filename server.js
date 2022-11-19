@@ -243,9 +243,7 @@ app.post("/register", (req, res) => {
 });
 
 app.get("/search", (req, res) => {
-	res.status(200).render("search", {
-		error: "",
-	});
+	res.status(200).render("search");
 });
 
 //search for free rider and list out on list.ejs
@@ -281,7 +279,9 @@ app.post("/search", (req, res) => {
 		}
 		display += "</tr>"
 	}	
-		res.status(200).render("list", {riders: display});
+		res.status(200).render("list", {
+				riders: display,
+			});
 	});
 
 // Direct to the drop.ejs by GET
