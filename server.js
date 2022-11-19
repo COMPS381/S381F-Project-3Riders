@@ -136,9 +136,8 @@ app.post("/report", (req, res) => {
 	// add rider to database if not exist
 	// add reporter to rider's reports array
 	let Rider = mongoose.model("Rider", riderSchema);
-	Rider.findOneAndUpdate(
+	Rider.findOneAndUpdate( 
 		{ sid: req.body.sid },
-		{ name: req.body.name },
 		{
 			$push: {
 				reports: {
@@ -148,7 +147,6 @@ app.post("/report", (req, res) => {
 				},
 			},
 		},
-		// {},
 		async (error, result) => {
 			if (error) return;
 			// do something with the document
