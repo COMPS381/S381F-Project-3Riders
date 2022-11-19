@@ -269,8 +269,8 @@ app.post("/search", (req, res) => {
 	}else if (name != "" && course == "NA"){
 		riders = Rider.find({name: name}).lean();
 	}
-	riders_json = JSON.stringify(riders);
-	console.log("Free Riders found: ", riders_json);
+	//riders_json = JSON.stringify(riders);
+	console.log("Free Riders found: ", riders);
 	
 	let display = ""
 	for (var i = riders.length - 1; i >= 0; i--) {
