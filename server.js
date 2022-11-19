@@ -270,7 +270,7 @@ app.post("/search", (req, res) => {
 	}
 	console.log("Free Riders", riders);
 	
-	String display = ""
+	display = ""
 	for (var i = riders.length - 1; i >= 0; i--) {
 		display += "<tr><td>"+riders[i].name +"</td>"
 		for (var j = riders[i].reports.length - 1; i >= 0; i--) {
