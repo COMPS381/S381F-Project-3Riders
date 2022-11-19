@@ -289,6 +289,8 @@ app.post("/search", (req, res) => {
 	}	
 
 	req.session.search_data = display;
+	console.log("Display:", display)
+	console.log("Session data",req.session.search_data)
 	res.redirect("list");
 
 	});
