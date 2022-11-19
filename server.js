@@ -271,7 +271,7 @@ app.post("/search", (req, res) => {
 	}
 	console.log("Free Riders", riders);
 	
-	display = ""
+	let display = ""
 	for (var i = riders.length - 1; i >= 0; i--) {
 		display += "<tr><td>"+riders[i].name +"</td>"
 		console.log(riders[i].name)
@@ -289,8 +289,9 @@ app.post("/search", (req, res) => {
 	}	
 
 	req.session.search_data = display;
+	console.log(req.session)
 	console.log("Display:", display)
-	console.log("Session data",req.session.search_data)
+	console.log("Session data", req.session.search_data)
 	res.redirect("list");
 
 	});
