@@ -19,7 +19,7 @@ db.on("error", (error) => console.log(error));
 db.once("open", async () => {
 	console.log("connection to db established");
 	// get users from mongoose instance
-	users = await User.find({});
+	users = await User.find({}).then(console.log("user accounts loaded"));
 	// console.log(users);
 });
 
@@ -171,17 +171,18 @@ app.post("/report", (req, res) => {
 					if (err) return console.error(err);
 					console.log(result.sid + " saved to rider collection.");
 				});
-				res.status(200).json({
-					log: reply,
-					message: "Reported successfully",
-				});
+				// res.status(200).json({
+				// 	log: reply,
+				// 	message: "Reported successfully",
+				// });
+				res.status(200).render("report", { username: req.session.username, msg: "Reported successfully"});
 			} catch (error) {
 				console.log(error);
-				res.status(500).end("Error: " + error);
+				res.status(500).render("report", { username: req.session.username, msg: "Error: " + error});
 			}
 		}
 	);
-	res.status(200).render("report", { username: req.session.username, msg: "Reported successfully"});
+	// res.status(200).render("report", { username: req.session.username, msg: "Reported successfully"});
 });
 
 app.get("/register", (req, res) => {
