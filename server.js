@@ -213,13 +213,13 @@ app.get("/register", (req, res) => {
 app.post("/register", (req, res) => {
 	// register a new user, if duplicate entry, return error msg, else return success msg
 	let NewUser = mongoose.model("User", userSchema);
-	let type = req.body.admin ? "admin" : "user";
+	// let type = req.body.admin ? "admin" : "user";
 	let newUser = new NewUser({
 		username: req.body.username,
 		password: req.body.password,
 		sid: req.body.sid,
 		avatar: req.body.avatar,
-		type: type,
+		type: "user",
 	});
 	newUser.save(async (err, result) => {
 		if (err) {
