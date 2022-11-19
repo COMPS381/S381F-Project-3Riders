@@ -279,10 +279,12 @@ app.post("/drop", (req, res) => {
 				//remarks: req.body.remarks || "",
 			//}},
 		).then(console.log("Rider removed"));
-		res.status(200).render("report");
+		res.status(200).render("report", {
+			username: req.session.username, msg: "",
+		});
 	} else {
 		res.status(401).render("report", {
-			username: req.session.username, error: "user not authenticated",
+			username: req.session.username, msg: "user not authenticated",
 		});
 	}
 });
