@@ -243,7 +243,7 @@ app.post("/register", (req, res) => {
 });
 
 app.get("/search", (req, res) => {
-	res.status(200).render("search");
+	res.redirect("list");
 });
 
 //search for free rider and list out on list.ejs
