@@ -235,12 +235,12 @@ app.post("/search", (req, res) => {
 
 	let Rider = mongoose.model("Rider", riderSchema);
 	let riders = Rider.find({ name: name, reports: { courseCode: course } });
-	console.log("Free Riders", freeRiders);
+	console.log("Free Riders", riders);
 
 	var tbodyRef = document
 		.getElementById("listTable")
 		.getElementsByTagName("tbody")[0];
-		freeRiders.forEach((element) => {
+		riders.forEach((element) => {
 		var row = tbodyRef.insertRow();
 		var nameCell = row.insertCell(0);
 		var yearCell = row.insertCell(1);
