@@ -229,30 +229,47 @@ app.get("/search", (req, res) => {
 app.post("/search", (req, res) => {
 	console.log(req.body);
 
-	let name = req.body.name;
-	let year = req.body.year;
-	let course = req.body.course;
+	let name = req.body.search_name;
+	let course = req.body.search_course;
 
 	let Rider = mongoose.model("Rider", riderSchema);
-	let riders = Rider.find({ name: name, reports: { courseCode: course } });
+	let riders = ""
+	if (name != "" && course != "NA"){
+		riders = Rider.find({ name: name, reports: { courseCode: course } });
+	}else if (name == "" && course == "NA"){
+		riders = Rider.find({});
+	}
+	else if (name == "" && course != "NA"){
+		riders = Rider.find( reports: { courseCode: course } );
+	}else if (name != "" && course == "NA"){
+		riders = Rider.find(name: name);
+	}
 	console.log("Free Riders", riders);
 
 	var tbodyRef = document
 		.getElementById("listTable")
 		.getElementsByTagName("tbody")[0];
 		riders.forEach((element) => {
-		var row = tbodyRef.insertRow();
-		var nameCell = row.insertCell(0);
-		var yearCell = row.insertCell(1);
-		var programCell = row.insertCell(2);
-		var timeCell = row.insertCell(3);
+			var name = row.insertCell(0);
+			nameCell.innerHTML = element["name"];
 
-		nameCell.innerHTML = element["name"];
-		yearCell.innerHTML = element["year"];
-		programCell.innerHTML = element["program"];
-		timeCell.innerHTML = element[""];
+			var reports = element["report"]
+			for (var i = reports.length - 1; i >= 0; i--) {
+				var row = tbodyRef.insertRow();
+				
+				var userName = row.insertCell(1);
+				var courseCode = row.insertCell(2);
+				var reportDate = row.insertCell(3);
+				var remarks = row.insertCell(4);
+
+				userName.innerHTML = reports["program"];
+				courseCode.innerHTML = reports["courseCode"];
+				reportDate.innerHTML = reports["reportDate"];
+				remarks.innerHTML = reports["remarks"];
+			}
+			
+		});
 	});
-});
 
 // Direct to the drop.ejs by GET
 app.get("/drop", (req, res) => {
