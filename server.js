@@ -234,6 +234,7 @@ app.post("/search", (req, res) => {
 	let course = req.body.search_course;
 
 	let Rider = mongoose.model("Rider", riderSchema);
+
 	let riders = ""
 	if (name != "" && course != "NA"){
 		riders = Rider.find({ name: name, reports: { courseCode: course } });
@@ -250,6 +251,7 @@ app.post("/search", (req, res) => {
 	var tbodyRef = document
 		.getElementById("listTable")
 		.getElementsByTagName("tbody")[0];
+
 		
 		res.status(200).render("list", { 
 			riders.forEach((element) => {
