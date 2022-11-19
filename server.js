@@ -80,6 +80,7 @@ app.post("/login", (req, res) => {
 			req.session.type = user.type;
 			avatarMap.set(req.body.username, user.avatar == "" ? "/default.webp" : user.avatar);
 			console.log(req.session.type);
+			console.log(req.session)
 		}
 	});
 	if (req.session.authenticated) {
