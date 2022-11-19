@@ -256,6 +256,38 @@ app.post("/search", (req, res) => {
 	});
 });
 
+// Direct to the drop.ejs by GET
+app.get("/drop", (req, res) => {
+	if (req.session.authenticated) {
+		res.status(200).render("drop");
+	} else {
+		res.status(401).render("login", {
+			error: "user not authenticated",
+		});
+	}
+});
+//Dropping someone
+app.post("/drop", (req, res) => {
+	if (req.session.type == 'user'){
+		let Rider = mongoose.model("Rider", riderSchema);
+		Rider.deleteOne(
+			{ sid: req.body.sid },
+			//{ name: ""},
+			//{ reports: {
+				//username: req.session.username,
+				//courseCode: req.body.courseCode,
+				//remarks: req.body.remarks || "",
+			//}},
+		);
+		console.log("Rider removed");
+		res.status(200).render("report");
+	} else {
+		res.status(401).render("report", {
+			username: "req.session.username", error: "user not authenticated",
+		});
+	}
+});
+
 process.env.PORT = process.env.PORT || 8099;
 app.listen(app.listen(process.env.PORT));
 console.log(`Server running at http://localhost:${process.env.PORT}/`);
