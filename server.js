@@ -260,17 +260,17 @@ app.post("/search", (req, res) => {
 
 	let riders = [];
 	if (name != "" && course != "NA"){
-		riders = JSON.stringify(Rider.find({ name: name, reports: { courseCode: course } }).lean().exec());
+		riders = Rider.find({ name: name, reports: { courseCode: course } }).lean().exec();
 	}else if (name == "" && course == "NA"){
-		riders = JSON.stringify(Rider.find({}).lean().exec());
+		riders = Rider.find({}).lean().exec();
 	}
 	else if (name == "" && course != "NA"){
-		riders = JSON.stringify(Rider.find( {reports: { courseCode: course } }).lean().exec());
+		riders = Rider.find( {reports: { courseCode: course } }).lean().exec();
 	}else if (name != "" && course == "NA"){
-		riders = JSON.stringify(Rider.find({name: name}).lean().exec());
+		riders = Rider.find({name: name}).lean().exec();
 	}
-	
-	console.log("Free Riders found: ", riders);
+	riders_json = JSON.stringify(riders);
+	console.log("Free Riders found: ", riders_json);
 	
 	let display = ""
 	for (var i = riders.length - 1; i >= 0; i--) {
