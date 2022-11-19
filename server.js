@@ -243,7 +243,7 @@ app.post("/register", (req, res) => {
 });
 
 app.get("/search", (req, res) => {
-	res.redirect("list");
+	res.status(200).render("list", { riders: "" });
 });
 
 //search for free rider and list out on list.ejs
@@ -280,9 +280,7 @@ app.post("/search", (req, res) => {
 		display += "</tr>";
 	}	
 
-	res.redirect("list", {
-			riders: display,
-		});
+	res.status(200).render("list", { riders: display });
 
 	});
 
