@@ -122,7 +122,8 @@ app.post("/sandwich", (req, res) => {
 
 app.get("/list", (req, res) => {
 	if (req.session.authenticated) {
-		res.status(200).render("list", {riders: ""});
+		res.status(200).render("list", {riders: req.session.valid});
+		req.session.valid = null;
 	} else {
 		res.status(401).render("login", {
 			error: "user not authenticated",
@@ -243,7 +244,7 @@ app.post("/register", (req, res) => {
 });
 
 app.get("/search", (req, res) => {
-	res.redirect({ riders: "" }, "list");
+	res.redirect("list");
 });
 
 //search for free rider and list out on list.ejs
@@ -285,7 +286,8 @@ app.post("/search", (req, res) => {
 		display += "</tr>";
 	}	
 
-	res.redirect({ riders: display }, "list");
+	req.session.valid = display;
+	res.redirect("list");
 
 	});
 
