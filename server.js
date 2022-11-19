@@ -280,7 +280,9 @@ app.post("/search", (req, res) => {
 		display += "</tr>";
 	}	
 
-	res.status(200).render("list");
+	res.status(200).redirect("list", {
+			riders: display,
+		});
 
 	});
 
