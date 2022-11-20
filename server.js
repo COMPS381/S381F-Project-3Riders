@@ -338,7 +338,8 @@ app.post("/drop", (req, res) => {
 				}
 			} 
 		);
-		console.log("Okay next step is to remove: ")
+
+		console.log("Okay next step is to remove: ");
 		for (let i = 0; i < idArray.length; i++) {
 			aRider.findByIdAndDelete(idArray[i], function (err, aRider) {
 				if (err) {
