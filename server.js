@@ -307,17 +307,48 @@ app.get("/drop", (req, res) => {
 		});
 	}
 });
+
 //Dropping someone
 app.post("/drop", (req, res) => {
-	if (req.session.type == 'user'){
-		let Rider = mongoose.model("Rider", riderSchema);
-		Rider.deleteOne(
-			{ sid: req.body.sid },
-			{ reports: {
-				courseCode: req.body.courseCode,
+	if (req.session.type == 'admin'){
+		const anSID = req.body.sid;
+		const aCourseCode = req.body.coursecode;
+
+		const idArray = []; 
+		let aRider = mongoose.model("Rider", riderSchema);
+		aRider.findOne(
+			{ sid: {$eq:anSID} },
+			function (err, aRider) {
+				if (err) {
+					console.log("ERROR 1!");
+				} else {
+					for (let i = 0; i < aRider.reports.length; i++) {
+						if (aRider.reports.length == 0 || aRider.reports[i].courseCode == "") {
+							console.log(anSID, " is no longer a Rider");
+							break;
+						} else {
+							if (aRider.reports[i].courseCode != "" || aRider.reports[i].courseCode == aCourseCode) {
+								console.log(anSID, " is a Rider");
+								idArray.push(aRider.reports[i]._id);
+								console.log("Pushed ", aRider.reports[i]._id, " into idArray");
+							}
+						}
+					}
+					console.log("idArray = ", idArray);
 				}
-			},
-		).then(console.log("Rider removed"));
+			} 
+		);
+		console.log("Okay next step is to remove: ")
+		for (let i = 0; i < idArray.length; i++) {
+			aRider.findByIdAndDelete(idArray[i], function (err, aRider) {
+				if (err) {
+					console.log("ERROR 2!");
+				} else {
+					console.log("Deleted ", anSID, " from the riders' list of ", aCourseCode);
+				}
+			});
+		}
+
 		res.status(200).render("report", {
 			username: req.session.username, msg: "",
 		});
