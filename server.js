@@ -126,7 +126,6 @@ app.post("/sandwich", (req, res) => {
 app.get("/list", (req, res) => {
 	if (req.session.authenticated) {
 		res.status(200).render("list", {riders: req.session.search_data});
-		
 	} else {
 		res.status(401).render("login", {
 			error: "user not authenticated",
@@ -136,7 +135,7 @@ app.get("/list", (req, res) => {
 
 app.post("/list", (req, res) => {
 	if (req.session.authenticated) {
-		res.status(200).render("list", {riders: ""});
+		res.status(200).render("list", {riders: req.sesion.search_data});
 	} else {
 		res.status(401).render("login", {
 			error: "user not authenticated",
