@@ -125,36 +125,8 @@ app.post("/sandwich", (req, res) => {
 
 app.get("/list", (req, res) => {
 	if (req.session.authenticated) {
-		let display = ""
-		console.log(req.session);
-		let ridersList = req.session.search_data;
-		console.log("Rider list :", ridersList);
-		if (ridersList != null && ridersList != "") {
-			console.log("Constracting content for display......")
-			for (var i = ridersList.length - 1; i >= 0; i--) {
-				display += "<tr><td>"+ridersList[i].name +"</td>"
-				console.log(ridersList[i].name)
-				console.log(ridersList[i].reports)
-				var reports = ridersList[i].reports;
-				for (var x = 0; x <= reports.length - 1; x++) {
-					display += "<td>" + reports[x].username + "</td>" +
-					"<td>" + reports[x].courseCode + "</td>" +
-					"<td>" + reports[x].remarks + "</td>" +
-					"<td>" + reports[x].reportDate + "</td>";
-					console.log("Username: ", reports[x].username)
-					console.log("Course Code: ",reports[x].courseCode)
-					console.log("Remarks: ",reports[x].remarks)
-					console.log("Report Date: ",reports[x].reportDate)
-				}
-				display += "</tr>";
-			}	
-			console.log(req.session)
-			//console.log("Session data", req.session.search_data)
-			console.log("Display:", display)
-			res.status(200).render("list", {riders: display});
-		}else{
-			res.status(200).render("list", {riders: ""});
-		}
+		res.status(200).render("list");
+		
 	} else {
 		res.status(401).render("login", {
 			error: "user not authenticated",
