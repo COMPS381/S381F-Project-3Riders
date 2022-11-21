@@ -257,30 +257,35 @@ app.post("/search", (req, res) => {
 	let course = req.body.search_course;
 	console.log("Finding...Name: "+ name +" Coursecode: "+ course);
 	let Rider = mongoose.model("Rider", riderSchema);
+	let docList = [];
 
 	if (name != "" && course != "NA"){
-		Rider.find().fetch({ name: name, reports: { courseCode: course } }, function(err, results){
+		Rider.find({ name: name, reports: { courseCode: course } }, function(err, results){
 			if (err) return console.error(err);
-			req.session.search_data = results;
+			results.forEach(doc => docList.push(doc));
+			req.session.search_data = docList;
 			res.redirect("list");
 		});
 	}else if (name == "" && course == "NA"){
-		Rider.find().fetch({}, function(err, results){
+		Rider.find({}, function(err, results){
 			if (err) return console.error(err);
-			req.session.search_data = results;
+			results.forEach(doc => docList.push(doc));
+			req.session.search_data = docList;
 			res.redirect("list");
 		});
 	}
 	else if (name == "" && course != "NA"){
-		Rider.find().fetch( {reports: { courseCode: course } }, function(err, results){
+		Rider.find( {reports: { courseCode: course } }, function(err, results){
 			if (err) return console.error(err);
-			req.session.search_data = results;
+			results.forEach(doc => docList.push(doc));
+			req.session.search_data = docList;
 			res.redirect("list");
 		});
 	}else if (name != "" && course == "NA"){
-		Rider.find().fetch({name: name}, function(err, results){
+		Rider.find({name: name}, function(err, results){
 			if (err) return console.error(err);
-			req.session.search_data = results;
+			results.forEach(doc => docList.push(doc));
+			req.session.search_data = docList;
 			res.redirect("list");
 		});
 	}
