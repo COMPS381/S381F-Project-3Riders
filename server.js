@@ -126,7 +126,7 @@ app.post("/sandwich", (req, res) => {
 app.get("/list", (req, res) => {
 	if (req.session.authenticated) {
 		console.log("Free Riders found: ", req.session.search_data);
-		res.status(200).render("list", {riders: decodeURIComponent(req.session.search_data)});
+		res.status(200).render("list", {riders: String(req.session.search_data)});
 	} else {
 		res.status(401).render("login", {
 			error: "user not authenticated",
