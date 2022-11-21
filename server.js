@@ -286,26 +286,26 @@ app.post("/search", (req, res) => {
 		Rider.find({ name: name, reports: { courseCode: course } }, function(err, results){
 			if (err) return console.error(err);
 			console.log(results);
-			return req.session.search_data = results;
+			req.session.search_data = results;
 		});
 	}else if (name == "" && course == "NA"){
 		Rider.find({}, function(err, results){
 			if (err) return console.error(err);
 			console.log(results);
-			return req.session.search_data = results;
+			req.session.search_data = results;
 		});
 	}
 	else if (name == "" && course != "NA"){
 		Rider.find( {reports: { courseCode: course } }, function(err, results){
 			if (err) return console.error(err);
 			console.log(results);
-			return req.session.search_data = results;
+			req.session.search_data = results;
 		});
 	}else if (name != "" && course == "NA"){
 		Rider.find({name: name}, function(err, results){
 			if (err) return console.error(err);
 			console.log(results);
-			return req.session.search_data = results;
+			req.session.search_data = results;
 		});
 	}
 
