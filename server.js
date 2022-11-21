@@ -125,9 +125,30 @@ app.post("/sandwich", (req, res) => {
 
 app.get("/list", (req, res) => {
 	if (req.session.authenticated) {
-		console.log("Search data********************************************************"+req.session.search_data)
-		res.status(200).render("list", {riders: req.session.search_data});
+		let display = ""
+		if (req.session.search_data != null && req.session.search_data != "") {
+			console.log("Constracting content for display......")
+			for (var i = riders.length - 1; i >= 0; i--) {
+				display += "<tr><td>"+riders[i].name +"</td>"
+				console.log(riders[i].name)
+				for (var j = riders[i].reports.length - 1; i >= 0; i--) {
+					display += "<td>" + riders[i].reports[j].username + "</td>" +
+					"<td>" + riders[i].reports[j].courseCode + "</td>" +
+					"<td>" + riders[i].reports[j].remarks + "</td>" +
+					"<td>" + riders[i].reports[j].reportDate + "</td>";
+					console.log(riders[i].reports[j].username)
+					console.log(riders[i].reports[j].courseCode)
+					console.log(riders[i].reports[j].remarks)
+					console.log(riders[i].reports[j].reportDate)
+				}
+				display += "</tr>";
+			}	
+		console.log(req.session)
+		console.log("Display:", display)
+		console.log("Session data", req.session.search_data)
+		res.status(200).render("list", {riders: display});
 		req.session.search_data = null;
+		}
 	} else {
 		res.status(401).render("login", {
 			error: "user not authenticated",
@@ -258,57 +279,34 @@ app.post("/search", (req, res) => {
 	console.log("Finding...Name: "+ name +" Coursecode: "+ course);
 	let Rider = mongoose.model("Rider", riderSchema);
 
-	let riders = [];
 	if (name != "" && course != "NA"){
 		Rider.find({ name: name, reports: { courseCode: course } }, function(err, results){
 			if (err) return console.error(err);
 			console.log(results);
-			return riders.concat(results);
+			return req.session.search_data = results;
 		});
 	}else if (name == "" && course == "NA"){
 		Rider.find({}, function(err, results){
 			if (err) return console.error(err);
 			console.log(results);
-			return riders.concat(results);
+			return req.session.search_data = results;
 		});
 	}
 	else if (name == "" && course != "NA"){
 		Rider.find( {reports: { courseCode: course } }, function(err, results){
 			if (err) return console.error(err);
 			console.log(results);
-			return riders.concat(results);
+			return req.session.search_data = results;
 		});
 	}else if (name != "" && course == "NA"){
 		Rider.find({name: name}, function(err, results){
 			if (err) return console.error(err);
 			console.log(results);
-			return riders.concat(results);
+			return req.session.search_data = results;
 		});
 	}
 
 	console.log("Free Riders found: ", riders);
-	
-	let display = ""
-	for (var i = riders.length - 1; i >= 0; i--) {
-		display += "<tr><td>"+riders[i].name +"</td>"
-		console.log(riders[i].name)
-		for (var j = riders[i].reports.length - 1; i >= 0; i--) {
-			display += "<td>" + riders[i].reports[j].username + "</td>" +
-			"<td>" + riders[i].reports[j].courseCode + "</td>" +
-			"<td>" + riders[i].reports[j].remarks + "</td>" +
-			"<td>" + riders[i].reports[j].reportDate + "</td>";
-			console.log(riders[i].reports[j].username)
-			console.log(riders[i].reports[j].courseCode)
-			console.log(riders[i].reports[j].remarks)
-			console.log(riders[i].reports[j].reportDate)
-		}
-		display += "</tr>";
-	}	
-
-	req.session.search_data = display;
-	console.log(req.session)
-	console.log("Display:", display)
-	console.log("Session data", req.session.search_data)
 	res.redirect("list");
 
 	});
