@@ -83,9 +83,13 @@
 								</th>
 							</tr>
 						</thead>
-						<tbody>
+						<tbody id="display">
 							<% if (riders != "") { %>
-								<%= riders %>
+							<script type="text/javascript">
+								display = document.getElementById("display");
+								display.innerHTML += "<%= riders %>";
+							</script>
+								
 							<% } %></tbody>
 					</table>
 				</div>
