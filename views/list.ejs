@@ -91,6 +91,7 @@
 		</div>
 	</body>
 	<% if (riders != "") { %>
+		<%riders = decodeURIComponent(riders)%>
 		<script type="text/javascript">
 			var display = document.getElementById("display");
 			/*
