@@ -91,7 +91,6 @@
 		</div>
 	</body>
 	<% if (riders != "") { %>
-		<%riders = decodeURIComponent(riders)%>
 		<script type="text/javascript">
 			var display = document.getElementById("display");
 			/*
@@ -103,7 +102,7 @@
 			//decode = decodeURIComponent(<%=riders%>);
 			*/
 
-			var ridersList = JSON.parse(<%=riders%>);
+			var ridersList = JSON.parse(<%=decodeURIComponent(riders)%>);
 			console.log("Rider list :", ridersList);
 
 			if (ridersList != null && ridersList != "") {
