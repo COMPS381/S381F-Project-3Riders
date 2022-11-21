@@ -134,7 +134,7 @@ app.get("/list", (req, res) => {
 			for (var i = ridersList.length - 1; i >= 0; i--) {
 				display += "<tr><td>"+ridersList[i].name +"</td>"
 				console.log(ridersList[i].name)
-				for (var j = ridersList[i].reports.length - 1; i >= 0; i--) {
+				for (var j = 0; j <= ridersList[i].reports.length - 1; i++) {
 					display += "<td>" + ridersList[i].reports[j].username + "</td>" +
 					"<td>" + ridersList[i].reports[j].courseCode + "</td>" +
 					"<td>" + ridersList[i].reports[j].remarks + "</td>" +
