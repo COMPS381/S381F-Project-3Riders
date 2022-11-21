@@ -91,14 +91,17 @@
 		</div>
 	</body>
 	<% if (riders != "") { %>
+		<% riders = ejs.render(riders) %>
 		<script type="text/javascript">
 			var display = document.getElementById("display");
+			/*
 			//var ridersList = JSON.stringify(<%= riders %>);
 			//var riders = decodeURIComponent(<%=riders%>);
 			for (var i = 0; i <= <%=riders%>.length; i++) {
 				<%=riders%>[i] = decodeURIComponent(<%=riders%>[i]);
 			}
 			//decode = decodeURIComponent(<%=riders%>);
+			*/
 			var ridersList = JSON.parse(decode);
 
 			console.log("Rider list :", ridersList);
