@@ -149,7 +149,7 @@ app.get("/list", (req, res) => {
 		res.status(200).render("list", {riders: display});
 		req.session.search_data = null;
 		}else{
-			res.status(200).render("list");
+			res.status(200).render("list", {riders: ""});
 		}
 	} else {
 		res.status(401).render("login", {
