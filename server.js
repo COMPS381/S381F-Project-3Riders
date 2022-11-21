@@ -51,6 +51,7 @@ app.get("/", (req, res) => {
 		});
 	} else {
 		res.status(200).render("report", { username: req.session.username, msg: ""  });
+
 		// res.status(200).render('secrets',{name:req.session.username});
 	}
 });
@@ -78,6 +79,8 @@ app.post("/login", (req, res) => {
 			req.session.type = user.type;
 			avatarMap.set(req.body.username, user.avatar == "" ? "/default.webp" : user.avatar);
 			console.log(req.session.type);
+			req.session.search_data = null;
+			console.log(req.session)
 		}
 	});
 	if (req.session.authenticated) {
@@ -122,7 +125,9 @@ app.post("/sandwich", (req, res) => {
 
 app.get("/list", (req, res) => {
 	if (req.session.authenticated) {
-		res.status(200).render("list");
+		console.log("Search data********************************************************"+req.session.search_data)
+		res.status(200).render("list", {riders: req.session.search_data});
+		req.session.search_data = null;
 	} else {
 		res.status(401).render("login", {
 			error: "user not authenticated",
@@ -132,7 +137,7 @@ app.get("/list", (req, res) => {
 
 app.post("/list", (req, res) => {
 	if (req.session.authenticated) {
-		res.status(200).render("list");
+		res.status(200).render("list", {riders: ""});
 	} else {
 		res.status(401).render("login", {
 			error: "user not authenticated",
@@ -243,58 +248,53 @@ app.post("/register", (req, res) => {
 });
 
 app.get("/search", (req, res) => {
-	res.status(200).render("search", {
-		error: "",
-	});
+	res.redirect("list");
 });
 
 //search for free rider and list out on list.ejs
 app.post("/search", (req, res) => {
-	console.log(req.body);
-
 	let name = req.body.search_name;
 	let course = req.body.search_course;
-
+	console.log("Finding...Name: "+ name +" Coursecode: "+ course);
 	let Rider = mongoose.model("Rider", riderSchema);
 
-	let riders = ""
+	let riders = [];
 	if (name != "" && course != "NA"){
-		riders = Rider.find({ name: name, reports: { courseCode: course } });
+		riders = Rider.find({ name: name, reports: { courseCode: course } }).lean();
 	}else if (name == "" && course == "NA"){
-		riders = Rider.find({});
+		riders = Rider.find({}).lean();
 	}
 	else if (name == "" && course != "NA"){
-		riders = Rider.find( {reports: { courseCode: course } });
+		riders = Rider.find( {reports: { courseCode: course } }).lean();
 	}else if (name != "" && course == "NA"){
-		riders = Rider.find({name: name});
+		riders = Rider.find({name: name}).lean();
 	}
-	console.log("Free Riders", riders);
+	//riders_json = JSON.stringify(riders);
+	console.log("Free Riders found: ", riders);
+	
+	let display = ""
+	for (var i = riders.length - 1; i >= 0; i--) {
+		display += "<tr><td>"+riders[i].name +"</td>"
+		console.log(riders[i].name)
+		for (var j = riders[i].reports.length - 1; i >= 0; i--) {
+			display += "<td>" + riders[i].reports[j].username + "</td>" +
+			"<td>" + riders[i].reports[j].courseCode + "</td>" +
+			"<td>" + riders[i].reports[j].remarks + "</td>" +
+			"<td>" + riders[i].reports[j].reportDate + "</td>";
+			console.log(riders[i].reports[j].username)
+			console.log(riders[i].reports[j].courseCode)
+			console.log(riders[i].reports[j].remarks)
+			console.log(riders[i].reports[j].reportDate)
+		}
+		display += "</tr>";
+	}	
 
-	var tbodyRef = document
-		.getElementById("listTable")
-		.getElementsByTagName("tbody")[0];
+	req.session.search_data = display;
+	console.log(req.session)
+	console.log("Display:", display)
+	console.log("Session data", req.session.search_data)
+	res.redirect("list");
 
-	riders.forEach((element) => {
-			var name = row.insertCell(0);
-			nameCell.innerHTML = element["name"];
-
-			var reports = element["report"]
-			for (var i = reports.length - 1; i >= 0; i--) {
-				var row = tbodyRef.insertRow();
-				
-				var userName = row.insertCell(1);
-				var courseCode = row.insertCell(2);
-				var reportDate = row.insertCell(3);
-				var remarks = row.insertCell(4);
-
-				userName.innerHTML = reports["program"];
-				courseCode.innerHTML = reports["courseCode"];
-				reportDate.innerHTML = reports["reportDate"];
-				remarks.innerHTML = reports["remarks"];
-			}	
-		}); 
-		
-		//res.status(200).render("list");
 	});
 
 // Direct to the drop.ejs by GET
@@ -307,17 +307,49 @@ app.get("/drop", (req, res) => {
 		});
 	}
 });
+
 //Dropping someone
 app.post("/drop", (req, res) => {
-	if (req.session.type == 'user'){
-		let Rider = mongoose.model("Rider", riderSchema);
-		Rider.deleteOne(
-			{ sid: req.body.sid },
-			{ reports: {
-				courseCode: req.body.courseCode,
+	if (req.session.type == 'admin'){
+		const anSID = req.body.sid;
+		const aCourseCode = req.body.coursecode;
+
+		const idArray = []; 
+		let aRider = mongoose.model("Rider", riderSchema);
+		aRider.findOne(
+			{ sid: {$eq:anSID} },
+			function (err, aRider) {
+				if (err) {
+					console.log("ERROR 1!");
+				} else {
+					for (let i = 0; i < aRider.reports.length; i++) {
+						if (aRider.reports.length == 0 || aRider.reports[i].courseCode == "") {
+							console.log(anSID, " is no longer a Rider");
+							break;
+						} else {
+							if (aRider.reports[i].courseCode != "" || aRider.reports[i].courseCode == aCourseCode) {
+								console.log(anSID, " is a Rider");
+								idArray.push(aRider.reports[i]._id);
+								console.log("Pushed ", aRider.reports[i]._id, " into idArray");
+							}
+						}
+					}
+					console.log("idArray = ", idArray);
 				}
-			},
-		).then(console.log("Rider removed"));
+			} 
+		);
+
+		console.log("Okay next step is to remove: ");
+		for (let i = 0; i < idArray.length; i++) {
+			aRider.findByIdAndDelete(idArray[i], function (err, aRider) {
+				if (err) {
+					console.log("ERROR 2!");
+				} else {
+					console.log("Deleted ", anSID, " from the riders' list of ", aCourseCode);
+				}
+			});
+		}
+
 		res.status(200).render("report", {
 			username: req.session.username, msg: "",
 		});

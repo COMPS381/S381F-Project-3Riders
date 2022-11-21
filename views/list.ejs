@@ -25,6 +25,7 @@
 								type="text"
 								class="drac-input drac-input-white drac-text-white"
 								id="search_name"
+								name="search_name"
 								placeholder="His/Her names..."
 							/>
 						</div>
@@ -37,7 +38,7 @@
 								>Studying course:
 							</label>
 							<select
-								name="course"
+								name="search_course"
 								id="search_course"
 								class="drac-input drac-input-white drac-text-white"
 							>
@@ -82,7 +83,10 @@
 								</th>
 							</tr>
 						</thead>
-						<tbody></tbody>
+						<tbody>
+							<% if (riders != "") { %>
+								<%= riders %>
+							<% } %></tbody>
 					</table>
 				</div>
 			</div>
