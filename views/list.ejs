@@ -93,7 +93,7 @@
 	<% if (riders != "") { %>
 		<script type="text/javascript">
 			var display = document.getElementById("display");
-			var ridersList = <%= riders %>;
+			var ridersList = JSON.stringify(<%= riders %>);
 
 			console.log("Rider list :", ridersList);
 

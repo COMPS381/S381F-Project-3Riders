@@ -260,7 +260,6 @@ app.post("/search", (req, res) => {
 	if (name != "" && course != "NA"){
 		Rider.find({ name: name, reports: { courseCode: course } }, function(err, results){
 			if (err) return console.error(err);
-			console.log(results);
 			req.session.search_data = results;
 			console.log("Free Riders found: ", req.session.search_data);
 			res.redirect("list");
@@ -268,7 +267,6 @@ app.post("/search", (req, res) => {
 	}else if (name == "" && course == "NA"){
 		Rider.find({}, function(err, results){
 			if (err) return console.error(err);
-			console.log(results);
 			req.session.search_data = results;
 			console.log("Free Riders found: ", req.session.search_data);
 			res.redirect("list");
@@ -277,7 +275,6 @@ app.post("/search", (req, res) => {
 	else if (name == "" && course != "NA"){
 		Rider.find( {reports: { courseCode: course } }, function(err, results){
 			if (err) return console.error(err);
-			console.log(results);
 			req.session.search_data = results;
 			console.log("Free Riders found: ", req.session.search_data);
 			res.redirect("list");
@@ -285,7 +282,6 @@ app.post("/search", (req, res) => {
 	}else if (name != "" && course == "NA"){
 		Rider.find({name: name}, function(err, results){
 			if (err) return console.error(err);
-			console.log(results);
 			req.session.search_data = results;
 			console.log("Free Riders found: ", req.session.search_data);
 			res.redirect("list");
