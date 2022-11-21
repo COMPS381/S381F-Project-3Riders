@@ -126,6 +126,7 @@ app.post("/sandwich", (req, res) => {
 app.get("/list", (req, res) => {
 	if (req.session.authenticated) {
 		let display = ""
+		console.log(req.session);
 		let ridersList = req.session.search_data;
 		console.log("Rider list :", ridersList);
 		if (ridersList != null && ridersList != "") {
@@ -287,12 +288,16 @@ app.post("/search", (req, res) => {
 			if (err) return console.error(err);
 			console.log(results);
 			req.session.search_data = results;
+			console.log("Free Riders found: ", req.session.search_data);
+			res.redirect("list");
 		});
 	}else if (name == "" && course == "NA"){
 		Rider.find({}, function(err, results){
 			if (err) return console.error(err);
 			console.log(results);
 			req.session.search_data = results;
+			console.log("Free Riders found: ", req.session.search_data);
+			res.redirect("list");
 		});
 	}
 	else if (name == "" && course != "NA"){
@@ -300,17 +305,18 @@ app.post("/search", (req, res) => {
 			if (err) return console.error(err);
 			console.log(results);
 			req.session.search_data = results;
+			console.log("Free Riders found: ", req.session.search_data);
+			res.redirect("list");
 		});
 	}else if (name != "" && course == "NA"){
 		Rider.find({name: name}, function(err, results){
 			if (err) return console.error(err);
 			console.log(results);
 			req.session.search_data = results;
+			console.log("Free Riders found: ", req.session.search_data);
+			res.redirect("list");
 		});
 	}
-
-	console.log("Free Riders found: ", req.session.search_data);
-	res.redirect("list");
 
 	});
 
