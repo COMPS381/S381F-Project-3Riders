@@ -259,7 +259,7 @@ app.post("/search", (req, res) => {
 	let Rider = mongoose.model("Rider", riderSchema);
 
 	if (name != "" && course != "NA"){
-		Rider.find({ name: name, reports: { courseCode: course } }, function(err, results){
+		Rider.find().fetch({ name: name, reports: { courseCode: course } }, function(err, results){
 			if (err) return console.error(err);
 			req.session.search_data = results;
 			res.redirect("list");
