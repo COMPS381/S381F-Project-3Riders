@@ -93,18 +93,19 @@
 	<% if (riders != "") { %>
 		<script type="text/javascript">
 			var display = document.getElementById("display");
-			var ridersList = JSON.parse(<%= riders %>);
+			var riders = <%= riders %>
+			var ridersList = JSON.Parse(riders);
 
 			console.log("Rider list :", ridersList);
 
 			if (ridersList != null && ridersList != "") {
 				console.log("Construction content for display......")
-				for (var i = ridersList.length - 1; i >= 0; i--) {
+				for (let i in ridersList) {
 					display.innerHTML += "<tr><td>"+ridersList[i].name +"</td>"
 					console.log(ridersList[i].name)
 					console.log(ridersList[i].reports)
-					var reports = ridersList[i].reports;
-					for (var x = 0; x <= reports.length - 1; x++) {
+					//var reports = ridersList[i].reports;
+					for (let x in ridersList[i].reports) {
 						display.innerHTML += "<td>" + reports[x].username + "</td>" +
 						"<td>" + reports[x].courseCode + "</td>" +
 						"<td>" + reports[x].remarks + "</td>" +
