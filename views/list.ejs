@@ -92,12 +92,11 @@
 	</body>
 	<% if (riders != "") { %>
 		<script type="text/javascript">
-			const riderSchema = require("./models/rider");
 			var display = document.getElementById("display");
 			//var ridersList = JSON.stringify(<%= riders %>);
-			var riders = <%=riders%>;
-			for (var i = 0; i <= riders.length; i++) {
-				riders[i] = decodeURIComponent(riders[i]);
+			//var riders = decodeURIComponent(<%=riders%>);
+			for (var i = 0; i <= <%=riders%>.length; i++) {
+				<%=riders%>[i] = decodeURIComponent(<%=riders%>[i]);
 			}
 			//decode = decodeURIComponent(<%=riders%>);
 			var ridersList = JSON.parse(decode);
