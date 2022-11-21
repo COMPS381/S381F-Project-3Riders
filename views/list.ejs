@@ -101,7 +101,7 @@
 			}
 			//decode = decodeURIComponent(<%=riders%>);
 			*/
-			var ridersString = decodeURIComponent('<%=riders%>');
+			var ridersString = '<%-riders%>';
 			var ridersList = JSON.parse(ridersString);
 			console.log("Rider list :", ridersList);
 
