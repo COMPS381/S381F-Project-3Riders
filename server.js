@@ -265,20 +265,20 @@ app.post("/search", (req, res) => {
 			res.redirect("list");
 		});
 	}else if (name == "" && course == "NA"){
-		Rider.find({}, function(err, results){
+		Rider.find().fetch({}, function(err, results){
 			if (err) return console.error(err);
 			req.session.search_data = results;
 			res.redirect("list");
 		});
 	}
 	else if (name == "" && course != "NA"){
-		Rider.find( {reports: { courseCode: course } }, function(err, results){
+		Rider.find().fetch( {reports: { courseCode: course } }, function(err, results){
 			if (err) return console.error(err);
 			req.session.search_data = results;
 			res.redirect("list");
 		});
 	}else if (name != "" && course == "NA"){
-		Rider.find({name: name}, function(err, results){
+		Rider.find().fetch({name: name}, function(err, results){
 			if (err) return console.error(err);
 			req.session.search_data = results;
 			res.redirect("list");
