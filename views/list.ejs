@@ -101,8 +101,8 @@
 			}
 			//decode = decodeURIComponent(<%=riders%>);
 			*/
-			var ridersList = JSON.parse(decode);
 
+			var ridersList = JSON.parse(<%=riders%>);
 			console.log("Rider list :", ridersList);
 
 			if (ridersList != null && ridersList != "") {
