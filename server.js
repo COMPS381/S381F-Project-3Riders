@@ -260,29 +260,29 @@ app.post("/search", (req, res) => {
 
 	let riders;
 	if (name != "" && course != "NA"){
-		Rider.find({ name: name, reports: { courseCode: course } }, function(err, results){
+		riders = Rider.find({ name: name, reports: { courseCode: course } }, function(err, results){
 			if (err) return console.error(err);
 			console.log(results);
-			return riders = results;
+			return results;
 		});
 	}else if (name == "" && course == "NA"){
-		Rider.find({}, function(err, results){
+		riders = Rider.find({}, function(err, results){
 			if (err) return console.error(err);
 			console.log(results);
-			return riders = results;
+			return results;
 		});
 	}
 	else if (name == "" && course != "NA"){
-		Rider.find( {reports: { courseCode: course } }, function(err, results){
+		riders = Rider.find( {reports: { courseCode: course } }, function(err, results){
 			if (err) return console.error(err);
 			console.log(results);
-			return riders = results;
+			return results;
 		});
 	}else if (name != "" && course == "NA"){
-		Rider.find({name: name}, function(err, results){
+		riders = Rider.find({name: name}, function(err, results){
 			if (err) return console.error(err);
 			console.log(results);
-			return riders = results;
+			return results;
 		});
 	}
 
