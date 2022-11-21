@@ -127,6 +127,7 @@ app.get("/list", (req, res) => {
 	if (req.session.authenticated) {
 		let display = ""
 		let ridersList = req.session.search_data;
+		console.log("Rider list :", ridersList);
 		if (ridersList != null && ridersList != "") {
 			console.log("Constracting content for display......")
 			for (var i = ridersList.length - 1; i >= 0; i--) {
@@ -144,11 +145,11 @@ app.get("/list", (req, res) => {
 				}
 				display += "</tr>";
 			}	
-		console.log(req.session)
-		console.log("Display:", display)
-		console.log("Session data", req.session.search_data)
-		res.status(200).render("list", {riders: display});
-		req.session.search_data = null;
+			console.log(req.session)
+			console.log("Display:", display)
+			console.log("Session data", req.session.search_data)
+			res.status(200).render("list", {riders: display});
+			req.session.search_data = null;
 		}else{
 			res.status(200).render("list", {riders: ""});
 		}
