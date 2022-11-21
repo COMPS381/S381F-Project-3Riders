@@ -94,8 +94,8 @@
 		<script type="text/javascript">
 			const riderSchema = require("./models/rider");
 			var display = document.getElementById("display");
-			var ridersList = JSON.stringify(<%= riders %>);
-			//var ridersList = JSON.Parse(riders);
+			//var ridersList = JSON.stringify(<%= riders %>);
+			var ridersList = JSON.Parse(<%=riders%>);
 
 			console.log("Rider list :", ridersList);
 
