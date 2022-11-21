@@ -266,20 +266,20 @@ app.post("/search", (req, res) => {
 			let riders = results;
 		});
 	}else if (name == "" && course == "NA"){
-		riders = Rider.find({}, function(err, results){
+		Rider.find({}, function(err, results){
 			if (err) return console.error(err);
 			console.log(results);
 			let riders = results;
 		});
 	}
 	else if (name == "" && course != "NA"){
-		riders = Rider.find( {reports: { courseCode: course } }, function(err, results){
+		Rider.find( {reports: { courseCode: course } }, function(err, results){
 			if (err) return console.error(err);
 			console.log(results);
 			let riders = results;
 		});
 	}else if (name != "" && course == "NA"){
-		riders = Rider.find({name: name}, function(err, results){
+		Rider.find({name: name}, function(err, results){
 			if (err) return console.error(err);
 			console.log(results);
 			let riders = results;
