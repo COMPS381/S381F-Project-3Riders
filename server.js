@@ -311,8 +311,8 @@ app.get("/drop", (req, res) => {
 //Dropping someone
 app.post("/drop", (req, res) => {
 	if (req.session.type == 'admin'){
-		const anSID = req.body.sid;
-		const aCourseCode = req.body.coursecode;
+		var anSID = req.body.sid;
+		var aCourseCode = req.body.coursecode;
 
 		const idArray = []; 
 		let aRider = mongoose.model("Rider", riderSchema);
@@ -340,12 +340,12 @@ app.post("/drop", (req, res) => {
 		);
 
 		console.log("Okay next step is to remove: ");
-		for (let i = 0; i < idArray.length; i++) {
-			aRider.findByIdAndDelete(idArray[i], function (err, aRider) {
+		for (let ii = 0; ii < idArray.length; ii++) {
+			aRider.findByIdAndDelete(idArray[ii], function (err, aRider) {
 				if (err) {
 					console.log("ERROR 2!");
 				} else {
-					console.log("Deleted ", anSID, " from the riders' list of ", aCourseCode);
+					console.log(anSID, " is no longer a rider in ", aCourseCode);
 				}
 			});
 		}
