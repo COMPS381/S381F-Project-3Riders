@@ -309,7 +309,7 @@ app.post("/search", (req, res) => {
 		});
 	}
 
-	console.log("Free Riders found: ", riders);
+	console.log("Free Riders found: ", req.session.search_data);
 	res.redirect("list");
 
 	});
