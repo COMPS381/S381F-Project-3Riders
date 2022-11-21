@@ -258,16 +258,32 @@ app.post("/search", (req, res) => {
 	console.log("Finding...Name: "+ name +" Coursecode: "+ course);
 	let Rider = mongoose.model("Rider", riderSchema);
 
-	let riders = [];
+	
 	if (name != "" && course != "NA"){
-		riders = Rider.find({ name: name, reports: { courseCode: course } }).lean();
+		Rider.find({ name: name, reports: { courseCode: course } }, function(err, results){
+			if (err) return console.error(err);
+			console.log(results);
+			let riders = results;
+		});
 	}else if (name == "" && course == "NA"){
-		riders = Rider.find({}).lean();
+		riders = Rider.find({}, function(err, results){
+			if (err) return console.error(err);
+			console.log(results);
+			let riders = results;
+		});
 	}
 	else if (name == "" && course != "NA"){
-		riders = Rider.find( {reports: { courseCode: course } }).lean();
+		riders = Rider.find( {reports: { courseCode: course } }, function(err, results){
+			if (err) return console.error(err);
+			console.log(results);
+			let riders = results;
+		});
 	}else if (name != "" && course == "NA"){
-		riders = Rider.find({name: name}).lean();
+		riders = Rider.find({name: name}, function(err, results){
+			if (err) return console.error(err);
+			console.log(results);
+			let riders = results;
+		});
 	}
 	//riders_json = JSON.stringify(riders);
 	console.log("Free Riders found: ", riders);
