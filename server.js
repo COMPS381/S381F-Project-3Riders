@@ -256,18 +256,19 @@ app.post("/search", (req, res) => {
 	let course = req.body.search_course;
 	console.log("Finding...Name: "+ name +" Coursecode: "+ course);
 	let Rider = mongoose.model("Rider", riderSchema);
+	let resultList = []
 
 	if (name != "" && course != "NA"){
 		Rider.find({ name: name, reports: { courseCode: course } }, function(err, results){
 			if (err) return console.error(err);
-			req.session.search_data = results;
-			console.log("Free Riders found: ", req.session.search_data);
+			console.log("Free Riders found: ", results);
+			req.session.search_data = JSON.stringify(results);
 			res.redirect("list");
 		});
 	}else if (name == "" && course == "NA"){
 		Rider.find({}, function(err, results){
 			if (err) return console.error(err);
-			req.session.search_data = results;
+			req.session.search_data = JSON.stringify(results);
 			console.log("Free Riders found: ", req.session.search_data);
 			res.redirect("list");
 		});
@@ -275,14 +276,14 @@ app.post("/search", (req, res) => {
 	else if (name == "" && course != "NA"){
 		Rider.find( {reports: { courseCode: course } }, function(err, results){
 			if (err) return console.error(err);
-			req.session.search_data = results;
+			req.session.search_data = JSON.stringify(results);
 			console.log("Free Riders found: ", req.session.search_data);
 			res.redirect("list");
 		});
 	}else if (name != "" && course == "NA"){
 		Rider.find({name: name}, function(err, results){
 			if (err) return console.error(err);
-			req.session.search_data = results;
+			req.session.search_data = JSON.stringify(results);
 			console.log("Free Riders found: ", req.session.search_data);
 			res.redirect("list");
 		});
