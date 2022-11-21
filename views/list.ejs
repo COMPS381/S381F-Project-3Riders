@@ -113,10 +113,10 @@
 					console.log(ridersList[i].reports)
 					//var reports = ridersList[i].reports;
 					for (let x in ridersList[i].reports) {
-						display.innerHTML += "<td>" + reports[x].username + "</td>" +
-						"<td>" + reports[x].courseCode + "</td>" +
-						"<td>" + reports[x].remarks + "</td>" +
-						"<td>" + reports[x].reportDate + "</td>";
+						display.innerHTML += "<td>" + ridersList[i].reports[x].username + "</td>" +
+						"<td>" + ridersList[i].reports[x].courseCode + "</td>" +
+						"<td>" + ridersList[i].reports[x].remarks + "</td>" +
+						"<td>" + ridersList[i].reports[x].reportDate + "</td>";
 						console.log("Username: ", reports[x].username)
 						console.log("Course Code: ",reports[x].courseCode)
 						console.log("Remarks: ",reports[x].remarks)
