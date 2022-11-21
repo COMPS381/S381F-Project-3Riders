@@ -263,14 +263,14 @@ app.post("/search", (req, res) => {
 		Rider.find({ name: name, reports: { courseCode: course } }, function(err, results){
 			if (err) return console.error(err);
 			results.forEach(doc => docList.push(doc));
-			req.session.search_data = JSON.stringify(docList);
+			req.session.search_data = docList;
 			res.redirect("list");
 		});
 	}else if (name == "" && course == "NA"){
 		Rider.find({}, function(err, results){
 			if (err) return console.error(err);
 			results.forEach(doc => docList.push(doc));
-			req.session.search_data = JSON.stringify(docList);
+			req.session.search_data = docList;
 			res.redirect("list");
 		});
 	}
@@ -278,14 +278,14 @@ app.post("/search", (req, res) => {
 		Rider.find( {reports: { courseCode: course } }, function(err, results){
 			if (err) return console.error(err);
 			results.forEach(doc => docList.push(doc));
-			req.session.search_data = JSON.stringify(docList);
+			req.session.search_data = docList;
 			res.redirect("list");
 		});
 	}else if (name != "" && course == "NA"){
 		Rider.find({name: name}, function(err, results){
 			if (err) return console.error(err);
 			results.forEach(doc => docList.push(doc));
-			req.session.search_data = JSON.stringify(docList);
+			req.session.search_data = docList;
 			res.redirect("list");
 		});
 	}
