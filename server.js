@@ -126,20 +126,21 @@ app.post("/sandwich", (req, res) => {
 app.get("/list", (req, res) => {
 	if (req.session.authenticated) {
 		let display = ""
-		if (req.session.search_data != null && req.session.search_data != "") {
+		let ridersList = req.session.search_data;
+		if (ridersList != null && ridersList != "") {
 			console.log("Constracting content for display......")
-			for (var i = riders.length - 1; i >= 0; i--) {
-				display += "<tr><td>"+riders[i].name +"</td>"
-				console.log(riders[i].name)
-				for (var j = riders[i].reports.length - 1; i >= 0; i--) {
-					display += "<td>" + riders[i].reports[j].username + "</td>" +
-					"<td>" + riders[i].reports[j].courseCode + "</td>" +
-					"<td>" + riders[i].reports[j].remarks + "</td>" +
-					"<td>" + riders[i].reports[j].reportDate + "</td>";
-					console.log(riders[i].reports[j].username)
-					console.log(riders[i].reports[j].courseCode)
-					console.log(riders[i].reports[j].remarks)
-					console.log(riders[i].reports[j].reportDate)
+			for (var i = ridersList.length - 1; i >= 0; i--) {
+				display += "<tr><td>"+ridersList[i].name +"</td>"
+				console.log(ridersList[i].name)
+				for (var j = ridersList[i].reports.length - 1; i >= 0; i--) {
+					display += "<td>" + ridersList[i].reports[j].username + "</td>" +
+					"<td>" + ridersList[i].reports[j].courseCode + "</td>" +
+					"<td>" + ridersList[i].reports[j].remarks + "</td>" +
+					"<td>" + ridersList[i].reports[j].reportDate + "</td>";
+					console.log(ridersList[i].reports[j].username)
+					console.log(ridersList[i].reports[j].courseCode)
+					console.log(ridersList[i].reports[j].remarks)
+					console.log(ridersList[i].reports[j].reportDate)
 				}
 				display += "</tr>";
 			}	
