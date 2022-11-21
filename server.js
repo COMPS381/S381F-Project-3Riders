@@ -134,21 +134,23 @@ app.get("/list", (req, res) => {
 			for (var i = ridersList.length - 1; i >= 0; i--) {
 				display += "<tr><td>"+ridersList[i].name +"</td>"
 				console.log(ridersList[i].name)
-				for (var j = 0; j <= ridersList[i].reports.length - 1; i++) {
-					display += "<td>" + ridersList[i].reports[j].username + "</td>" +
-					"<td>" + ridersList[i].reports[j].courseCode + "</td>" +
-					"<td>" + ridersList[i].reports[j].remarks + "</td>" +
-					"<td>" + ridersList[i].reports[j].reportDate + "</td>";
-					console.log(ridersList[i].reports[j].username)
-					console.log(ridersList[i].reports[j].courseCode)
-					console.log(ridersList[i].reports[j].remarks)
-					console.log(ridersList[i].reports[j].reportDate)
+				console.log(ridersList[i].reports)
+				var reports = ridersList[i].reports;
+				for (var x = 0; x <= reports.length - 1; x++) {
+					display += "<td>" + reports[x].username + "</td>" +
+					"<td>" + reports[x].courseCode + "</td>" +
+					"<td>" + reports[x].remarks + "</td>" +
+					"<td>" + reports[x].reportDate + "</td>";
+					console.log("Username: ", reports[x].username)
+					console.log("Course Code: ",reports[x].courseCode)
+					console.log("Remarks: ",reports[x].remarks)
+					console.log("Report Date: ",reports[x].reportDate)
 				}
 				display += "</tr>";
 			}	
 			console.log(req.session)
+			//console.log("Session data", req.session.search_data)
 			console.log("Display:", display)
-			console.log("Session data", req.session.search_data)
 			res.status(200).render("list", {riders: display});
 		}else{
 			res.status(200).render("list", {riders: ""});
