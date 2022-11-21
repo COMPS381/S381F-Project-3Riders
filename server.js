@@ -260,14 +260,14 @@ app.post("/search", (req, res) => {
 	let docList = [];
 
 	if (name != "" && course != "NA"){
-		Rider.find({ name: name, reports: { courseCode: course }, {_id: 0} }, function(err, results){
+		Rider.find( { name: name, reports: { courseCode: course } }, {_id: 0} , function(err, results){
 			if (err) return console.error(err);
 			results.forEach(doc => docList.push(doc));
 			req.session.search_data = JSON.stringify(docList);
 			res.redirect("list");
 		});
 	}else if (name == "" && course == "NA"){
-		Rider.find({{_id: 0 }}, function(err, results){
+		Rider.find({}, {_id: 0 }, function(err, results){
 			if (err) return console.error(err);
 			results.forEach(doc => docList.push(doc));
 			req.session.search_data = JSON.stringify(docList);
@@ -275,14 +275,14 @@ app.post("/search", (req, res) => {
 		});
 	}
 	else if (name == "" && course != "NA"){
-		Rider.find( {reports: { courseCode: course }, {_id: 0}  }, function(err, results){
+		Rider.find( {reports: { courseCode: course } }, {_id: 0}, function(err, results){
 			if (err) return console.error(err);
 			results.forEach(doc => docList.push(doc));
 			req.session.search_data = JSON.stringify(docList);
 			res.redirect("list");
 		});
 	}else if (name != "" && course == "NA"){
-		Rider.find({name: name, {_id: 0} }, function(err, results){
+		Rider.find({name: name}, {_id: 0} , function(err, results){
 			if (err) return console.error(err);
 			results.forEach(doc => docList.push(doc));
 			req.session.search_data = JSON.stringify(docList);
