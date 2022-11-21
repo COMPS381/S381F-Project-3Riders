@@ -93,6 +93,7 @@
 	<% if (riders != "") { %>
 		<script type="text/javascript">
 			var display = document.getElementById("display");
+			var content = "";
 			/*
 			//var ridersList = JSON.stringify(<%= riders %>);
 			//var riders = decodeURIComponent(<%=riders%>);
@@ -108,12 +109,12 @@
 			if (ridersList != null && ridersList != "") {
 				console.log("Construction content for display......")
 				for (let i in ridersList) {
-					display.innerHTML += "<tr><td>"+ridersList[i].name +"</td>"
+					content += "<tr><td>"+ridersList[i].name +"</td>"
 					console.log(ridersList[i].name)
 					console.log(ridersList[i].reports)
 					//var reports = ridersList[i].reports;
 					for (let x in ridersList[i].reports) {
-						display.innerHTML += "<td>" + ridersList[i].reports[x].username + "</td>" +
+						content += "<td>" + ridersList[i].reports[x].username + "</td>" +
 						"<td>" + ridersList[i].reports[x].courseCode + "</td>" +
 						"<td>" + ridersList[i].reports[x].remarks + "</td>" +
 						"<td>" + ridersList[i].reports[x].reportDate + "</td>";
@@ -122,8 +123,9 @@
 						console.log("Remarks: ",ridersList[i].reports[x].remarks)
 						console.log("Report Date: ",ridersList[i].reports[x].reportDate)
 					}
-					display.innerHTML += "</tr>";
-				}	
+					content += "</tr>";
+				}
+				display.innerHTML = content;	
 			}
 	</script>
 	<% } %>
