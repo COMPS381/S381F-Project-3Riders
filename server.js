@@ -50,7 +50,10 @@ app.get("/", (req, res) => {
 			error: "user not authenticated",
 		});
 	} else {
-		res.status(200).render("report", { username: req.session.username, msg: ""  });
+		res.status(200).render("report", {
+			username: req.session.username,
+			msg: "",
+		});
 
 		// res.status(200).render('secrets',{name:req.session.username});
 	}
@@ -73,28 +76,44 @@ app.post("/login", (req, res) => {
 		) {
 			// correct user name + password
 			// store the following name/value pairs in cookie session
-			console.log("authenticated")
+			console.log("authenticated");
 			req.session.authenticated = true; // 'authenticated': true
 			req.session.username = req.body.username; // 'username': req.body.name
 			req.session.type = user.type;
-			avatarMap.set(req.body.username, user.avatar == "" ? "/default.webp" : user.avatar);
+			avatarMap.set(
+				req.body.username,
+				user.avatar == "" ? "/default.webp" : user.avatar
+			);
 			console.log(req.session.type);
 			// req.session.search_data = null;
-			console.log(req.session)
+			console.log(req.session);
 		}
 	});
 	if (req.session.authenticated) {
-		res.status(200).render("report", { username: req.session.username, msg: ""  });
+		req.headers["user-agent"].indexOf("curl") >= 0
+			? res.status(200).json({
+					msg: "Login successfully",
+			  })
+			: res.status(200).render("report", {
+					username: req.session.username,
+					msg: "",
+			  });
 	} else {
-		res.status(401).render("login", {
-			error: "Invalid username or password",
-		});
+		req.headers["user-agent"].indexOf("curl") >= 0
+			? res.status(401).json({
+					error: "Invalid username or password",
+			  })
+			: res.status(401).render("login", {
+					error: "Invalid username or password",
+			  });
 	}
 });
 
 app.get("/logout", (req, res) => {
 	req.session = null; // clear cookie-session
-	try { avatarMap.delete(req.session.username); } catch (e) {}// drop avatar 
+	try {
+		avatarMap.delete(req.session.username);
+	} catch (e) {} // drop avatar
 	res.redirect("/login");
 });
 
@@ -105,30 +124,42 @@ app.get("/avatar", (req, res) => {
 app.post("/sandwich", (req, res) => {
 	console.log(req.session.type);
 	if (req.session.type == "admin") {
-		console.log("[xkcd] make me a sandwich")
+		console.log("make me a sandwich");
 		// try to find the username in the database that matches the username in the request, if yes then update the type to admin
 		User.findOneAndUpdate(
 			{ username: req.body.username },
 			{ type: "admin" },
 			(err, doc) => {
 				if (err) {
-					res.status(500).end("[ERROR] " + err);
+					req.headers["user-agent"].indexOf("curl") >= 0
+						? res.status(500).json({
+								msg: "[ERROR] " + err,
+						  })
+						: res.status(500).end("[ERROR] " + err);
 				}
-				console.log(doc)
-				res.status(200).end("OKAY");
+				console.log(doc);
+				req.headers["user-agent"].indexOf("curl") >= 0
+					? res.status(200).json({
+							msg: "OKAY",
+					  })
+					: res.status(200).end("OKAY");
 			}
 		);
 	} else {
-		res.status(401).end(req.session.username + " is not in the admin group. This incident will NOT be reported");
+		res.status(401).end(
+			req.session.username +
+				" is not in the admin group. This incident will NOT be reported"
+		);
 	}
 });
-
 
 var searchMap = new Map();
 app.get("/list", (req, res) => {
 	if (req.session.authenticated) {
-		console.log("Free Riders found: ", searchMap.get(req.body.username));// req.session.search_data);
-		res.status(200).render("list", {riders: searchMap.get(req.body.username)});
+		console.log("Free Riders found: ", searchMap.get(req.body.username)); // req.session.search_data);
+		res.status(200).render("list", {
+			riders: searchMap.get(req.body.username),
+		});
 	} else {
 		res.status(401).render("login", {
 			error: "user not authenticated",
@@ -136,23 +167,26 @@ app.get("/list", (req, res) => {
 	}
 });
 
-app.post("/list", (req, res) => {
-	if (req.session.authenticated) {
-		console.log("Free Riders found: ", searchMap.get(req.body.username));
-		res.status(200).render("list", {riders: searchMap.get(req.body.username)});
-	} else {
-		res.status(401).render("login", {
-			error: "user not authenticated",
-		});
-	}
-});
+// app.post("/list", (req, res) => {
+// 	if (req.session.authenticated) {
+// 		console.log("Free Riders found: ", searchMap.get(req.body.username));
+// 		res.status(200).json(searchMap.get(req.body.username));
+// 	} else {
+// 		res.status(401).json({
+// 			error: "user not authenticated",
+// 		});
+// 	}
+// });
 
 app.get("/report", (req, res) => {
-	console.log(req.session.authenticated)
+	console.log(req.session.authenticated);
 	if (req.session.authenticated) {
-		res.status(200).render("report", { username: req.session.username, msg: ""  });
+		res.status(200).render("report", {
+			username: req.session.username,
+			msg: "",
+		});
 	} else {
-		console.log("here")
+		console.log("here");
 		res.status(401).render("login", {
 			error: "user not authenticated",
 		});
@@ -164,7 +198,7 @@ app.post("/report", (req, res) => {
 	// add rider to database if not exist
 	// add reporter to rider's reports array
 	let Rider = mongoose.model("Rider", riderSchema);
-	Rider.findOneAndUpdate( 
+	Rider.findOneAndUpdate(
 		{ sid: req.body.sid },
 		{
 			$push: {
@@ -203,10 +237,24 @@ app.post("/report", (req, res) => {
 				// 	log: reply,
 				// 	message: "Reported successfully",
 				// });
-				res.status(200).render("report", { username: req.session.username, msg: "Reported successfully"});
+				req.headers["user-agent"].indexOf("curl") >= 0
+					? res.status(200).json({
+							msg: "Reported successfully",
+					  })
+					: res.status(200).render("report", {
+							username: req.session.username,
+							msg: "Reported successfully",
+					  });
 			} catch (error) {
 				console.log(error);
-				res.status(500).render("report", { username: req.session.username, msg: "Error: " + error});
+				req.headers["user-agent"].indexOf("curl") >= 0
+					? res.status(500).json({
+							msg: "Error: " + error,
+					  })
+					: res.status(500).render("report", {
+							username: req.session.username,
+							msg: "Error: " + error,
+					  });
 			}
 		}
 	);
@@ -233,18 +281,30 @@ app.post("/register", (req, res) => {
 			console.log(err);
 			// check if err is duplicate entry
 			if (err.code == 11000) {
-				res.status(500).render("register", {
-					msg: "Error: Duplicate username or sid, if you registered before please login",
-				});
+				req.headers["user-agent"].indexOf("curl") >= 0
+					? res.status(500).json({
+							msg: "Error: Duplicate username or sid, if you registered before please login",
+					  })
+					: res.status(500).render("register", {
+							msg: "Error: Duplicate username or sid, if you registered before please login",
+					  });
 			} else {
-				res.status(500).render("register", { msg: "Error: " + err });
+				req.headers["user-agent"].indexOf("curl") >= 0
+					? res.status(500).json({ msg: "Error: " + err })
+					: res
+							.status(500)
+							.render("register", { msg: "Error: " + err });
 			}
 		} else {
 			console.log(result.username + " saved to users collection.");
 			users = await User.find({}); // update users list
-			res.status(200).render("register", {
-				msg: "Registered successfully",
-			});
+			req.headers["user-agent"].indexOf("curl") >= 0
+				? res.status(200).json({
+						msg: "Registered successfully",
+				  })
+				: res.status(200).render("register", {
+						msg: "Registered successfully",
+				  });
 		}
 	});
 });
@@ -257,41 +317,55 @@ app.get("/search", (req, res) => {
 app.post("/search", (req, res) => {
 	let name = req.body.search_name;
 	let course = req.body.search_course;
-	console.log("Finding...Name: "+ name +" Coursecode: "+ course);
+	console.log("Finding...Name: " + name + " Coursecode: " + course);
 	let Rider = mongoose.model("Rider", riderSchema);
 	let docList = [];
 
-	if (name != "" && course != "NA"){
-		Rider.find( { name: name, reports: { courseCode: course } }, {_id: 0} , function(err, results){
+	if (name != "" && course != "NA") {
+		Rider.find(
+			{ name: name, reports: { courseCode: course } },
+			{ _id: 0 },
+			function (err, results) {
+				if (err) return console.error(err);
+				results.forEach((doc) => docList.push(doc));
+				searchMap.set(req.body.username, JSON.stringify(docList));
+				req.headers["user-agent"].indexOf("curl") >= 0
+					? res.status(200).json(docList)
+					: res.redirect("list");
+			}
+		);
+	} else if (name == "" && course == "NA") {
+		Rider.find({}, { _id: 0 }, function (err, results) {
 			if (err) return console.error(err);
-			results.forEach(doc => docList.push(doc));
+			results.forEach((doc) => docList.push(doc));
 			searchMap.set(req.body.username, JSON.stringify(docList));
-			res.redirect("list");
+			req.headers["user-agent"].indexOf("curl") >= 0
+				? res.status(200).json(docList)
+				: res.redirect("list");
 		});
-	}else if (name == "" && course == "NA"){
-		Rider.find({}, {_id: 0 }, function(err, results){
+	} else if (name == "" && course != "NA") {
+		Rider.find(
+			{ reports: { courseCode: course } },
+			{ _id: 0 },
+			function (err, results) {
+				if (err) return console.error(err);
+				results.forEach((doc) => docList.push(doc));
+				searchMap.set(req.body.username, JSON.stringify(docList));
+				req.headers["user-agent"].indexOf("curl") >= 0
+					? res.status(200).json(docList)
+					: res.redirect("list");
+			}
+		);
+	} else if (name != "" && course == "NA") {
+		Rider.find({ name: name }, { _id: 0 }, function (err, results) {
 			if (err) return console.error(err);
-			results.forEach(doc => docList.push(doc));
+			results.forEach((doc) => docList.push(doc));
 			searchMap.set(req.body.username, JSON.stringify(docList));
-			res.redirect("list");
+			req.headers["user-agent"].indexOf("curl") >= 0
+				? res.status(200).json(docList)
+				: res.redirect("list");
 		});
 	}
-	else if (name == "" && course != "NA"){
-		Rider.find( {reports: { courseCode: course } }, {_id: 0}, function(err, results){
-			if (err) return console.error(err);
-			results.forEach(doc => docList.push(doc));
-			searchMap.set(req.body.username, JSON.stringify(docList));
-			res.redirect("list");
-		});
-	}else if (name != "" && course == "NA"){
-		Rider.find({name: name}, {_id: 0} , function(err, results){
-			if (err) return console.error(err);
-			results.forEach(doc => docList.push(doc));
-			searchMap.set(req.body.username, JSON.stringify(docList));
-			res.redirect("list");
-		});
-	}
-
 });
 
 // Direct to the drop.ejs by GET
@@ -307,34 +381,41 @@ app.get("/drop", (req, res) => {
 
 //Dropping someone
 app.post("/drop", (req, res) => {
-	if (req.session.type == 'admin'){
+	if (req.session.type == "admin") {
 		var anSID = req.body.sid;
 		var aCourseCode = req.body.coursecode;
 
-		const idArray = []; 
+		const idArray = [];
 		let aRider = mongoose.model("Rider", riderSchema);
-		aRider.findOne(
-			{ sid: {$eq:anSID} },
-			function (err, aRider) {
-				if (err) {
-					console.log("ERROR 1!");
-				} else {
-					for (let i = 0; i < aRider.reports.length; i++) {
-						if (aRider.reports.length == 0 || aRider.reports[i].courseCode == "") {
-							console.log(anSID, " is no longer a Rider");
-							break;
-						} else {
-							if (aRider.reports[i].courseCode != "" || aRider.reports[i].courseCode == aCourseCode) {
-								console.log(anSID, " is a Rider");
-								idArray.push(aRider.reports[i]._id);
-								console.log("Pushed ", aRider.reports[i]._id, " into idArray");
-							}
+		aRider.findOne({ sid: { $eq: anSID } }, function (err, aRider) {
+			if (err) {
+				console.log("ERROR 1!");
+			} else {
+				for (let i = 0; i < aRider.reports.length; i++) {
+					if (
+						aRider.reports.length == 0 ||
+						aRider.reports[i].courseCode == ""
+					) {
+						console.log(anSID, " is no longer a Rider");
+						break;
+					} else {
+						if (
+							aRider.reports[i].courseCode != "" ||
+							aRider.reports[i].courseCode == aCourseCode
+						) {
+							console.log(anSID, " is a Rider");
+							idArray.push(aRider.reports[i]._id);
+							console.log(
+								"Pushed ",
+								aRider.reports[i]._id,
+								" into idArray"
+							);
 						}
 					}
-					console.log("idArray = ", idArray);
 				}
-			} 
-		);
+				console.log("idArray = ", idArray);
+			}
+		});
 
 		console.log("Okay next step is to remove: ");
 		for (let ii = 0; ii < idArray.length; ii++) {
@@ -342,18 +423,27 @@ app.post("/drop", (req, res) => {
 				if (err) {
 					console.log("ERROR 2!");
 				} else {
-					console.log(anSID, " is no longer a rider in ", aCourseCode);
+					console.log(
+						anSID,
+						" is no longer a rider in ",
+						aCourseCode
+					);
 				}
 			});
 		}
-
-		res.status(200).render("report", {
-			username: req.session.username, msg: "",
-		});
+		req.headers["user-agent"].indexOf("curl") >= 0
+			? res.status(200).json({ msg: "Report has been dropped" })
+			: res.status(200).render("report", {
+					username: req.session.username,
+					msg: "Report has been dropped",
+			  });
 	} else {
-		res.status(401).render("report", {
-			username: req.session.username, msg: "user not authenticated",
-		});
+		req.headers["user-agent"].indexOf("curl") >= 0
+			? res.status(401).json({ msg: "user not authenticated" })
+			: res.status(401).render("report", {
+					username: req.session.username,
+					msg: "user not authenticated",
+			  });
 	}
 });
 
