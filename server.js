@@ -35,6 +35,7 @@ let Rider = mongoose.model("Rider", riderSchema);
 	searchMap.set("leader", JSON.stringify(docList));
 	console.log(searchMap.get("leader"));
 });
+console.log(searchMap);
 
 app.use(
 	session({
