@@ -382,9 +382,10 @@ app.get("/drop", (req, res) => {
 //Dropping someone
 app.post("/drop", (req, res) => {
 	if (req.session.type == "admin") {
-		var anSID = req.body.sid;
-		var aCourseCode = req.body.coursecode;
+		var dropID = req.body.drop_id;
+		console.log("dropID = ", dropID);
 
+		/*
 		const idArray = [];
 		let aRider = mongoose.model("Rider", riderSchema);
 		aRider.findOne({ sid: { $eq: anSID } }, function (err, aRider) {
@@ -431,6 +432,7 @@ app.post("/drop", (req, res) => {
 				}
 			});
 		}
+		*/
 		req.headers["user-agent"].indexOf("curl") >= 0
 			? res.status(200).json({ msg: "Report has been dropped" })
 			: res.status(200).render("report", {

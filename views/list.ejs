@@ -92,6 +92,14 @@
 					</table>
 				</div>
 			</div>
+			<form method="/drop" action="post" id="dropForm" style="display:none">
+				<input
+					type="text"
+					id="drop_id"
+					name="drop_id"
+				/>
+				<button type="submit" id="dropButton"></button>
+			</form>
 		</div>
 	</body>
 	<% if (riders != "") { %>
@@ -129,6 +137,10 @@
 						ridersList[i].reports[x].reportDate +
 						"</td><td><button onclick=\"dropReport('" +
 						ridersList[i].reports[x]._id +
+						"', '" +
+						ridersList[i].name +
+						"', '" +
+						ridersList[i].reports[x].courseCode +
 						"')\">🗑️</button></td>";
 					console.log(
 						"Username: ",
@@ -151,9 +163,34 @@
 			}
 			display.innerHTML = content;
 		}
-		function dropReport(reportID){
-			// TODO: implement drop with _id
-			alert(reportID);
+		function dropReport(reportID, name, courseCode){
+			let choice = confirm(
+								"Detail: \n" +
+								"ID: " +reportID +"\n" +
+								"Name: " +name +"\n" +
+								"Free rided in course: " +courseCode +"\n\n" +
+								"Are you sure you want to remove?"
+								);
+			if (choice) {
+				//document.getElementById("drop_id").value = reportID;
+				//document.getElementById("dropForm").submit();
+				try {
+					fetch(
+						"/drop", 
+						{
+							method: "POST",
+							body: JSON.stringify({ "drop_id": "123456" })
+						}
+					);
+					console.log("Dropping");
+				} catch(err) {	
+					console.log("ERROR!");
+				}
+			} else {
+				alert("Aborted");
+				location.reload();
+			}
+			alert(reportID +" has been removed");
 		}
 	</script>
 	<% } %>
