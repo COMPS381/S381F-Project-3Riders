@@ -167,6 +167,7 @@
 		var content = "";
 		var leaderString = '<%-leader%>';
 		var leaderList = JSON.parse(leaderString);
+		console.log(leaderList);
 		for(let i in leaderList){
 			content += "<tr><td>" + leaderList[i].name + "</td><td>";
 			for (let x in leaderList[i].reports.length){
