@@ -121,16 +121,15 @@
 					content +=
 						"<td>" +
 						ridersList[i].reports[x].username +
-						"</td>" +
-						"<td>" +
+						"</td><td>" +
 						ridersList[i].reports[x].courseCode +
-						"</td>" +
-						"<td>" +
+						"</td><td>" +
 						ridersList[i].reports[x].remarks +
-						"</td>" +
-						"<td>" +
+						"</td><td>" +
 						ridersList[i].reports[x].reportDate +
-						"</td>";
+						"</td><td><button onclick=\"dropReport('" +
+						ridersList[i].reports[x]._id +
+						"')\">🗑️</button></td>";
 					console.log(
 						"Username: ",
 						ridersList[i].reports[x].username
@@ -151,6 +150,10 @@
 				content += "</tr>";
 			}
 			display.innerHTML = content;
+		}
+		function dropReport(reportID){
+			// TODO: implement drop with _id
+			alert(reportID);
 		}
 	</script>
 	<% } %>
