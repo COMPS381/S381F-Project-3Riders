@@ -35,7 +35,7 @@ var leaderboard = Rider.find({}, { _id: 0 }).sort({reportDate: -1 }).limit(5, fu
 	searchMap.set("leader", JSON.stringify(docList));
 	console.log(searchMap);
 });
-//console.log(searchMap);
+console.log(leaderboard);
 
 app.use(
 	session({
