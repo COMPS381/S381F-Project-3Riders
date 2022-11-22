@@ -172,13 +172,13 @@
 			content += "<tr><td>" + leaderList[i].name + "</td><td>";
 			for (let x in leaderList[i].reports.length){
 				content +=
-				    leaderList[i].reports.
+				    leaderList[i].reports[x].
 				        courseCode + " ";
 			}
 			content += "</td><td>";
 			for (let x in leaderList[i].reports.length){
 				content +=
-					leaderList[i].reports.
+					leaderList[i].reports[x].
 						remarks + ". ";
 			}
 			content += "</tr>";
