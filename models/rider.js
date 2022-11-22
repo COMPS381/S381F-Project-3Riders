@@ -7,7 +7,7 @@ var riderSchema = new mongoose.Schema({
 		{
 			username: String,
 			courseCode: { type: String, default: "" },
-			reportDate: { type: Date, default: Date.now },
+			reportDate: { type: Date, default: new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '') },
 			remarks: { type: String, default: "" },
 		},
 	],

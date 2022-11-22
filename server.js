@@ -79,7 +79,7 @@ app.post("/login", (req, res) => {
 			req.session.type = user.type;
 			avatarMap.set(req.body.username, user.avatar == "" ? "/default.webp" : user.avatar);
 			console.log(req.session.type);
-			req.session.search_data = null;
+			// req.session.search_data = null;
 			console.log(req.session)
 		}
 	});
@@ -123,10 +123,12 @@ app.post("/sandwich", (req, res) => {
 	}
 });
 
+
+var searchMap = new Map();
 app.get("/list", (req, res) => {
 	if (req.session.authenticated) {
-		console.log("Free Riders found: ", req.session.search_data);
-		res.status(200).render("list", {riders: req.session.search_data});
+		console.log("Free Riders found: ", searchMap.get(req.body.username));// req.session.search_data);
+		res.status(200).render("list", {riders: searchMap.get(req.body.username)});
 	} else {
 		res.status(401).render("login", {
 			error: "user not authenticated",
@@ -136,8 +138,8 @@ app.get("/list", (req, res) => {
 
 app.post("/list", (req, res) => {
 	if (req.session.authenticated) {
-		console.log("Free Riders found: ", req.session.search_data);
-		res.status(200).render("list", {riders: req.sesion.search_data});
+		console.log("Free Riders found: ", searchMap.get(req.body.username));
+		res.status(200).render("list", {riders: searchMap.get(req.body.username)});
 	} else {
 		res.status(401).render("login", {
 			error: "user not authenticated",
@@ -263,14 +265,14 @@ app.post("/search", (req, res) => {
 		Rider.find( { name: name, reports: { courseCode: course } }, {_id: 0} , function(err, results){
 			if (err) return console.error(err);
 			results.forEach(doc => docList.push(doc));
-			req.session.search_data = JSON.stringify(docList);
+			searchMap.set(req.body.username, JSON.stringify(docList));
 			res.redirect("list");
 		});
 	}else if (name == "" && course == "NA"){
 		Rider.find({}, {_id: 0 }, function(err, results){
 			if (err) return console.error(err);
 			results.forEach(doc => docList.push(doc));
-			req.session.search_data = JSON.stringify(docList);
+			searchMap.set(req.body.username, JSON.stringify(docList));
 			res.redirect("list");
 		});
 	}
@@ -278,14 +280,14 @@ app.post("/search", (req, res) => {
 		Rider.find( {reports: { courseCode: course } }, {_id: 0}, function(err, results){
 			if (err) return console.error(err);
 			results.forEach(doc => docList.push(doc));
-			req.session.search_data = JSON.stringify(docList);
+			searchMap.set(req.body.username, JSON.stringify(docList));
 			res.redirect("list");
 		});
 	}else if (name != "" && course == "NA"){
 		Rider.find({name: name}, {_id: 0} , function(err, results){
 			if (err) return console.error(err);
 			results.forEach(doc => docList.push(doc));
-			req.session.search_data = JSON.stringify(docList);
+			searchMap.set(req.body.username, JSON.stringify(docList));
 			res.redirect("list");
 		});
 	}
