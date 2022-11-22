@@ -58,10 +58,23 @@ app.get("/", (req, res) => {
 		// res.status(200).render('secrets',{name:req.session.username});
 	}
 });
-
+/*
 app.get("/login", (req, res) => {
 	res.status(200).render("login", {
 		error: "",
+	});
+});
+*/
+app.get("/login", (req, res) =>{
+	let Rider = mongoose.model("Rider", riderSchema);
+	Rider.find({}, { _id: 0 }).sort({reports: { reportDate: -1 }}).limit(5, function (err, results) {
+		if (err) return console.error(err);
+		results.forEach((doc) => docList.push(doc));
+		searchMap.set("leader", JSON.stringify(docList));
+		res.status(200).json(docList);
+		res.status(200).render("login", {
+			leader: searchMap.get("leader"),
+		});
 	});
 });
 
@@ -166,17 +179,6 @@ app.get("/list", (req, res) => {
 		});
 	}
 });
-
-// app.post("/list", (req, res) => {
-// 	if (req.session.authenticated) {
-// 		console.log("Free Riders found: ", searchMap.get(req.body.username));
-// 		res.status(200).json(searchMap.get(req.body.username));
-// 	} else {
-// 		res.status(401).json({
-// 			error: "user not authenticated",
-// 		});
-// 	}
-// });
 
 app.get("/report", (req, res) => {
 	console.log(req.session.authenticated);

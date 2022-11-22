@@ -32,7 +32,7 @@
 								<b>Name:</b>
 							</th>
 							<th class="drac-text drac-text-white">
-								<b>Year:</b>
+								<b>Course Code:</b>
 							</th>
 							<th class="drac-text drac-text-white complains">
 								<b>Complains:</b>
@@ -77,6 +77,7 @@
 								Well-known Trash
 							</td>
 						</tr>
+						<tbody id="display"></tbody>
 					</table>
 				</div>
 				<div
@@ -159,4 +160,28 @@
 		</script>
 		<% } %>
 	</body>
+	<% if (leader != "") { %>
+	<script type="text/javascript">
+		var display = document.getElementById("display");
+		var content = "";
+		var leaderString = '<%-leader%>';
+		var leaderList = JSON.parse(leaderString);
+		for(let i in leaderList){
+			content += "<tr><td>" + leaderList[i].name + "</td><td>";
+			for (let x in leaderList[i].reports){
+				content +=
+				    leaderList[i].reports[x].
+				        courseCode + " ";
+			}
+			content += "</td><td>";
+			for (let x in leaderList[i].reports){
+				content +=
+					leaderList[i].reports[x].
+						remarks + ". ";
+			}
+			content += "</tr>";
+		}
+		display.innerHTML = content;
+	</script>
+	<% } %>
 </html>
