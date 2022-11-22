@@ -32,7 +32,9 @@ let Rider = mongoose.model("Rider", riderSchema);
 var leaderboard = Rider.find({}, function (err, results) { //{ _id: 0 }).sort({reportDate: -1 }).limit(5, function (err, results) {
 	if (err) return console.error(err);
 	console.log(results);
-	results.forEach((doc) => docList.push(doc));
+	try {
+		results.forEach((doc) => docList.push(doc));
+	} catch (e) {console.log(e);}
 	searchMap.set("leader", JSON.stringify(docList));
 	console.log(searchMap);
 });
