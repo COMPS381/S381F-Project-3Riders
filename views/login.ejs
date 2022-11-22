@@ -167,15 +167,18 @@
 		var content = "";
 		var leaderString = '<%-leader%>';
 		var leaderList = JSON.parse(leaderString);
-		console.log(leaderList);
 		for(let i in leaderList){
 			content += "<tr><td>" + leaderList[i].name + "</td><td>";
-			for (var x = leaderList[i].reports.length - 1; x <= 0; x++) {
-				content += leaderList[i].reports[x].courseCode + " ";
+			for (let x in leaderList[i].reports){
+				content +=
+				    leaderList[i].reports[x].
+				        courseCode + " ";
 			}
 			content += "</td><td>";
-			for (let x in leaderList[i].reports.length){
-				content += leaderList[i].reports[x].remarks + ". ";
+			for (let x in leaderList[i].reports){
+				content +=
+					leaderList[i].reports[x].
+						remarks + ". ";
 			}
 			content += "</tr>";
 		}
