@@ -172,20 +172,16 @@
 								"Are you sure you want to remove?"
 								);
 			if (choice) {
-				//document.getElementById("drop_id").value = reportID;
-				//document.getElementById("dropForm").submit();
-				try {
-					fetch(
-						"/drop", 
-						{
-							method: "POST",
-							body: JSON.stringify({ "drop_id": "123456" })
-						}
-					);
-					console.log("Dropping");
-				} catch(err) {	
-					console.log("ERROR!");
-				}
+				var data = {
+					'nameStr': name,
+					'report_id': reportID
+				};
+				fetch("/drop", {
+					method: "POST",
+					headers: {'Content-Type': 'application/json',},
+					body: JSON.stringify(data)
+				});
+				console.log("Json Stringified = ", JSON.stringify(data));
 			} else {
 				alert("Aborted");
 				location.reload();

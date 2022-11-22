@@ -397,57 +397,40 @@ app.get("/drop", (req, res) => {
 //Dropping someone
 app.post("/drop", (req, res) => {
 	if (req.session.type == "admin") {
-		var dropID = req.body.drop_id;
-		console.log("dropID = ", dropID);
+		console.log("Request Body = ", req.body);
+		var nameStr = req.body.nameStr;
+		var dropID = req.body.report_id;
 
-		/*
-		const idArray = [];
 		let aRider = mongoose.model("Rider", riderSchema);
-		aRider.findOne({ sid: { $eq: anSID } }, function (err, aRider) {
-			if (err) {
-				console.log("ERROR 1!");
-			} else {
-				for (let i = 0; i < aRider.reports.length; i++) {
-					if (
-						aRider.reports.length == 0 ||
-						aRider.reports[i].courseCode == ""
-					) {
-						console.log(anSID, " is no longer a Rider");
-						break;
-					} else {
-						if (
-							aRider.reports[i].courseCode != "" ||
-							aRider.reports[i].courseCode == aCourseCode
-						) {
-							console.log(anSID, " is a Rider");
-							idArray.push(aRider.reports[i]._id);
-							console.log(
-								"Pushed ",
-								aRider.reports[i]._id,
-								" into idArray"
-							);
-						}
+		aRider.update(
+			{ name: "X" },
+			{
+				$pullAll: {
+					reports: {
+						remarks: "name should be fdk 222"
+						//_id: {$eq: dropID}
 					}
 				}
-				console.log("idArray = ", idArray);
 			}
-		});
+		);
+		console.log("Done!");
 
-		console.log("Okay next step is to remove: ");
-		for (let ii = 0; ii < idArray.length; ii++) {
-			aRider.findByIdAndDelete(idArray[ii], function (err, aRider) {
-				if (err) {
-					console.log("ERROR 2!");
-				} else {
-					console.log(
-						anSID,
-						" is no longer a rider in ",
-						aCourseCode
-					);
-				}
-			});
-		}
+		/*
+		aRider.find({ name:{$eq: "X"} }, function(error,docs) {
+			console.log("docs = ", docs);
+		});
 		*/
+
+		/* This one works but deletes the whole document
+		aRider.deleteOne(
+			{ name: nameStr },
+			{ reports: {
+				_id: dropID
+				}
+			}
+		).then(console.log("Rider removed"));
+		*/
+		
 		req.headers["user-agent"].indexOf("curl") >= 0
 			? res.status(200).json({ msg: "Report has been dropped" })
 			: res.status(200).render("report", {
