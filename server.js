@@ -402,33 +402,20 @@ app.post("/drop", (req, res) => {
 		var dropID = req.body.report_id;
 
 		let aRider = mongoose.model("Rider", riderSchema);
-		aRider.update(
-			{ name: "X" },
+		aRider.updateMany(
+			{ name: nameStr },
 			{
-				$pullAll: {
+				$pull: {
 					reports: {
-						remarks: "name should be fdk 222"
-						//_id: {$eq: dropID}
+						remarks: { $eq: dropID }
 					}
 				}
 			}
 		);
 		console.log("Done!");
 
-		/*
-		aRider.find({ name:{$eq: "X"} }, function(error,docs) {
-			console.log("docs = ", docs);
-		});
-		*/
-
-		/* This one works but deletes the whole document
-		aRider.deleteOne(
-			{ name: nameStr },
-			{ reports: {
-				_id: dropID
-				}
-			}
-		).then(console.log("Rider removed"));
+		/* Successful One
+		db.riders.updateMany({ name: "Xavier_2" }, { $pull: { reports: { remarks: { $eq: "Testing Only" } } } } );
 		*/
 		
 		req.headers["user-agent"].indexOf("curl") >= 0
