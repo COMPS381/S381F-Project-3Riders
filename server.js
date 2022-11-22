@@ -29,13 +29,15 @@ const SECRETKEY = "I want to pass COMPS381F" || process.env.SECRETKEY;
 
 var searchMap = new Map();
 let Rider = mongoose.model("Rider", riderSchema);
-var leaderoard = Rider.find({}, { _id: 0 }).sort({reportDate: -1 }).limit(5, function (err, results) {
+var leaderboard = Rider.find({}, { _id: 0 }).sort({reportDate: -1 }).limit(5, function (err, results) {
 	if (err) return console.error(err);
 	console.log(results);
 	results.forEach((doc) => docList.push(doc));
 	searchMap.set("leader", JSON.stringify(docList));
 	console.log(searchMap);
 });
+console.log(leaderboard);
+console.log(searchMap);
 
 app.use(
 	session({
