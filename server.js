@@ -79,6 +79,7 @@ app.get("/login", (req, res) =>{
 			leader: searchMap.get("leader"),
 		});
 	});
+	console.log(searchMap);
 });
 
 var avatarMap = new Map();

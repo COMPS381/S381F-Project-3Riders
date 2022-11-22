@@ -39,6 +39,7 @@
 							</th>
 						</tr>
 						<!-- TODO: placeholder, auto gen from db -->
+						<!--
 						<tr>
 							<td class="drac-text drac-text-white">
 								Y*** W*** Kwok
@@ -77,6 +78,7 @@
 								Well-known Trash
 							</td>
 						</tr>
+					-->
 						<tbody id="display"></tbody>
 					</table>
 				</div>
@@ -160,7 +162,6 @@
 		</script>
 		<% } %>
 	</body>
-	<% if (leader != "") { %>
 	<script type="text/javascript">
 		var display = document.getElementById("display");
 		var content = "";
@@ -183,5 +184,4 @@
 		}
 		display.innerHTML = content;
 	</script>
-	<% } %>
 </html>
