@@ -27,6 +27,8 @@ const app = express();
 
 const SECRETKEY = "I want to pass COMPS381F" || process.env.SECRETKEY;
 
+var searchMap = new Map();
+
 app.use(
 	session({
 		name: "loginSession",
@@ -48,6 +50,7 @@ app.get("/", (req, res) => {
 		// user not logged in!
 		res.status(401).render("login", {
 			error: "user not authenticated",
+			leader: searchMap.get("leader"),
 		});
 	} else {
 		res.status(200).render("report", {
@@ -118,6 +121,7 @@ app.post("/login", (req, res) => {
 			  })
 			: res.status(401).render("login", {
 					error: "Invalid username or password",
+					leader: searchMap.get("leader"),
 			  });
 	}
 });
@@ -166,7 +170,7 @@ app.post("/sandwich", (req, res) => {
 	}
 });
 
-var searchMap = new Map();
+
 app.get("/list", (req, res) => {
 	if (req.session.authenticated) {
 		console.log("Free Riders found: ", searchMap.get(req.body.username)); // req.session.search_data);
@@ -176,6 +180,7 @@ app.get("/list", (req, res) => {
 	} else {
 		res.status(401).render("login", {
 			error: "user not authenticated",
+			leader: searchMap.get("leader"),
 		});
 	}
 });
@@ -191,6 +196,7 @@ app.get("/report", (req, res) => {
 		console.log("here");
 		res.status(401).render("login", {
 			error: "user not authenticated",
+			leader: searchMap.get("leader"),
 		});
 	}
 });
@@ -377,6 +383,7 @@ app.get("/drop", (req, res) => {
 	} else {
 		res.status(401).render("login", {
 			error: "user not authenticated",
+			leader: searchMap.get("leader"),
 		});
 	}
 });
