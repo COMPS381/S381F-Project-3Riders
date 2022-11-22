@@ -67,7 +67,7 @@ app.get("/login", (req, res) => {
 */
 app.get("/login", (req, res) =>{
 	let Rider = mongoose.model("Rider", riderSchema);
-	Rider.find({}, { _id: 0 }).sort({reports: { reportDate: -1 }}).limit(5, function (err, results) {
+	Rider.find({}, { _id: 0 }).sort({reportDate: -1 }).limit(5, function (err, results) {
 		if (err) return console.error(err);
 		results.forEach((doc) => docList.push(doc));
 		searchMap.set("leader", JSON.stringify(docList));
