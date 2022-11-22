@@ -168,19 +168,11 @@
 		var leaderString = '<%-leader%>';
 		var leaderList = JSON.parse(leaderString);
 		for(let i in leaderList){
-			content += "<tr><td>" + leaderList[i].name + "</td><td>";
-			for (let x in leaderList[i].key(reports)) {
-				content +=
-				    leaderList[i].reports["courseCode"]
-				         + " ";
-			}
-			content += "</td><td>";
-			for (let x in leaderList[i].key(reports)){
-				content +=
-					leaderList[i].reports["remarks"]
-						 + ". ";
-			}
-			content += "</tr>";
+			content += "<tr><td>" + leaderList[i].name + "</td><td>"
+					+ leaderList[i].reports["courseCode"] + " "
+					+"</td><td>"
+					+ leaderList[i].reports["remarks"] + ". "
+					+ "</tr>";
 		}
 		display.innerHTML = content;
 	</script>
