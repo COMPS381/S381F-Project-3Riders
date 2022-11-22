@@ -28,6 +28,13 @@ const app = express();
 const SECRETKEY = "I want to pass COMPS381F" || process.env.SECRETKEY;
 
 var searchMap = new Map();
+let Rider = mongoose.model("Rider", riderSchema);
+	Rider.find({}, { _id: 0 }).sort({reportDate: -1 }).limit(5, function (err, results) {
+	if (err) return console.error(err);
+	results.forEach((doc) => docList.push(doc));
+	searchMap.set("leader", JSON.stringify(docList));
+	console.log(searchMap.get("leader"));
+});
 
 app.use(
 	session({
@@ -61,26 +68,14 @@ app.get("/", (req, res) => {
 		// res.status(200).render('secrets',{name:req.session.username});
 	}
 });
-/*
+
 app.get("/login", (req, res) => {
 	res.status(200).render("login", {
 		error: "",
+		leader: searchMap.get("leader"),
 	});
 });
-*/
-app.get("/login", (req, res) =>{
-	let Rider = mongoose.model("Rider", riderSchema);
-	Rider.find({}, { _id: 0 }).sort({reportDate: -1 }).limit(5, function (err, results) {
-		if (err) return console.error(err);
-		results.forEach((doc) => docList.push(doc));
-		searchMap.set("leader", JSON.stringify(docList));
-		res.status(200).json(docList);
-		res.status(200).render("login", {
-			leader: searchMap.get("leader"),
-		});
-	});
-	console.log(searchMap);
-});
+
 
 var avatarMap = new Map();
 app.post("/login", (req, res) => {
