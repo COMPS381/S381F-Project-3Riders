@@ -14,48 +14,48 @@
 
 ## Online demo
 
-https://3riders.up.railway.app/
+<https://3riders.up.railway.app/>
 
 ### Login
 
-1.  If user have not login before they will be redirected to the login page, then enter your username and password there.
-2.  Also can test login by a `POST` request to https://3riders.up.railway.app/login
+1. If user have not login before they will be redirected to the login page, then enter your username and password there.
+2. Also can test login by a `POST` request to <https://3riders.up.railway.app/login>
 
-    ```json
-    {
-    	"username": "yuzu",
-    	"password": "0812"
-    }
-    ```
+   ```json
+   {
+     "username": "yuzu",
+     "password": "0812"
+   }
+   ```
 
 ### Logout
 
-1.  Click the avatar on the top right, a logout button pop up under it, click it to logout.
-2.  Also can test logout by a `GET` request to https://3riders.up.railway.app/logout
+1. Click the avatar on the top right, a logout button pop up under it, click it to logout.
+2. Also can test logout by a `GET` request to <https://3riders.up.railway.app/logout>
 
 ### Register
 
-1.  At the login page, click the register button next to the login button, enter a form to register.
-2.  Also can test register by a `POST` request to https://3riders.up.railway.app/register
-    ```json
-    {
-    	"username": "alice",
-    	"password": "0325",
-    	"sid": "00000000"
-    }
-    ```
-3.  both the sid and username have to be unique, otherwise the register will fail.
-4.  using the webpage for registration is recommended, as it is easier to set a user avatar.
+1. At the login page, click the register button next to the login button, enter a form to register.
+2. Also can test register by a `POST` request to <https://3riders.up.railway.app/register>
+
+   ```json
+   {
+     "username": "alice",
+     "password": "0325",
+     "sid": "00000000"
+   }
+   ```
+
+3. both the sid and username have to be unique, otherwise the register will fail.
+4. using the webpage for registration is recommended, as it is easier to set a user avatar.
 
 #### Admin accounts
 
-Some actions are only allowed for admin accounts, such as deleting a report.
+Some actions are only allowed for admin accounts, such as deleting a report filed by other users, where normal users are only able to delete their own filed reports.
 
 New users can not register an admin account. And can only be granted the "Admin" role by existing admin accounts. (in our demo `yuzu` is an admin account)`)
 
-To grant an account the "Admin" role, login with an admin account
-
-```
+To grant an account the "Admin" role, login with an admin account and access the page <https://3riders.up.railway.app/sandwich>
 
 ## Getting Started
 
@@ -82,14 +82,6 @@ npm dev
 ```sh
 npm dropDb
 ```
-
-### drop a rider
-
-```js
-req.session.type = user.type;
-```
-
-> When dropping a rider, please ensure that the user type is "admin"
 
 ## Extra Documentation
 
