@@ -1,1 +1,73 @@
-<!-- TODO -->
+<html>
+	<head>
+		<title>sudo make me a sandwich</title>
+		<%- include('styles.ejs') %>
+	</head>
+	<body class="drac-bg-black drac-text-white center">
+		<%- include('topbar.ejs') %>
+		<div class="container" style="padding-top: 100px">
+			<div class="row">
+				<div class="col-sm-12">
+					<h1 class="drac-heading drac-heading-xl drac-text-white">
+						(Un)grant admin privileges to a user
+					</h1>
+					<br />
+					<form action="/sandwich" method="post">
+						<div class="form-group">
+							<label
+								for="username"
+								class="drac-text-white drac-heading"
+								style="float: left"
+								>username:
+							</label>
+							<input
+								type="text"
+								class="drac-input drac-input-white drac-text-white"
+								id="username"
+								name="username"
+								placeholder=""
+							/>
+						</div>
+						<br />
+
+						<div class="form-group">
+							<div class="drac-box">
+								<input
+									type="checkbox"
+									name="type"
+									id="type"
+									class="drac-switch drac-checkbox drac-switch-purple"
+									checked=""
+								/><label
+									for="type"
+									class="drac-text drac-text-white"
+								>
+									admin privileges</label
+								>
+							</div>
+						</div>
+						<br />
+						<br />
+
+						<button
+							type="submit"
+							value="addone"
+							class="drac-btn drac-text-black"
+							style="float: right; color: green"
+						>
+							Submit
+						</button>
+					</form>
+				</div>
+			</div>
+		</div>
+		<% if (msg != "") { %>
+		<script>
+			alert("<%= msg %>");
+			if ("<%= msg %>" == "Registered successfully") {
+				window.location.href = "/login";
+			}
+		</script>
+		<% } %>
+	</body>
+</html>

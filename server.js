@@ -30,19 +30,20 @@ const SECRETKEY = "I want to pass COMPS381F" || process.env.SECRETKEY;
 var searchMap = new Map();
 let Rider = mongoose.model("Rider", riderSchema);
 let docList = [];
-var leaderboard = Rider.aggregate([
-		{ $unwind: '$reports' }, 
-		{ $sort: {"reportDate": -1}},
-		{ $limit: 5}
-		], function (err, results) {
-	if (err) return console.error(err);
-	console.log(results);
-	try {
-		results.forEach((doc) => docList.push(doc));
-	} catch (e) {console.log(e);}
-	searchMap.set("leader", JSON.stringify(docList));
-	console.log(searchMap);
-});
+var leaderboard = Rider.aggregate(
+	[{ $unwind: "$reports" }, { $sort: { reportDate: -1 } }, { $limit: 5 }],
+	function (err, results) {
+		if (err) return console.error(err);
+		console.log(results);
+		try {
+			results.forEach((doc) => docList.push(doc));
+		} catch (e) {
+			console.log(e);
+		}
+		searchMap.set("leader", JSON.stringify(docList));
+		console.log(searchMap);
+	}
+);
 console.log(leaderboard);
 console.log(searchMap);
 
@@ -85,7 +86,6 @@ app.get("/login", (req, res) => {
 		leader: searchMap.get("leader"),
 	});
 });
-
 
 var avatarMap = new Map();
 app.post("/login", (req, res) => {
@@ -144,6 +144,16 @@ app.get("/avatar", (req, res) => {
 	res.send(avatarMap.get(req.session.username));
 });
 
+app.get("/sandwich", (req, res) => {
+	if (req.session.type == "admin") {
+		res.status(200).render("sandwich", { msg: "" });
+	} else {
+		res.status(401).render("sandwich", {
+			msg: "user not authenticated as admin, please login as admin",
+		});
+	}
+});
+
 app.post("/sandwich", (req, res) => {
 	console.log(req.session.type);
 	if (req.session.type == "admin") {
@@ -151,21 +161,24 @@ app.post("/sandwich", (req, res) => {
 		// try to find the username in the database that matches the username in the request, if yes then update the type to admin
 		User.findOneAndUpdate(
 			{ username: req.body.username },
-			{ type: "admin" },
-			(err, doc) => {
+			{ type: req.body.type ? "admin" : "user" },
+			async (err, doc) => {
 				if (err) {
 					req.headers["user-agent"].indexOf("curl") >= 0
 						? res.status(500).json({
 								msg: "[ERROR] " + err,
 						  })
-						: res.status(500).end("[ERROR] " + err);
+						: res
+								.status(500)
+								.render("sandwich", { msg: "[ERROR] " + err });
 				}
 				console.log(doc);
+				users = await User.find({}); // update users list
 				req.headers["user-agent"].indexOf("curl") >= 0
 					? res.status(200).json({
 							msg: "OKAY",
 					  })
-					: res.status(200).end("OKAY");
+					: res.status(200).redirect("/sandwich");
 			}
 		);
 	} else {
@@ -175,7 +188,6 @@ app.post("/sandwich", (req, res) => {
 		);
 	}
 });
-
 
 app.get("/list", (req, res) => {
 	if (req.session.authenticated) {
@@ -407,9 +419,9 @@ app.post("/drop", (req, res) => {
 			{
 				$pull: {
 					reports: {
-						remarks: { $eq: dropID }
-					}
-				}
+						remarks: { $eq: dropID },
+					},
+				},
 			}
 		);
 		console.log("Done!");
@@ -417,7 +429,7 @@ app.post("/drop", (req, res) => {
 		/* Successful One
 		db.riders.updateMany({ name: "Xavier_2" }, { $pull: { reports: { remarks: { $eq: "Testing Only" } } } } );
 		*/
-		
+
 		req.headers["user-agent"].indexOf("curl") >= 0
 			? res.status(200).json({ msg: "Report has been dropped" })
 			: res.status(200).render("report", {
