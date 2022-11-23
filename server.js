@@ -395,6 +395,7 @@ app.post("/search", (req, res) => {
 });
 
 // Direct to the drop.ejs by GET
+/*
 app.get("/drop", (req, res) => {
 	if (req.session.authenticated) {
 		res.status(200).render("drop");
@@ -405,6 +406,7 @@ app.get("/drop", (req, res) => {
 		});
 	}
 });
+*/
 
 //Dropping someone
 app.post("/drop", (req, res) => {
@@ -428,21 +430,6 @@ app.post("/drop", (req, res) => {
 			}
 		);
 		console.log("Done!");
-
-		/* Failed One
-		let aRider = mongoose.model("Rider", riderSchema);
-		aRider.aggregate([	
-			{$unwind: '$reports'},
-			{$sort: {'_id': dropID}}
-		], function(err, results) {
-			if (err) return console.error(err);
-			console.log("Results: ", results);
-		})
-		*/
-
-		/* Successful One
-		db.riders.updateMany({ name: "Xavier_2" }, { $pull: { reports: { remarks: { $eq: "Testing Only" } } } } );
-		*/
 
 		req.headers["user-agent"].indexOf("curl") >= 0
 			? res.status(200).json({ msg: "Report has been dropped" })
