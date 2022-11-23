@@ -29,10 +29,10 @@ const SECRETKEY = "I want to pass COMPS381F" || process.env.SECRETKEY;
 
 var searchMap = new Map();
 let Rider = mongoose.model("Rider", riderSchema);
-let docList = [];
 var leaderboard = Rider.aggregate(
 	[{ $unwind: "$reports" }, { $sort: { reportDate: -1 } }, { $limit: 5 }],
 	function (err, results) {
+		let docList = [];
 		if (err) return console.error(err);
 		console.log(results);
 		try {
@@ -258,6 +258,26 @@ app.post("/report", (req, res) => {
 				let reply = await result.save((err, result) => {
 					if (err) return console.error(err);
 					console.log(result.sid + " saved to rider collection.");
+					// update searchMap on successful save
+					Rider.aggregate(
+						[
+							{ $unwind: "$reports" },
+							{ $sort: { reportDate: -1 } },
+							{ $limit: 5 },
+						],
+						function (err, results) {
+							let docList = [];
+							if (err) return console.error(err);
+							console.log(results);
+							try {
+								results.forEach((doc) => docList.push(doc));
+							} catch (e) {
+								console.log(e);
+							}
+							searchMap.set("leader", JSON.stringify(docList));
+							console.log(searchMap);
+						}
+					);
 				});
 				// res.status(200).json({
 				// 	log: reply,
@@ -345,8 +365,6 @@ app.post("/search", (req, res) => {
 	let course = req.body.search_course;
 	console.log("Finding...Name: " + name + " Coursecode: " + course);
 	let Rider = mongoose.model("Rider", riderSchema);
-	let docList = [];
-
 	let nameRegex = new RegExp(name, "i");
 	let courseRegex = new RegExp(course, "i");
 	Rider.find(
@@ -358,6 +376,7 @@ app.post("/search", (req, res) => {
 		},
 		{ _id: 0 },
 		function (err, results) {
+			let docList = [];
 			if (err) return console.error(err);
 			results.forEach((doc) => docList.push(doc));
 			searchMap.set(req.body.username, JSON.stringify(docList));
@@ -367,20 +386,6 @@ app.post("/search", (req, res) => {
 		}
 	);
 });
-
-// Direct to the drop.ejs by GET
-/*
-app.get("/drop", (req, res) => {
-	if (req.session.authenticated) {
-		res.status(200).render("drop");
-	} else {
-		res.status(401).render("login", {
-			error: "user not authenticated",
-			leader: searchMap.get("leader"),
-		});
-	}
-});
-*/
 
 //Dropping someone
 app.post("/drop", (req, res) => {
@@ -424,6 +429,26 @@ app.post("/drop", (req, res) => {
 			},
 			function (err, result) {
 				console.log("Result: ", result);
+				// update searchMap on successful drop
+				Rider.aggregate(
+					[
+						{ $unwind: "$reports" },
+						{ $sort: { reportDate: -1 } },
+						{ $limit: 5 },
+					],
+					function (err, results) {
+						let docList = [];
+						if (err) return console.error(err);
+						console.log(results);
+						try {
+							results.forEach((doc) => docList.push(doc));
+						} catch (e) {
+							console.log(e);
+						}
+						searchMap.set("leader", JSON.stringify(docList));
+						console.log(searchMap);
+					}
+				);
 			}
 		);
 		console.log("Done!");

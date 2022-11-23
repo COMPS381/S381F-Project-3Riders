@@ -3,7 +3,7 @@
 		<title>3Riders</title>
 		<%- include('styles.ejs') %>
 	</head>
-	<body class="drac-bg-black drac-text-white center">
+	<body class="drac-bg-black drac-text-white drac-text center">
 		<%- include('topbar.ejs') %>
 		<div class="container" style="padding-top: 100px">
 			<div class="row">
@@ -76,11 +76,14 @@
 					</h1>
 					<table
 						id="listTable"
-						class="drac-table drac-table-cyan drac-text-white reports"
+						class="drac-table drac-table-purple drac-text-white reports"
 					>
 						<thead>
 							<tr>
 								<th class="drac-text drac-text-white">Name</th>
+								<th class="drac-text drac-text-white">
+									Student ID
+								</th>
 								<th class="drac-text drac-text-white">
 									Reported by
 								</th>
@@ -90,9 +93,9 @@
 								<th class="drac-text drac-text-white">
 									Remarks
 								</th>
-								<th class="drac-text drac-text-white">
+								<!-- <th class="drac-text drac-text-white">
 									Time being reported
-								</th>
+								</th> -->
 							</tr>
 						</thead>
 						<tbody id="display"></tbody>
@@ -136,33 +139,35 @@
 				for (let x in ridersList[i].reports) {
 					content +=
 						"<td>" +
+						ridersList[i].sid +
+						"</td><td>" +
 						ridersList[i].reports[x].username +
 						"</td><td>" +
 						ridersList[i].reports[x].courseCode +
 						"</td><td>" +
 						ridersList[i].reports[x].remarks +
-						"</td><td>" +
-						ridersList[i].reports[x].reportDate +
-						"</td><td><button onclick=\"dropReport('" +
+						// "</td><td>" +
+						// ridersList[i].reports[x].reportDate +
+						"</td><td><button class=\"drac-btn drac-bg-red drac-btn-outline drac-text-red drac-m-sm\" onclick=\"dropReport('" +
 						ridersList[i].reports[x]._id +
 						"', '" +
 						ridersList[i].name +
 						"', '" +
 						ridersList[i].reports[x].courseCode +
 						"')\">🗑️</button></td>";
-					console.log(
-						"Username: ",
-						ridersList[i].reports[x].username
-					);
-					console.log(
-						"Course Code: ",
-						ridersList[i].reports[x].courseCode
-					);
-					console.log("Remarks: ", ridersList[i].reports[x].remarks);
-					console.log(
-						"Report Date: ",
-						ridersList[i].reports[x].reportDate
-					);
+					// console.log(
+					// 	"Username: ",
+					// 	ridersList[i].reports[x].username
+					// );
+					// console.log(
+					// 	"Course Code: ",
+					// 	ridersList[i].reports[x].courseCode
+					// );
+					// console.log("Remarks: ", ridersList[i].reports[x].remarks);
+					// console.log(
+					// 	"Report Date: ",
+					// 	ridersList[i].reports[x].reportDate
+					// );
 					if (x < ridersList[i].reports.length - 1) {
 						content += "</tr><tr><td></td>";
 					}
@@ -199,8 +204,8 @@
 				alert(reportID + " has been removed");
 			} else {
 				alert("Aborted");
-				location.reload();
 			}
+			location.reload();
 		}
 	</script>
 	<% } %>
