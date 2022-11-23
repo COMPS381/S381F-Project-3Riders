@@ -89,8 +89,9 @@ To grant an account the "Admin" role, login with an admin account and access the
     ```json
     {
     	// provide blank string to ignore the filter
-    	"sid": "",
-    	"coursecode": ""
+    	"search_sid": "",
+		"search_name": "",
+    	"search_course": ""
     }
     ```
 
@@ -132,10 +133,6 @@ npm dev
 ```sh
 npm dropDb
 ```
-
-## Extra Documentation
-
-[Dracula UI](https://ui.draculatheme.com/)
 
 ## Licence
 
