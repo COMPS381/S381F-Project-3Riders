@@ -347,51 +347,25 @@ app.post("/search", (req, res) => {
 	let Rider = mongoose.model("Rider", riderSchema);
 	let docList = [];
 
-	if (name != "" && course != "NA") {
-		Rider.find(
-			{ name: name, reports: { courseCode: course } },
-			{ _id: 0 },
-			function (err, results) {
-				if (err) return console.error(err);
-				results.forEach((doc) => docList.push(doc));
-				searchMap.set(req.body.username, JSON.stringify(docList));
-				req.headers["user-agent"].indexOf("curl") >= 0
-					? res.status(200).json(docList)
-					: res.redirect("list");
-			}
-		);
-	} else if (name == "" && course == "NA") {
-		Rider.find({}, { _id: 0 }, function (err, results) {
+	let nameRegex = new RegExp(name, "i");
+	let courseRegex = new RegExp(course, "i");
+	Rider.find(
+		{
+			$and: [
+				{ name: { $regex: nameRegex } },
+				{ "reports.courseCode": { $regex: courseRegex } },
+			],
+		},
+		{ _id: 0 },
+		function (err, results) {
 			if (err) return console.error(err);
 			results.forEach((doc) => docList.push(doc));
 			searchMap.set(req.body.username, JSON.stringify(docList));
 			req.headers["user-agent"].indexOf("curl") >= 0
 				? res.status(200).json(docList)
 				: res.redirect("list");
-		});
-	} else if (name == "" && course != "NA") {
-		Rider.find(
-			{ reports: { courseCode: course } },
-			{ _id: 0 },
-			function (err, results) {
-				if (err) return console.error(err);
-				results.forEach((doc) => docList.push(doc));
-				searchMap.set(req.body.username, JSON.stringify(docList));
-				req.headers["user-agent"].indexOf("curl") >= 0
-					? res.status(200).json(docList)
-					: res.redirect("list");
-			}
-		);
-	} else if (name != "" && course == "NA") {
-		Rider.find({ name: name }, { _id: 0 }, function (err, results) {
-			if (err) return console.error(err);
-			results.forEach((doc) => docList.push(doc));
-			searchMap.set(req.body.username, JSON.stringify(docList));
-			req.headers["user-agent"].indexOf("curl") >= 0
-				? res.status(200).json(docList)
-				: res.redirect("list");
-		});
-	}
+		}
+	);
 });
 
 // Direct to the drop.ejs by GET
@@ -415,15 +389,15 @@ app.post("/drop", (req, res) => {
 
 		let aRider = mongoose.model("Rider", riderSchema);
 		aRider.updateMany(
-			{ },
+			{},
 			{
 				$pull: {
 					reports: {
-						_id: dropID
+						_id: dropID,
 					},
 				},
 			},
-			function(err, result) {
+			function (err, result) {
 				console.log("Result: ", result);
 			}
 		);
