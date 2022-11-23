@@ -182,11 +182,11 @@
 					body: JSON.stringify(data)
 				});
 				console.log("Json Stringified = ", JSON.stringify(data));
+				alert(reportID +" has been removed");
 			} else {
 				alert("Aborted");
 				location.reload();
 			}
-			alert(reportID +" has been removed");
 		}
 	</script>
 	<% } %>
