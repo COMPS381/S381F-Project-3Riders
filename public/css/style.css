@@ -52,3 +52,7 @@ a.drac-btn:hover {
 	max-height: 150px;
 	max-width: 150px;
 }
+
+.registerLink {
+	color: var(--blue);
+}
