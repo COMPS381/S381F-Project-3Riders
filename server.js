@@ -403,16 +403,30 @@ app.post("/drop", (req, res) => {
 
 		let aRider = mongoose.model("Rider", riderSchema);
 		aRider.updateMany(
-			{ name: nameStr },
+			{ },
 			{
 				$pull: {
 					reports: {
-						remarks: { $eq: dropID }
-					}
-				}
+						_id: dropID
+					},
+				},
+			},
+			function(err, result) {
+				console.log("Result: ", result);
 			}
 		);
 		console.log("Done!");
+
+		/* Failed One
+		let aRider = mongoose.model("Rider", riderSchema);
+		aRider.aggregate([	
+			{$unwind: '$reports'},
+			{$sort: {'_id': dropID}}
+		], function(err, results) {
+			if (err) return console.error(err);
+			console.log("Results: ", results);
+		})
+		*/
 
 		/* Successful One
 		db.riders.updateMany({ name: "Xavier_2" }, { $pull: { reports: { remarks: { $eq: "Testing Only" } } } } );
