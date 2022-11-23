@@ -75,8 +75,6 @@ app.get("/", (req, res) => {
 			username: req.session.username,
 			msg: "",
 		});
-
-		// res.status(200).render('secrets',{name:req.session.username});
 	}
 });
 
@@ -89,9 +87,7 @@ app.get("/login", (req, res) => {
 
 var avatarMap = new Map();
 app.post("/login", (req, res) => {
-	// console.log(req.body);
 	users.forEach((user) => {
-		// console.log(user);
 		if (
 			user.username == req.body.username &&
 			user.password == req.body.password
@@ -107,7 +103,6 @@ app.post("/login", (req, res) => {
 				user.avatar == "" ? "/default.webp" : user.avatar
 			);
 			console.log(req.session.type);
-			// req.session.search_data = null;
 			console.log(req.session);
 		}
 	});
@@ -279,10 +274,6 @@ app.post("/report", (req, res) => {
 						}
 					);
 				});
-				// res.status(200).json({
-				// 	log: reply,
-				// 	message: "Reported successfully",
-				// });
 				req.headers["user-agent"].indexOf("curl") >= 0
 					? res.status(200).json({
 							msg: "Reported successfully",
@@ -304,7 +295,6 @@ app.post("/report", (req, res) => {
 			}
 		}
 	);
-	// res.status(200).render("report", { username: req.session.username, msg: "Reported successfully"});
 });
 
 app.get("/register", (req, res) => {
@@ -314,7 +304,6 @@ app.get("/register", (req, res) => {
 app.post("/register", (req, res) => {
 	// register a new user, if duplicate entry, return error msg, else return success msg
 	let NewUser = mongoose.model("User", userSchema);
-	// let type = req.body.admin ? "admin" : "user";
 	let newUser = new NewUser({
 		username: req.body.username,
 		password: req.body.password,

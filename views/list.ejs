@@ -44,16 +44,6 @@
 								name="search_course"
 								placeholder="course code"
 							/>
-							<!-- <select
-								name="search_course"
-								id="search_course"
-								class="drac-input drac-input-white drac-text-white"
-							>
-								<option value="NA">Choose course code</option>
-								<option value="381F">S381F</option>
-								<option value="333F">S333F</option>
-								<option value="456F">S456F</option>
-							</select> -->
 						</div>
 						<br />
 						<br />
@@ -93,9 +83,6 @@
 								<th class="drac-text drac-text-white">
 									Remarks
 								</th>
-								<!-- <th class="drac-text drac-text-white">
-									Time being reported
-								</th> -->
 							</tr>
 						</thead>
 						<tbody id="display"></tbody>
@@ -117,14 +104,6 @@
 	<script type="text/javascript">
 		var display = document.getElementById("display");
 		var content = "";
-		/*
-			//var ridersList = JSON.stringify(<%= riders %>);
-			//var riders = decodeURIComponent(<%=riders%>);
-			for (var i = 0; i <= <%=riders%>.length; i++) {
-				<%=riders%>[i] = decodeURIComponent(<%=riders%>[i]);
-			}
-			//decode = decodeURIComponent(<%=riders%>);
-			*/
 		var ridersString = `<%-riders%>`;
 		var ridersList = JSON.parse(ridersString);
 		console.log("Rider list :", ridersList);
