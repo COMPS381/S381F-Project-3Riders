@@ -1,7 +1,7 @@
 {
   "name": "s381-project-3riders",
   "version": "1.0.0",
-  "description": "an app for reporting and finding potential freeriders",
+  "description": "a platform for reporting and finding potential freeriders",
   "main": "server.js",
   "scripts": {
 	"start": "node server.js",
