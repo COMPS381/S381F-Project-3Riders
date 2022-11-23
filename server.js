@@ -353,7 +353,9 @@ app.post("/search", (req, res) => {
 	let sid = req.body.search_sid;
 	let name = req.body.search_name;
 	let course = req.body.search_course;
-	console.log("Finding... SID: " + sid + " Name: " + name + " Coursecode: " + course);
+	console.log(
+		"Finding... SID: " + sid + " Name: " + name + " Coursecode: " + course
+	);
 	let Rider = mongoose.model("Rider", riderSchema);
 	let sidRegex = new RegExp(sid, "i");
 	let nameRegex = new RegExp(name, "i");
@@ -454,6 +456,14 @@ app.post("/drop", (req, res) => {
 			}
 		);
 	}
+});
+
+app.get("/*", (req, res) => {
+	req.headers["user-agent"].indexOf("curl") >= 0
+		? res.status(404).json({ msg: `${req.path} - Unknown request!` })
+		: res
+				.status(404)
+				.render("404", { msg: `${req.path} - Unknown request!` });
 });
 
 process.env.PORT = process.env.PORT || 8099;
