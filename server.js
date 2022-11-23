@@ -369,6 +369,7 @@ app.post("/search", (req, res) => {
 });
 
 // Direct to the drop.ejs by GET
+/*
 app.get("/drop", (req, res) => {
 	if (req.session.authenticated) {
 		res.status(200).render("drop");
@@ -379,6 +380,7 @@ app.get("/drop", (req, res) => {
 		});
 	}
 });
+*/
 
 //Dropping someone
 app.post("/drop", (req, res) => {
