@@ -350,15 +350,18 @@ app.get("/search", (req, res) => {
 
 //search for free rider and list out on list.ejs
 app.post("/search", (req, res) => {
+	let sid = req.body.search_sid;
 	let name = req.body.search_name;
 	let course = req.body.search_course;
-	console.log("Finding...Name: " + name + " Coursecode: " + course);
+	console.log("Finding... SID: " + sid + " Name: " + name + " Coursecode: " + course);
 	let Rider = mongoose.model("Rider", riderSchema);
+	let sidRegex = new RegExp(sid, "i");
 	let nameRegex = new RegExp(name, "i");
 	let courseRegex = new RegExp(course, "i");
 	Rider.find(
 		{
 			$and: [
+				{ sid: { $regex: sidRegex } },
 				{ name: { $regex: nameRegex } },
 				{ "reports.courseCode": { $regex: courseRegex } },
 			],
@@ -436,18 +439,20 @@ app.post("/drop", (req, res) => {
 						}
 						searchMap.set("leader", JSON.stringify(docList));
 						console.log(searchMap);
+						console.log("Done!");
+
+						req.headers["user-agent"].indexOf("curl") >= 0
+							? res
+									.status(200)
+									.json({ msg: "Report has been dropped" })
+							: res.status(200).render("report", {
+									username: req.session.username,
+									msg: "Report has been dropped",
+							  });
 					}
 				);
 			}
 		);
-		console.log("Done!");
-
-		req.headers["user-agent"].indexOf("curl") >= 0
-			? res.status(200).json({ msg: "Report has been dropped" })
-			: res.status(200).render("report", {
-					username: req.session.username,
-					msg: "Report has been dropped",
-			  });
 	}
 });
 

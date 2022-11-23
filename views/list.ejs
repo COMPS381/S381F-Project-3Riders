@@ -16,6 +16,22 @@
 					<form action="/search" method="post">
 						<div class="form-group">
 							<label
+								for="sid"
+								class="drac-text-white drac-heading"
+								style="float: left"
+								>Student ID:
+							</label>
+							<input
+								type="text"
+								class="drac-input drac-input-white drac-text-white"
+								id="search_sid"
+								name="search_sid"
+								placeholder="His/Her student ID..."
+							/>
+						</div>
+						<br />
+						<div class="form-group">
+							<label
 								for="name"
 								class="drac-text-white drac-heading"
 								style="float: left"
@@ -26,7 +42,7 @@
 								class="drac-input drac-input-white drac-text-white"
 								id="search_name"
 								name="search_name"
-								placeholder="His/Her names..."
+								placeholder="His/Her name..."
 							/>
 						</div>
 						<br />
@@ -70,10 +86,10 @@
 					>
 						<thead>
 							<tr>
-								<th class="drac-text drac-text-white">Name</th>
 								<th class="drac-text drac-text-white">
 									Student ID
 								</th>
+								<th class="drac-text drac-text-white">Name</th>
 								<th class="drac-text drac-text-white">
 									Reported by
 								</th>
@@ -111,14 +127,14 @@
 		if (ridersList != null && ridersList != "") {
 			console.log("Construction content for display......");
 			for (let i in ridersList) {
-				content += "<tr><td>" + ridersList[i].name + "</td>";
+				content += "<tr><td>" + ridersList[i].sid + "</td>";
 				console.log(ridersList[i].name);
 				console.log(ridersList[i].reports);
 				//var reports = ridersList[i].reports;
 				for (let x in ridersList[i].reports) {
 					content +=
 						"<td>" +
-						ridersList[i].sid +
+						ridersList[i].name +
 						"</td><td>" +
 						ridersList[i].reports[x].username +
 						"</td><td>" +
@@ -127,7 +143,7 @@
 						ridersList[i].reports[x].remarks +
 						// "</td><td>" +
 						// ridersList[i].reports[x].reportDate +
-						"</td><td><button class=\"drac-btn drac-bg-red drac-btn-outline drac-text-red drac-m-sm\" onclick=\"dropReport('" +
+						'</td><td><button class="drac-btn drac-bg-red drac-btn-outline drac-text-red drac-m-sm" onclick="dropReport(\'' +
 						ridersList[i].reports[x]._id +
 						"', '" +
 						ridersList[i].name +
@@ -178,13 +194,34 @@
 					method: "POST",
 					headers: { "Content-Type": "application/json" },
 					body: JSON.stringify(data),
-				});
-				console.log("Json Stringified = ", JSON.stringify(data));
-				alert(reportID + " has been removed");
+				})
+					.then((response) => {
+						if (!response.ok) {
+							throw new Error();
+						}
+						return response.blob();
+					})
+					.then((myBlob) => {
+						console.log(
+							"Json Stringified = ",
+							JSON.stringify(data)
+						);
+						alert(
+							reportID +
+								" has been removed \n" +
+								"refresh page to see changes"
+						);
+					})
+					.catch((error) => {
+						alert(
+							"deletion unsuccessful \n" +
+								"make sure that this report is filed by you \n" +
+								"or you are an admin"
+						);
+					});
 			} else {
 				alert("Aborted");
 			}
-			location.reload();
 		}
 	</script>
 	<% } %>
