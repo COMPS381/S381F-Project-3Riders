@@ -98,47 +98,47 @@
 				back
 			</button>
 		</span>
-	</body>
-	<script>
-		var b64;
-
-		function showPassword() {
-			var passWd = document.getElementById("userpassword");
-			if (passWd.type === "password") {
-				passWd.type = "text";
-			} else {
-				passWd.type = "password";
+		<script>
+			var b64;
+	
+			function showPassword() {
+				var passWd = document.getElementById("userpassword");
+				if (passWd.type === "password") {
+					passWd.type = "text";
+				} else {
+					passWd.type = "password";
+				}
 			}
-		}
-
-		function readFile() {
-			if (!this.files || !this.files[0]) return;
-
-			const FR = new FileReader();
-
-			FR.addEventListener("load", function (evt) {
-				document.getElementById("submit").disabled = true;
-				document.getElementById("img").src = evt.target.result;
-				// b64 = evt.target.result;
-				resizeImage(evt.target.result, 150, 150).then((result) => {
-					document.getElementById("avatar").value =  result;
-					document.getElementById("submit").disabled = false;
+	
+			function readFile() {
+				if (!this.files || !this.files[0]) return;
+	
+				const FR = new FileReader();
+	
+				FR.addEventListener("load", function (evt) {
+					document.getElementById("submit").disabled = true;
+					document.getElementById("img").src = evt.target.result;
+					// b64 = evt.target.result;
+					resizeImage(evt.target.result, 150, 150).then((result) => {
+						document.getElementById("avatar").value =  result;
+						document.getElementById("submit").disabled = false;
+					});
 				});
-			});
-
-			FR.readAsDataURL(this.files[0]);
-		}
-
-		document
-			.getElementById("filePicker")
-			.addEventListener("change", readFile);
-	</script>
-	<% if (msg != "") { %>
-	<script>
-		alert("<%= msg %>");
-		if ("<%= msg %>" == "Registered successfully") {
-			window.location.href = "/login";
-		}
-	</script>
-	<% } %>
+	
+				FR.readAsDataURL(this.files[0]);
+			}
+	
+			document
+				.getElementById("filePicker")
+				.addEventListener("change", readFile);
+		</script>
+		<% if (msg != "") { %>
+		<script>
+			alert("<%= msg %>");
+			if ("<%= msg %>" == "Registered successfully") {
+				window.location.href = "/login";
+			}
+		</script>
+		<% } %>
+	</body>
 </html>
