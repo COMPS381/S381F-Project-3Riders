@@ -382,12 +382,35 @@ app.get("/drop", (req, res) => {
 
 //Dropping someone
 app.post("/drop", (req, res) => {
+	let aRider = mongoose.model("Rider", riderSchema);
+	// if user is admin or the report is his own, then he can drop
 	if (req.session.type == "admin") {
+		authorized();
+	} else {
+		aRider.findOne(
+			{ "reports._id": req.body.report_id },
+			{ "reports.username": 1 },
+			(err, result) => {
+				if (result.reports[0].username == req.session.username) {
+					authorized();
+				} else {
+					req.headers["user-agent"].indexOf("curl") >= 0
+						? res
+								.status(401)
+								.json({ msg: "user not authenticated" })
+						: res.status(401).render("report", {
+								username: req.session.username,
+								msg: "user not authenticated",
+						  });
+				}
+			}
+		);
+	}
+	function authorized() {
 		console.log("Request Body = ", req.body);
-		var nameStr = req.body.nameStr;
+		// var nameStr = req.body.nameStr;
 		var dropID = req.body.report_id;
-
-		let aRider = mongoose.model("Rider", riderSchema);
+		// find with the report _id and see if the related username matches req.session.username
 		aRider.updateMany(
 			{},
 			{
@@ -403,33 +426,11 @@ app.post("/drop", (req, res) => {
 		);
 		console.log("Done!");
 
-		/* Failed One
-		let aRider = mongoose.model("Rider", riderSchema);
-		aRider.aggregate([	
-			{$unwind: '$reports'},
-			{$sort: {'_id': dropID}}
-		], function(err, results) {
-			if (err) return console.error(err);
-			console.log("Results: ", results);
-		})
-		*/
-
-		/* Successful One
-		db.riders.updateMany({ name: "Xavier_2" }, { $pull: { reports: { remarks: { $eq: "Testing Only" } } } } );
-		*/
-
 		req.headers["user-agent"].indexOf("curl") >= 0
 			? res.status(200).json({ msg: "Report has been dropped" })
 			: res.status(200).render("report", {
 					username: req.session.username,
 					msg: "Report has been dropped",
-			  });
-	} else {
-		req.headers["user-agent"].indexOf("curl") >= 0
-			? res.status(401).json({ msg: "user not authenticated" })
-			: res.status(401).render("report", {
-					username: req.session.username,
-					msg: "user not authenticated",
 			  });
 	}
 });

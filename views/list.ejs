@@ -37,7 +37,14 @@
 								style="float: left"
 								>Studying course:
 							</label>
-							<select
+							<input
+								type="text"
+								class="drac-input drac-input-white drac-text-white"
+								id="search_course"
+								name="search_course"
+								placeholder="course code"
+							/>
+							<!-- <select
 								name="search_course"
 								id="search_course"
 								class="drac-input drac-input-white drac-text-white"
@@ -46,7 +53,7 @@
 								<option value="381F">S381F</option>
 								<option value="333F">S333F</option>
 								<option value="456F">S456F</option>
-							</select>
+							</select> -->
 						</div>
 						<br />
 						<br />
@@ -92,12 +99,13 @@
 					</table>
 				</div>
 			</div>
-			<form method="/drop" action="post" id="dropForm" style="display:none">
-				<input
-					type="text"
-					id="drop_id"
-					name="drop_id"
-				/>
+			<form
+				method="/drop"
+				action="post"
+				id="dropForm"
+				style="display: none"
+			>
+				<input type="text" id="drop_id" name="drop_id" />
 				<button type="submit" id="dropButton"></button>
 			</form>
 		</div>
@@ -163,30 +171,36 @@
 			}
 			display.innerHTML = content;
 		}
-		function dropReport(reportID, name, courseCode){
+		function dropReport(reportID, name, courseCode) {
 			let choice = confirm(
-								"Detail: \n" +
-								"ID: " +reportID +"\n" +
-								"Name: " +name +"\n" +
-								"Free rided in course: " +courseCode +"\n\n" +
-								"Are you sure you want to remove?"
-								);
+				"Detail: \n" +
+					"ID: " +
+					reportID +
+					"\n" +
+					"Name: " +
+					name +
+					"\n" +
+					"Free rided in course: " +
+					courseCode +
+					"\n\n" +
+					"Are you sure you want to remove?"
+			);
 			if (choice) {
 				var data = {
-					'nameStr': name,
-					'report_id': reportID
+					nameStr: name,
+					report_id: reportID,
 				};
 				fetch("/drop", {
 					method: "POST",
-					headers: {'Content-Type': 'application/json',},
-					body: JSON.stringify(data)
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify(data),
 				});
 				console.log("Json Stringified = ", JSON.stringify(data));
+				alert(reportID + " has been removed");
 			} else {
 				alert("Aborted");
 				location.reload();
 			}
-			alert(reportID +" has been removed");
 		}
 	</script>
 	<% } %>
